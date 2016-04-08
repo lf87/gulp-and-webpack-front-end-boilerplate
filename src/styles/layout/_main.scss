@@ -1,0 +1,34 @@
+.site-main {
+    float: left;
+    width: 100%;
+    background-color: $white;
+    padding: $vspace;
+    @include bp-sm {
+        padding: 0 10px;
+    }
+}
+
+.content-block {
+    border: 1px $black solid;
+    float: left;
+    width: 100%;
+    padding: $vspace 30px;
+    margin-bottom: $vspace;
+    &:first-child {
+        margin-top: $vspace;
+    }
+}
+
+.article {}
+
+.article-sections {
+    > section {
+        margin-bottom: 1em;
+    }
+}
+
+.section-articles {
+    > article {
+        margin-bottom: 1em;
+    }
+}
