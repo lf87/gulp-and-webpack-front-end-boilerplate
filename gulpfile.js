@@ -1,4 +1,5 @@
-//process.env.DISABLE_NOTIFIER = true; // Disables all notifications
+//process.env.DISABLE_NOTIFIER = true; // U&ncomment to disables all notifications
+
 var fileinclude = require('gulp-file-include'), // Include partials
     gulp = require('gulp'), // Gulp
     sass = require('gulp-sass'), // Libsass Pre-processor
@@ -8,28 +9,26 @@ var fileinclude = require('gulp-file-include'), // Include partials
     stylish = require('jshint-stylish'), // Style your jshint results
     uglify = require('gulp-uglify'), // JS minification
     imagemin = require('gulp-imagemin'), // Compress Images
-    newer = require('gulp-newer'), // passes through only those source files that are newer than corresponding destination files.
+    newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
     rename = require('gulp-rename'), // Rename files i.e. in this case rename minified files to .min
-    replace = require('gulp-replace'),
+    replace = require('gulp-replace'), // A string replace plugin for gulp
     concat = require('gulp-concat'), // Merges all files in to 1
     notify = require('gulp-notify'), // Notifications upon task completion
     sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
-    svgSprite = require('gulp-svg-sprite'),
-    del = require('del'), // Clean folders of unused files
-    htmlclean = require('gulp-htmlclean'),
-    neat = require('node-neat').includePaths,
-    browserSync = require('browser-sync'), // Live reloading plus lots more
+    svgSprite = require('gulp-svg-sprite'), // takes a bunch of SVG files, optimizes them and bakes them into SVG sprites of several types:
+    del = require('del'), // Clean folders of files
+    htmlclean = require('gulp-htmlclean'), // Minify HTML
+    neat = require('node-neat').includePaths, // The Bourbon Neat grid system
+    browserSync = require('browser-sync'), // Live reloading
     ext_replace = require('gulp-ext-replace'), // Small gulp plugin to change a file's extension
-    merge = require('merge-stream'), // Create a stream that emits events from multiple other streams (required for 'replace' fucntion)
+    merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
     reload = browserSync.reload,
-
-    // Custom Variables
 
     // Default file extension
     fileExt = '.html',
-    // File extension to replace (file ext replace task)
+
+    // File extension 'replace task' variables
     oldExt = '.html',
-    // New file extension (file ext replace task)
     newExt = '.php'
 
 
