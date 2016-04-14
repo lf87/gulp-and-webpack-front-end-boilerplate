@@ -1,19 +1,14 @@
 {
   "name": "gulp-boilerplate",
   "version": "1.0.0",
-  "description": "",
+  "description": "A HTML, CSS, JS Boilerplate that uses Gulp as the build system.",
   "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://git.homeagency.co.uk/infrastructure/gulp-boilerplate.git"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.11.1",
+    "browser-sync": "^2.12.3",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
