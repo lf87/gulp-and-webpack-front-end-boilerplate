@@ -269,11 +269,11 @@ gulp.task('svg-sprite', function() {
 
 // $ scss-lint - SCSS Linter
 gulp.task('scss-lint', function() {
-  return gulp.src('./src/styles/*/**.scss')
+  return gulp.src(['./src/styles/*/**.scss', '!./src/styles/vendors/*/**.scss'])
     .pipe(scsslint({
     'reporterOutputFormat': 'Checkstyle',
     'filePipeOutput': 'scssReport.xml',
-    'config': 'scss-lint-default.yml'
+    'config': 'scss-lint.yml'
   }))
   .pipe(gulp.dest('./reports'))
 });

@@ -2,8 +2,8 @@ body {
     @include font-size(16px);
     @include font-smoothing;
     @include arial(500);
+    background-color: $grey;
     color: $black;
-    background-color: #ccc;
 }
 
 // Copy
@@ -11,9 +11,9 @@ h1,
 h2,
 h3 {
     @include font-size-heading(50px);
-    margin-bottom: .75em;
-    font-weight: 500;
     display: inline-block;
+    font-weight: 500;
+    margin-bottom: .75em;
     width: 100%;
     @include bp-lg {
         @include font-size-heading(40px);
@@ -50,16 +50,16 @@ p {
 .btn {
     @include font-size(16px);
     background-color: $black;
-    color: $white;
-    padding: .65em 3.5em;
     border-radius: 5px;
-    margin-right: 1em;
+    color: $white;
+    cursor: pointer;
     display: block;
+    filter: brightness(100%);
     float: left;
+    margin-right: 1em;
+    padding: .65em 3.5em;
     transition: filter .3s ease;
     // -webkit-tap-highlight-color: $black;
-    cursor: pointer;
-    filter: brightness(100%);
     @include bp-sm {
         padding: .25em 2.07em;
     }
@@ -74,31 +74,28 @@ p {
 
 // Links with expanding underline animation
 .animate-inline {
+    display: inline-block;
     position: relative;
     a {
-        &:after {
+        &::after {
+            background: transparent;
             content: '';
             display: block;
-            margin: auto;
             height: 1px;
-            width: 0px;
-            background: transparent;
+            margin: auto;
             transition: width .3s ease, background-color .3s ease;
+            width: 0;
         }
-        &:hover:after {
-            width: 100%;
+        &:hover::after {
             background: $white;
+            width: 100%;
         }
     }
     &.current-menu-item {
-        a:hover:after {
+        a:hover::after {
             background-color: $black;
         }
     }
-}
-
-.animate-inline {
-    display: inline-block;
 }
 
 // Lazy loading animations
@@ -119,10 +116,10 @@ p {
     float: left;
     margin: 10px 0 10px 10px;
     svg {
+        display: block;
+        height: 30px;
         max-width: 100%;
         width: 30px;
-        height: 30px;
-        display: block;
         path {
             fill: $black;
         }

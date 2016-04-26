@@ -29,11 +29,11 @@
         menu.appendTo('.mobmen-container').addClass('mobmen');
         body.prepend('<div class="body-overlay"></div>');
         var mobmenu = $('.mobmen');
-        var nav_icon = $('#nav-icon');
+        var nav_icon = $('.nav-icon');
         var body_overlay = $('.body-overlay');
 
 
-        $('#nav-icon').on('click', function() {
+        nav_icon.on('click', function() {
             nav_icon.toggleClass('nav-icon-go');
             mobmenu.toggleClass('mob-menu-go');
             body_overlay.toggleClass('active');

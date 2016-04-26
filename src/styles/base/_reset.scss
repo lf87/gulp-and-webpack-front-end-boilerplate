@@ -1,8 +1,6 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
+// http://meyerweb.com/eric/tools/css/reset/
+// v2.0 | 20110126
+// License: none (public domain)
 html,
 body,
 div,
@@ -84,17 +82,15 @@ time,
 mark,
 audio,
 video {
+    border: 0;
+    font: inherit;
+    font-size: 100%;
     margin: 0;
     padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
 }
 
-
-/* HTML5 display-role reset for older browsers */
-
+// HTML5 display-role reset for older browsers
 article,
 aside,
 details,
@@ -123,11 +119,10 @@ q {
     quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-    content: '';
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
     content: none;
 }
 
@@ -138,8 +133,8 @@ table {
 
 // Custom Resets
 *,
-*:after,
-*:before {
+*::after,
+*::before {
     box-sizing: border-box;
 }
 
@@ -149,10 +144,10 @@ a {
 
 img {
     display: block;
-    max-width: 100%;
     height: auto;
+    max-width: 100%;
 }
 
 main {
-    display: block;
+    display: block; // IE9 rendering fix
 }

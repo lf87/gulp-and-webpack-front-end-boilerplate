@@ -1,4 +1,4 @@
-#nav-icon {
+.nav-icon {
     display: none;
     @include bp-sm {
         display: block;
@@ -22,7 +22,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        #nav-icon {
+        .nav-icon {
             transform: translate(0, 0);
             right: 20px;
         }
@@ -94,7 +94,7 @@
 }
 
 // Hamburger Icon
-#nav-icon {
+.nav-icon {
     width: 27px;
     height: 19px;
     display: none;
