@@ -161,7 +161,7 @@
     height: 100%;
     width: 100%;
     z-index: $zbodyoverlay;
-    background-color: rgba($white, 0.875);
+    background-color: rgba($white, .875);
     transition: opacity .4s ease-in;
     backface-visibility: hidden;
     pointer-events: none;

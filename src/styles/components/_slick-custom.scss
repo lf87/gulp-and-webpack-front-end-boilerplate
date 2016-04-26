@@ -35,8 +35,8 @@ img[data-sizes="auto"] {
     height: 44px;
     transform: translateY(-50%);
     cursor: pointer;
-    opacity: 0.8;
-    transition: opacity, 0.2s ease;
+    opacity: .8;
+    transition: opacity, .2s ease;
     outline: none;
     -webkit-tap-highlight-color: transparent;
     &:before {
@@ -93,7 +93,7 @@ img[data-sizes="auto"] {
     margin: 0;
     display: block;
     text-indent: -9999em;
-    transition: opacity, ease-in-out 0.25s;
+    transition: opacity, ease-in-out .25s;
     cursor: pointer;
     background-color: #ccc;
     /* -webkit-tap-highlight-color: rgba(0, 0, 0, 0); */

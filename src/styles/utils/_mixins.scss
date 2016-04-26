@@ -1,7 +1,7 @@
 // Set a rem font size with pixel fallback
 @function calculateRem($size) {
-	$remSize: $size / 16px;
-	@return $remSize * 1rem;
+    $remSize: $size / 16px;
+    @return $remSize * 1rem;
 }
 
 // If you don't want to use an automatically calculated line height, then remove this now and stick with it
@@ -26,11 +26,13 @@
     font-weight: $weight;
     font-style: $style;
 }
+
 @mixin helvetica($weight: normal, $style: normal) {
     font-family: Helvetica, Arial, sans-serif;
     font-weight: $weight;
     font-style: $style;
 }
+
 @mixin open-sans($weight: 400, $style: normal) {
     font-family: 'Open Sans', sans-serif;
     font-weight: $weight;
@@ -39,48 +41,54 @@
 
 // Font smoothing. Be careful - don't use if texts loses readability (works best for text on a dark background)
 @mixin font-smoothing($value: antialiased) {
-  @if $value == antialiased {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  @else {
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
-  }
+    @if $value==antialiased {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    @else {
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+    }
 }
 
 // Box Sizing - Not required if using autoprefixer
 @mixin box-sizing($box-model) {
-  -webkit-box-sizing: $box-model; /* Safari <= 5 */
-     -moz-box-sizing: $box-model; /* Firefox <= 19 */
-          box-sizing: $box-model;
+    -webkit-box-sizing: $box-model;
+    /* Safari <= 5 */
+    -moz-box-sizing: $box-model;
+    /* Firefox <= 19 */
+    box-sizing: $box-model;
 }
 
 // Non mobile first Breakpoints
 @mixin bp-lg {
-  @media only screen and (max-width: 1200px) {
-    @content;
-  }
+    @media only screen and (max-width: 1200px) {
+        @content;
+    }
 }
+
 @mixin bp-md {
-  @media only screen and (max-width: 992px) {
-    @content;
-  }
+    @media only screen and (max-width: 992px) {
+        @content;
+    }
 }
+
 @mixin bp-sm {
-  @media only screen and (max-width: 767px) {
-    @content;
-  }
+    @media only screen and (max-width: 767px) {
+        @content;
+    }
 }
+
 @mixin bp-xs {
-  @media only screen and (max-width: 479px) {
-    @content;
-  }
+    @media only screen and (max-width: 479px) {
+        @content;
+    }
 }
+
 @mixin bp-xxs {
-  @media only screen and (max-width: 320px) {
-    @content;
-  }
+    @media only screen and (max-width: 320px) {
+        @content;
+    }
 }
 
 // Misc Breakpoints
@@ -92,24 +100,24 @@
 
 // Clearfix
 @mixin clearfix {
-	&:before,
-	&:after {
-		content: "";
-		display: table;
-	}
-	&:after {
-		clear: both;
-	}
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
 }
 
 // Visually hide an element (so screen readers can still pick it up)
 @mixin visuallyhidden {
-  margin: -1px;
-  padding: 0;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip: rect(0, 0, 0, 0);
-  position: absolute;
+    margin: -1px;
+    padding: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip: rect(0, 0, 0, 0);
+    position: absolute;
 }

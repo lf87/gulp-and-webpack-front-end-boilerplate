@@ -20,6 +20,7 @@ var fileinclude = require('gulp-file-include'), // Include partials
     htmlclean = require('gulp-htmlclean'), // Minify HTML
     neat = require('node-neat').includePaths, // The Bourbon Neat grid system
     browserSync = require('browser-sync'), // Live reloading
+    scsslint = require('gulp-scss-lint'), // SCSS Linting
     ext_replace = require('gulp-ext-replace'), // Small gulp plugin to change a file's extension
     merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
     reload = browserSync.reload,
@@ -264,4 +265,15 @@ gulp.task('svg-sprite', function() {
     return gulp.src('**/*.svg', { cwd: 'src/images/svgs' })
         .pipe(svgSprite(config)).on('error', function(error) { console.log(error); })
         .pipe(gulp.dest('dist/assets/img/defs'))
+});
+
+// $ scss-lint - SCSS Linter
+gulp.task('scss-lint', function() {
+  return gulp.src('./src/styles/*/**.scss')
+    .pipe(scsslint({
+    'reporterOutputFormat': 'Checkstyle',
+    'filePipeOutput': 'scssReport.xml',
+    'config': 'scss-lint-default.yml'
+  }))
+  .pipe(gulp.dest('./reports'))
 });
