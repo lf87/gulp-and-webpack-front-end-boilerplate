@@ -1,53 +1,52 @@
 // Custom styles
 .slick-container {
-    width: 100%;
-    float: left;
-    position: relative;
-    background-size: cover;
     background-position: center top;
     background-repeat: none;
-    position: relative;
+    background-size: cover;
     color: $white;
+    float: left;
+    position: relative;
     text-align: center;
+    width: 100%;
 }
 
 .slick-slider {
-    width: 100%;
     float: left;
     position: relative;
+    width: 100%;
 }
 
-img[data-sizes="auto"] {
+[data-sizes="auto"] {
     display: block;
 }
 
 // SLick Arrows
 .slick-arrow {
+    background-color: transparent;
+    border: 0;
+    color: $white;
+    cursor: pointer;
+    font-size: 20px;
+    height: 44px;
+    opacity: .8;
+    outline: none;
     position: absolute;
+    -webkit-tap-highlight-color: transparent;
     text-indent: -9999em;
     top: 50%;
-    color: #fff;
-    font-size: 20px;
-    border: none;
-    background-color: transparent;
-    z-index: $zarrows;
-    width: 44px;
-    height: 44px;
     transform: translateY(-50%);
-    cursor: pointer;
-    opacity: .8;
     transition: opacity, .2s ease;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-    &:before {
-        content: "\276f";
+    width: 44px;
+    z-index: $zarrows;
+    &::before {
+        color: $black;
+        content: '\276f';
         display: block;
+        left: 50%;
         position: absolute;
+        text-indent: 0;
         top: 50%;
         transform: translate(-50%, -50%);
-        left: 50%;
-        text-indent: 0;
-        color: $black;
     }
     &:hover {
         opacity: 1;
@@ -56,8 +55,8 @@ img[data-sizes="auto"] {
 
 .slick-prev {
     left: 0;
-    &:before {
-        content: "\276e";
+    &::before {
+        content: '\276e';
     }
 }
 
@@ -67,38 +66,35 @@ img[data-sizes="auto"] {
 
 // Pagination
 .slick-dots {
-    transform: translateX(-50%);
-    position: absolute;
-    left: 50%;
     bottom: 2em;
-}
-
-.slick-dots li {
-    list-style-image: none;
-    list-style-type: none;
-    margin-left: 0;
-    white-space: nowrap;
-    float: left;
-    padding-left: 4px;
-    padding-right: 4px;
-}
-
-.slick-dots button {
-    background: $white;
-    border-radius: 50%;
-    border: none;
-    width: 17px;
-    height: 17px;
-    padding: 0;
-    margin: 0;
-    display: block;
-    text-indent: -9999em;
-    transition: opacity, ease-in-out .25s;
-    cursor: pointer;
-    background-color: $white;
-    /* -webkit-tap-highlight-color: rgba(0, 0, 0, 0); */
-    outline: none;
-    filter: brightness(100%);
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    li {
+        float: left;
+        list-style-image: none;
+        list-style-type: none;
+        margin-left: 0;
+        padding-left: 4px;
+        padding-right: 4px;
+        white-space: nowrap;
+    }
+    button {
+        background-color: $white;
+        border: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        display: block;
+        filter: brightness(100%);
+        height: 17px;
+        margin: 0;
+        outline: none;
+        padding: 0;
+        // -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        text-indent: -9999em;
+        transition: opacity, ease-in-out .25s;
+        width: 17px;
+    }
 }
 
 &.slick-active button {

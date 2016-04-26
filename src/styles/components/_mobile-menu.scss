@@ -1,70 +1,59 @@
-.nav-icon {
-    display: none;
-    @include bp-sm {
-        display: block;
-    }
-}
-
 .mobile-nav-bar {
-    z-index: $zmobilenavbar;
-    width: 100%;
-    float: left;
     background-color: $black;
-    height: 50px;
+    display: none;
     float: left;
+    height: 50px;
     position: relative;
     width: 100%;
-    display: none;
+    z-index: $zmobilenavbar;
     @include bp-sm {
         display: block;
     }
     &.fixed {
+        left: 0;
         position: fixed;
         top: 0;
-        left: 0;
         .nav-icon {
-            transform: translate(0, 0);
             right: 20px;
+            transform: translate(0, 0);
         }
     }
 }
 
 .mobmen-container {
-    width: 100%;
     float: left;
-    position: absolute;
-    top: 50px;
     left: 0;
     overflow: hidden;
     pointer-events: none;
+    position: absolute;
+    top: 50px;
+    width: 100%;
 }
 
 .mobmen {
     @include font-size(21px);
-    transition: all .4s ease-in-out;
-    transform: translate(0, -100%);
-    opacity: 0;
-    display: none;
-    overflow-x: hidden;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
     background: $black;
-    text-align: center;
-    top: 0;
+    bottom: 0;
+    display: none;
     left: 0;
-    z-index: $zmobilemenu;
+    opacity: 0;
+    overflow-x: hidden;
     pointer-events: initial;
     position: relative;
+    text-align: center;
+    top: 0;
+    transform: translate(0, -100%);
+    transition: all .4s ease-in-out;
+    width: 100%;
+    z-index: $zmobilemenu;
     @include bp-sm {
         display: block;
     }
     li {
-        width: auto;
         clear: both;
         display: inline-block;
-        padding-bottom: 1em;
         margin-right: 0;
+        padding-bottom: 1em;
         width: 100%;
         &:first-child {
             padding-top: 1em;
@@ -83,50 +72,50 @@
 }
 
 .overflow-hidden {
+    display: none;
     height: 100%;
     overflow: hidden;
-    display: none;
 }
 
 .mob-menu-go {
-    transform: translate(0, 0);
     opacity: 1;
+    transform: translate(0, 0);
 }
 
 // Hamburger Icon
 .nav-icon {
-    width: 27px;
-    height: 19px;
-    display: none;
-    position: absolute;
     cursor: pointer;
-    transform: translate(0, 0);
+    display: none;
+    height: 19px;
     left: 50%;
-    top: 16px;
     margin-left: 24px;
-    > div {
-        position: absolute;
-        top: 0;
-        color: $white;
-        left: -55px;
-        font-size: 16px;
-        line-height: 1;
-        font-weight: 500;
-    }
+    position: absolute;
+    top: 16px;
+    transform: translate(0, 0);
+    width: 27px;
     @include bp-sm {
         display: block;
     }
-    span {
-        display: block;
+    > div {
+        color: $white;
+        font-size: 16px;
+        font-weight: 500;
+        left: -55px;
+        line-height: 1;
         position: absolute;
-        height: 3px;
-        width: 100%;
+        top: 0;
+    }
+    span {
         background: $white;
-        left: 0;
         border-radius: 1px;
+        display: block;
+        height: 3px;
+        left: 0;
+        position: absolute;
         transition: transform, .25s ease-in-out;
+        width: 100%;
         &:nth-child(1) {
-            top: 0px;
+            top: 0;
         }
         &:nth-child(2),
         &:nth-child(3) {
@@ -139,9 +128,9 @@
     &.nav-icon-go span {
         &:nth-child(1),
         &:nth-child(4) {
-            top: 8px;
-            width: 0px;
             left: 50%;
+            top: 8px;
+            width: 0;
         }
         &:nth-child(2) {
             transform: rotate(45deg) translate(0, 0);
@@ -153,19 +142,19 @@
 }
 
 .body-overlay {
+    backface-visibility: hidden;
+    background-color: rgba($white, .875);
+    bottom: 0;
+    display: none;
+    height: 100%;
+    left: 0;
     opacity: 0;
+    pointer-events: none;
     position: fixed;
     top: 99px;
-    left: 0;
-    bottom: 0;
-    height: 100%;
+    transition: opacity .4s ease-in;
     width: 100%;
     z-index: $zbodyoverlay;
-    background-color: rgba($white, .875);
-    transition: opacity .4s ease-in;
-    backface-visibility: hidden;
-    pointer-events: none;
-    display: none;
     @include bp-sm {
         display: block;
     }

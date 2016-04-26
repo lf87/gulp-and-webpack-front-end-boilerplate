@@ -1,8 +1,8 @@
 .site-main {
-    float: left;
-    width: 100%;
     background-color: $white;
+    float: left;
     padding: $vspace;
+    width: 100%;
     @include bp-sm {
         padding: 0 10px;
     }
@@ -11,15 +11,17 @@
 .content-block {
     border: 1px $black solid;
     float: left;
-    width: 100%;
-    padding: $vspace 30px;
     margin-bottom: $vspace;
+    padding: $vspace 30px;
+    width: 100%;
     &:first-child {
         margin-top: $vspace;
     }
 }
 
-.article {}
+.article {
+    // Styles
+}
 
 .article-sections {
     > section {

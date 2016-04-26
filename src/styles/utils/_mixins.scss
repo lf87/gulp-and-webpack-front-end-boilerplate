@@ -1,23 +1,23 @@
 // Set a rem font size with pixel fallback
-@function calculateRem($size) {
-    $remSize: $size / 16px;
-    @return $remSize * 1rem;
+@function calculate-rem($size) {
+    $rem-size: $size / 16px;
+    @return $rem-size * 1rem;
 }
 
 // If you don't want to use an automatically calculated line height, then remove this now and stick with it
 @mixin font-size($size: 14, $line: $size * 1.5) {
     font-size: $size;
     line-height: $line;
-    font-size: calculateRem($size);
-    line-height: calculateRem($line);
+    font-size: calculate-rem($size);
+    line-height: calculate-rem($line);
 }
 
 // Reduced line height for large headings
 @mixin font-size-heading($size: 14, $line: $size * 1.15) {
     font-size: $size;
     line-height: $line;
-    font-size: calculateRem($size);
-    line-height: calculateRem($line);
+    font-size: calculate-rem($size);
+    line-height: calculate-rem($line);
 }
 
 // Fonts
@@ -41,23 +41,13 @@
 
 // Font smoothing. Be careful - don't use if texts loses readability (works best for text on a dark background)
 @mixin font-smoothing($value: antialiased) {
-    @if $value==antialiased {
-        -webkit-font-smoothing: antialiased;
+    @if $value == antialiased {
         -moz-osx-font-smoothing: grayscale;
-    }
-    @else {
-        -webkit-font-smoothing: subpixel-antialiased;
+        -webkit-font-smoothing: antialiased;
+    } @else {
         -moz-osx-font-smoothing: auto;
+        -webkit-font-smoothing: subpixel-antialiased;
     }
-}
-
-// Box Sizing - Not required if using autoprefixer
-@mixin box-sizing($box-model) {
-    -webkit-box-sizing: $box-model;
-    /* Safari <= 5 */
-    -moz-box-sizing: $box-model;
-    /* Firefox <= 19 */
-    box-sizing: $box-model;
 }
 
 // Non mobile first Breakpoints
@@ -100,18 +90,18 @@
 
 // Clearfix
 @mixin clearfix {
-    &:before,
-    &:after {
-        content: "";
+    &::before,
+    &::after {
+        content: '';
         display: table;
     }
-    &:after {
+    &::after {
         clear: both;
     }
 }
 
 // Visually hide an element (so screen readers can still pick it up)
-@mixin visuallyhidden {
+@mixin visually-hidden {
     margin: -1px;
     padding: 0;
     width: 1px;
