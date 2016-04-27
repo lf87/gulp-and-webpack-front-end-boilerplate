@@ -220,22 +220,6 @@ gulp.task('clean', function() {
         }));
 });
 
-// $ images-force - Force image compression - will check even if already compressed, useful if files have been renamed
-gulp.task('images-force', function() {
-    return gulp.src('src/images/**/*.{png,jpg,gif}')
-        .pipe(cache.clear())
-        .pipe(imagemin({
-            optimizationLevel: 7,
-            progressive: true,
-            interlaced: true
-        }))
-        .pipe(gulp.dest('dist/assets/img'))
-        .pipe(notify({
-            message: 'Images task complete',
-            onLast: true
-        }));
-});
-
 // !!! Below is a WIP - don't use !!!
 // $ replace - Rename suffix e.g. change all *.html files to *.php and then delete original files
 var folders = [
