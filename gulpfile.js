@@ -159,6 +159,28 @@ gulp.task('fonts', function() {
         }));
 });
 
+// $ gulp docs
+gulp.task('docs', function() {
+    browserSync.reload();
+    return gulp.src('src/docs/**/*')
+        .pipe(gulp.dest('dist/assets/docs'))
+        .pipe(notify({
+            message: 'Docs task complete',
+            onLast: true
+        }));
+});
+
+// $ gulp favicons
+gulp.task('favicons', function() {
+    browserSync.reload();
+    return gulp.src('src/favicons/**/*')
+        .pipe(gulp.dest('dist/assets/favicons'))
+        .pipe(notify({
+            message: 'Favicons task complete',
+            onLast: true
+        }));
+});
+
 // $ gulp watch - This is everything that's being watched when you run the default task
 gulp.task('watch', function() {
     gulp.watch('src/components/**/*' + fileExt, ['fileinclude']);
@@ -166,11 +188,14 @@ gulp.task('watch', function() {
     gulp.watch('src/scripts/**/*.js', ['scripts'], ['bs-reload']);
     gulp.watch('src/images/**/*', ['images']);
     gulp.watch('src/fonts/**/*', ['fonts']);
+    gulp.watch('src/favicons/**/*', ['favicons']);
+    gulp.watch('src/docs/**/*', ['docs']);
     gulp.watch('*' + fileExt, ['bs-reload']);
 });
 
 // $ gulp - Default task
-gulp.task('default', ['fileinclude', 'sass', 'scripts', 'images', 'fonts', 'browser-sync', 'watch']);
+gulp.task('default', ['fileinclude', 'sass', 'scripts', 'images', 'fonts', 'docs', 'favicons', 'browser-sync', 'watch']);
+gulp.task('q', ['browser-sync', 'watch']);
 
 // **********************
 // ***** Misc Tasks *****
