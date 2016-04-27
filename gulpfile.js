@@ -21,6 +21,7 @@ var fileinclude = require('gulp-file-include'), // Include partials
     neat = require('node-neat').includePaths, // The Bourbon Neat grid system
     browserSync = require('browser-sync'), // Live reloading
     scsslint = require('gulp-scss-lint'), // SCSS Linting
+    combineMq = require('gulp-combine-mq'), // Combine media queries
     ext_replace = require('gulp-ext-replace'), // Small gulp plugin to change a file's extension
     merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
     reload = browserSync.reload,
@@ -72,6 +73,9 @@ gulp.task('sass', function() {
             cascade: false
         }))
         .pipe(cssnano())
+        .pipe(combineMq({
+            beautify: false
+        }))
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest(''))
         .pipe(notify({
@@ -232,6 +236,7 @@ gulp.task('images-force', function() {
         }));
 });
 
+// !!! Below is a WIP - don't use !!!
 // $ replace - Rename suffix e.g. change all *.html files to *.php and then delete original files
 var folders = [
     'src/components/',
