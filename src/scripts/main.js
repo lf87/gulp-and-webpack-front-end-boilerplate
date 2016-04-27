@@ -24,20 +24,20 @@
     $(document).ready(function() {
 
         // Mobile Menu
-        var menu = $('.menu').first().clone();
-        var body = $('body');
-        menu.appendTo('.mobmen-container').addClass('mobmen');
-        body.prepend('<div class="body-overlay"></div>');
-        var mobmenu = $('.mobmen');
-        var nav_icon = $('.nav-icon');
-        var body_overlay = $('.body-overlay');
+        var $menu = $('.menu').first().clone();
+        var $body = $('body');
+        $menu.appendTo('.mobmen-container').addClass('mobmen');
+        $body.prepend('<div class="body-overlay"></div>');
+        var $mobMenu = $('.mobmen');
+        var $navIcon = $('.nav-icon');
+        var $bodyOverlay = $('.body-overlay');
 
 
-        nav_icon.on('click', function() {
-            nav_icon.toggleClass('nav-icon-go');
-            mobmenu.toggleClass('mob-menu-go');
-            body_overlay.toggleClass('active');
-            body.toggleClass('overflow');
+        $navIcon.on('click', function() {
+            $navIcon.toggleClass('nav-icon-go');
+            $mobMenu.toggleClass('mob-menu-go');
+            $bodyOverlay.toggleClass('active');
+            $body.toggleClass('overflow');
         });
 
         // Resize delay
@@ -67,17 +67,17 @@
         }, false);
 
         // Slick slider variables
-        var status = $('.paging-info'),
-            lazy = $('.lazy-slider');
+        var $status = $('.paging-info'),
+            $lazy = $('.lazy-slider');
 
         // Slick slider counters
-        lazy.on('init reInit afterChange', function(event, slick, currentSlide) {
+        $lazy.on('init reInit afterChange', function(event, slick, currentSlide) {
             //currentSlide is undefined on init -- set it to 0 in this case (currentSlide is 0 based)
             var i = (currentSlide ? currentSlide : 0) + 1;
-            status.text(i + '/' + slick.slideCount);
+            $status.text(i + '/' + slick.slideCount);
         });
         // Slick Slider
-        lazy.slick({
+        $lazy.slick({
             slidesToShow: 1,
             slidesToScroll: 1,
             infinite: true,
@@ -102,45 +102,36 @@
         function fixnav() {
             if ($(window).width() < 768) {
                 // Store the position of the element in position
-                var navbar = $('#navbar');
-                var position = $(navbar).offset();
+                var $navBar = $('#navbar');
+                var $position = $($navBar).offset();
 
                 // On scrolling of the document do something
                 $(document).scroll(function() {
                     // The current height
-                    var y = $(this).scrollTop();
+                    var $yPos = $(this).scrollTop();
 
                     // If the current Y is bigger than the element. (you scrolled beyond the element)
-                    if (y >= position.top) {
-                        navbar.addClass('fixed');
+                    if ($yPos >= $position.top) {
+                        $navBar.addClass('fixed');
                     } else {
-                        navbar.removeClass('fixed');
+                        $navBar.removeClass('fixed');
                     }
                 });
-                var y = $(document).scrollTop();
+                var $yPos = $(document).scrollTop();
 
                 // If the current Y is bigger than the element. (you scrolled beyond the element)
-                if (y >= position.top) {
-                    navbar.addClass('fixed');
+                if ($yPos >= $position.top) {
+                    $navBar.addClass('fixed');
                 } else {
-                    navbar.removeClass('fixed');
+                    $navBar.removeClass('fixed');
                 }
             }
         }
         fixnav();
 
-        if ($(window).width() > 767) {
-            // Scroll to top of page (Where slideshow is) when user clicks a Gallery thumb
-            var gallery_img = $('.gallery-container img');
-
-            gallery_img.on('click', function() {
-                $("html, body").animate({ scrollTop: 0 }, 500);
-            });
-        }
-
         // Fix for double tap issue on touch devices
         $('.site-header a').on('click touchend', function() {
-            var el = $(this);
+            var $el = $(this);
             var link = el.attr('href');
             window.location = link;
         });
