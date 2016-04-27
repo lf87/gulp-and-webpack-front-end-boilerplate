@@ -97,6 +97,9 @@ gulp.task('scripts', function() {
         }))
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest('dist/assets/js'))
+        .pipe(reload({
+            stream: true
+        }))
         .pipe(notify({
             message: 'Scripts task complete',
             onLast: true
@@ -195,7 +198,9 @@ gulp.task('watch', function() {
 
 // $ gulp - Default task
 gulp.task('default', ['fileinclude', 'sass', 'scripts', 'images', 'fonts', 'docs', 'favicons', 'browser-sync', 'watch']);
-gulp.task('q', ['browser-sync', 'watch']);
+
+// $ gulp qs - Quick start task
+gulp.task('qs', ['browser-sync', 'watch']);
 
 // **********************
 // ***** Misc Tasks *****
