@@ -84,7 +84,7 @@
             adaptiveHeight: true,
             speed: 600,
             lazyLoad: 'progressive',
-            dots: 'true',
+            dots: true,
             responsive: [{
                 breakpoint: 768,
                 settings: {
