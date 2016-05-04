@@ -132,7 +132,7 @@
         // Fix for double tap issue on touch devices
         $('.site-header a').on('click touchend', function() {
             var $el = $(this);
-            var link = el.attr('href');
+            var link = $el.attr('href');
             window.location = link;
         });
     });

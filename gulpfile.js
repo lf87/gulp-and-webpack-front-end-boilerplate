@@ -133,6 +133,9 @@ gulp.task('fileinclude', function() {
         }))
         .pipe(gulp.dest(''))
         .pipe(replace(/_/g, ''))
+        .pipe(reload({
+        stream: true
+    }))
         .pipe(notify({
             message: 'Include files task complete',
             onLast: true
@@ -157,35 +160,41 @@ gulp.task('images', function() {
 
 // $ gulp fonts
 gulp.task('fonts', function() {
-    browserSync.reload();
     return gulp.src('src/fonts/**/*')
         .pipe(gulp.dest('dist/assets/fonts'))
         .pipe(notify({
             message: 'Fonts task complete',
             onLast: true
-        }));
+        }))
+        .pipe(reload({
+        stream: true
+    }));
 });
 
 // $ gulp docs
 gulp.task('docs', function() {
-    browserSync.reload();
     return gulp.src('src/docs/**/*')
         .pipe(gulp.dest('dist/assets/docs'))
         .pipe(notify({
             message: 'Docs task complete',
             onLast: true
-        }));
+        }))
+        .pipe(reload({
+        stream: true
+    }));
 });
 
 // $ gulp favicons
 gulp.task('favicons', function() {
-    browserSync.reload();
     return gulp.src('src/favicons/**/*')
         .pipe(gulp.dest('dist/assets/favicons'))
         .pipe(notify({
             message: 'Favicons task complete',
             onLast: true
-        }));
+        }))
+        .pipe(reload({
+        stream: true
+    }));
 });
 
 // $ gulp watch - This is everything that's being watched when you run the default task
