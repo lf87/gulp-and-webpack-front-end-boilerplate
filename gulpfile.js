@@ -15,7 +15,6 @@ var fileinclude = require('gulp-file-include'), // Include partials
     concat = require('gulp-concat'), // Merges all files in to 1
     notify = require('gulp-notify'), // Notifications upon task completion
     sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
-    svgSprite = require('gulp-svg-sprite'), // takes a bunch of SVG files, optimizes them and bakes them into SVG sprites of several types:
     del = require('del'), // Clean folders of files
     htmlclean = require('gulp-htmlclean'), // Minify HTML
     neat = require('node-neat').includePaths, // The Bourbon Neat grid system
@@ -288,12 +287,6 @@ config = {
         }
     }
 };
-
-gulp.task('svg-sprite', function() {
-    return gulp.src('**/*.svg', { cwd: 'src/images/svgs' })
-        .pipe(svgSprite(config)).on('error', function(error) { console.log(error); })
-        .pipe(gulp.dest('dist/assets/img/defs'))
-});
 
 // $ scss-lint - SCSS Linter
 gulp.task('scss-lint', function() {
