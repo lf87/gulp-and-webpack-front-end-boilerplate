@@ -41,8 +41,8 @@ var fileinclude = require('gulp-file-include'), // Include partials
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: "./",
-        //proxy: 'website-proxy.dev', // Cross device syncing won't work (using ngrok) when proxy enabled
-        //port: 58108
+        //proxy: 'website-proxy.dev',
+        port: 3006,
         files: '*.css'
     });
 });
@@ -59,7 +59,7 @@ gulp.task('bs-reload', function() {
 
 // $ gulp sass
 gulp.task('sass', function() {
-    return gulp.src("./src/styles/*.scss")
+    return gulp.src('./src/styles/*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass({
             includePaths: ['src/styles/*.scss'].concat(neat)
@@ -111,7 +111,7 @@ gulp.task('scripts', function() {
 
 // $ gulp fileinclude (Also runs HTML CLean - Simple and safety HTML/SVG cleaner to minify without changing its structure.)
 gulp.task('fileinclude', function() {
-    gulp.src(['src/components/*' + fileExt, 'src/components/templates/*' + fileExt])
+    gulp.src(['src/components/*', 'src/components/templates/*'])
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
