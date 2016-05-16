@@ -4,7 +4,7 @@ var fileinclude = require('gulp-file-include'), // Include partials
     gulp = require('gulp'), // Gulp
     sass = require('gulp-sass'), // Libsass Pre-processor
     autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
-    cssnano = require('gulp-cssnano'), // Minify CSS
+    //cssnano = require('gulp-cssnano'), // Minify CSS
     jshint = require('gulp-jshint'), // Lint your JS on the fly
     stylish = require('jshint-stylish'), // Style your jshint results
     uglify = require('gulp-uglify'), // JS minification
@@ -20,9 +20,10 @@ var fileinclude = require('gulp-file-include'), // Include partials
     neat = require('node-neat').includePaths, // The Bourbon Neat grid system
     browserSync = require('browser-sync'), // Live reloading
     scsslint = require('gulp-scss-lint'), // SCSS Linting
-    combineMq = require('gulp-combine-mq'), // Combine media queries
+    //combineMq = require('gulp-combine-mq'), // Combine media queries
     ext_replace = require('gulp-ext-replace'), // Small gulp plugin to change a file's extension
     merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
+    cleanCSS = require('gulp-clean-css'); // Replaces css-nano, this will also combine MQs
     reload = browserSync.reload;
 
 // Default file extension
@@ -66,9 +67,9 @@ gulp.task('sass', function() {
             browsers: ['last 2 versions'],
             cascade: false
         }))
-        .pipe(cssnano())
-        .pipe(combineMq({
-            beautify: false
+        .pipe(cleanCSS({debug: true}, function(details) {
+            console.log(details.name + ' file size before: ' + details.stats.originalSize + ' bytes');
+            console.log(details.name + ' file size after: ' + details.stats.minifiedSize + ' bytes');
         }))
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest(''))
