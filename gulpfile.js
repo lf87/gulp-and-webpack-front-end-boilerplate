@@ -234,14 +234,14 @@ var folders = [
     'src/components/',
     'src/components/templates/',
     'src/components/templates/partials/',
-    'src/components/templates/partials/components/'
+    'src/components/templates/partials/modules/'
 ];
 
 var foldersFiles = [
     'src/components/*' + oldExt,
     'src/components/templates/*' + oldExt,
     'src/components/templates/partials/*' + oldExt,
-    'src/components/templates/partials/components/*' + oldExt
+    'src/components/templates/partials/modules/*' + oldExt
 ];
 
 gulp.task('replace', function() {
@@ -267,26 +267,6 @@ gulp.task('replace', function() {
     function2();
     function3();
 });
-
-
-
-// $ svg-sprite - Outputs SVGs to file.
-config = {
-    "dest": "./dist/assets/img/defs",
-    "svg": {
-        "xmlDeclaration": false,
-        "doctypeDeclaration": false
-    },
-    "mode": {
-        "defs": {
-            "dest": "./",
-            "sprite": "./sprites.def.svg",
-            "bust": true,
-            "inline": true,
-            "example": true
-        }
-    }
-};
 
 // $ scss-lint - SCSS Linter
 gulp.task('scss-lint', function() {
