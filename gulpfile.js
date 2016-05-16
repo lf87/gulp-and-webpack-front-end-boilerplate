@@ -23,15 +23,10 @@ var fileinclude = require('gulp-file-include'), // Include partials
     combineMq = require('gulp-combine-mq'), // Combine media queries
     ext_replace = require('gulp-ext-replace'), // Small gulp plugin to change a file's extension
     merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
-    reload = browserSync.reload,
+    reload = browserSync.reload;
 
-    // Default file extension
-    fileExt = '.html',
-
-    // File extension 'replace task' variables
-    oldExt = '.html',
-    newExt = '.php'
-
+// Default file extension
+var fileExt = '.html';
 
 // **********************
 // *** Required Tasks ***
@@ -42,8 +37,8 @@ gulp.task('browser-sync', function() {
     browserSync.init({
         server: "./",
         //proxy: 'website-proxy.dev',
-        port: 3006,
-        files: '*.css'
+        //port: 3000,
+        files: '*.css' // Inject CSS changes
     });
 });
 
@@ -109,7 +104,7 @@ gulp.task('scripts', function() {
         }));
 });
 
-// $ gulp fileinclude (Also runs HTML CLean - Simple and safety HTML/SVG cleaner to minify without changing its structure.)
+// $ gulp fileinclude (Also runs HTML CLean)
 gulp.task('fileinclude', function() {
     gulp.src(['src/components/*', 'src/components/templates/*'])
         .pipe(fileinclude({
@@ -133,8 +128,8 @@ gulp.task('fileinclude', function() {
         .pipe(gulp.dest(''))
         .pipe(replace(/_/g, ''))
         .pipe(reload({
-        stream: true
-    }))
+            stream: true
+        }))
         .pipe(notify({
             message: 'Include files task complete',
             onLast: true
@@ -166,8 +161,8 @@ gulp.task('fonts', function() {
             onLast: true
         }))
         .pipe(reload({
-        stream: true
-    }));
+            stream: true
+        }));
 });
 
 // $ gulp docs
@@ -179,8 +174,8 @@ gulp.task('docs', function() {
             onLast: true
         }))
         .pipe(reload({
-        stream: true
-    }));
+            stream: true
+        }));
 });
 
 // $ gulp favicons
@@ -192,8 +187,8 @@ gulp.task('favicons', function() {
             onLast: true
         }))
         .pipe(reload({
-        stream: true
-    }));
+            stream: true
+        }));
 });
 
 // $ gulp watch - This is everything that's being watched when you run the default task
@@ -211,12 +206,14 @@ gulp.task('watch', function() {
 // $ gulp - Default task
 gulp.task('default', ['fileinclude', 'sass', 'scripts', 'images', 'fonts', 'docs', 'favicons', 'browser-sync', 'watch']);
 
-// $ gulp qs - Quick start task
-gulp.task('qs', ['browser-sync', 'watch']);
+
 
 // **********************
 // ***** Misc Tasks *****
 // **********************
+
+// $ gulp qs - Quick start task
+gulp.task('qs', ['browser-sync', 'watch']);
 
 // $ clean - Emptys everything in the distribution folders and the HTML in the root
 gulp.task('clean', function() {
@@ -228,26 +225,21 @@ gulp.task('clean', function() {
         }));
 });
 
-// !!! Below is a WIP - don't use !!!
 // $ replace - Rename suffix e.g. change all *.html files to *.php and then delete original files
-var folders = [
+var oldExt = '.php',
+    newExt = '.html',
+    folders = [
     'src/components/',
     'src/components/templates/',
     'src/components/templates/partials/',
-    'src/components/templates/partials/modules/'
-];
-
-var foldersFiles = [
-    'src/components/*' + oldExt,
-    'src/components/templates/*' + oldExt,
-    'src/components/templates/partials/*' + oldExt,
-    'src/components/templates/partials/modules/*' + oldExt
+    'src/components/templates/partials/modules/',
+    'src/components/templates/partials/svgs/'
 ];
 
 gulp.task('replace', function() {
     var tasks;
 
-    function function1() {
+    function replaceRename() {
         tasks = folders.map(function(element) {
             return gulp.src(element + '*' + oldExt)
                 .pipe(ext_replace(newExt))
@@ -255,26 +247,40 @@ gulp.task('replace', function() {
         });
     }
 
-    function function2() {
+    function replaceMerge() {
         return merge(tasks);
     }
 
-    function function3() {
-        return del(foldersFiles); // figure out why this aint working
+    function replaceDelete() {
+        del([
+            'src/components/*' + oldExt,
+            'src/components/templates/*' + oldExt,
+            'src/components/templates/partials/*' + oldExt,
+            'src/components/templates/partials/modules/*' + oldExt,
+            'src/components/templates/partials/svgs/*' + oldExt
+        ]);
+         return gulp.src("./")
+        .pipe(notify({
+            message: 'Files suffix changed from *' + oldExt + ' to *' + newExt,
+            onLast: true
+        }));
     }
 
-    function1();
-    function2();
-    function3();
+    replaceRename();
+    replaceMerge();
+    // Timeout to ensure renaming is complete before deleting original files
+    setTimeout(function() {
+        replaceDelete();
+    }, 2500);
 });
 
 // $ scss-lint - SCSS Linter
 gulp.task('scss-lint', function() {
-  return gulp.src(['./src/styles/*/**.scss', '!./src/styles/vendors/*.scss'])
-    .pipe(scsslint({
-    'reporterOutputFormat': 'Checkstyle',
-    'filePipeOutput': 'scssReport.xml',
-    'config': 'scss-lint.yml'
-  }))
-  .pipe(gulp.dest('./reports'))
+    return gulp.src(['./src/styles/*/**.scss', '!./src/styles/vendors/*.scss'])
+        .pipe(scsslint({
+            'reporterOutputFormat': 'Checkstyle',
+            'filePipeOutput': 'scssReport.xml',
+            'config': 'scss-lint.yml'
+        }))
+        .pipe(gulp.dest('./reports'))
 });
