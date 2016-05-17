@@ -23,7 +23,8 @@ var fileinclude = require('gulp-file-include'), // Include partials
     //combineMq = require('gulp-combine-mq'), // Combine media queries
     ext_replace = require('gulp-ext-replace'), // Small gulp plugin to change a file's extension
     merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
-    cleanCSS = require('gulp-clean-css'); // Replaces css-nano, this will also combine MQs
+    cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
+    fontmin = require('gulp-fontmin'); // Font minification - Also generates CSS
     reload = browserSync.reload;
 
 // Default file extension
@@ -156,9 +157,10 @@ gulp.task('images', function() {
 // $ gulp fonts
 gulp.task('fonts', function() {
     return gulp.src('src/fonts/**/*')
+        .pipe(fontmin())
         .pipe(gulp.dest('dist/assets/fonts'))
         .pipe(notify({
-            message: 'Fonts task complete',
+            message: 'Fonts minified',
             onLast: true
         }))
         .pipe(reload({
