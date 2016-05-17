@@ -100,9 +100,9 @@
 
         // Fixed position navigation bar when user scrolls below #navbar
         function fixnav() {
+            var $navBar = $('#navbar');
             if ($(window).width() < 768) {
                 // Store the position of the element in position
-                var $navBar = $('#navbar');
                 var $position = $($navBar).offset();
 
                 // On scrolling of the document do something
@@ -125,6 +125,8 @@
                 } else {
                     $navBar.removeClass('fixed');
                 }
+            } else {
+                $navBar.removeClass('fixed');
             }
         }
         fixnav();
