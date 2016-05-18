@@ -231,7 +231,7 @@ gulp.task('qs', ['browser-sync', 'watch']);
 
 // $ clean - Emptys everything in the distribution folders and the HTML in the root
 gulp.task('clean', function() {
-    del(['dist/assets/css', 'dist/assets/js', 'dist/assets/img', '*' + fileExt, 'dist/assets/fonts', 'src/styles/_svg-symbols.scss']);
+    del(['dist/assets/css', 'dist/assets/js', 'dist/assets/img', 'maps', 'reports', '*' + fileExt, 'dist/assets/fonts', 'src/styles/_svg-symbols.scss']);
     return gulp.src("./")
         .pipe(notify({
             message: 'Folders cleaned successfully',
