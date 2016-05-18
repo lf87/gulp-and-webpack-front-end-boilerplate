@@ -4,7 +4,6 @@
     .faq-img {
         margin-bottom: 1.4em;
     }
-    p,
     i::before,
     i::after {
         transition: transform, .3s, ease-in-out;
@@ -44,16 +43,13 @@
     }
     p {
         @include font-size(16px);
-        backface-visibility: hidden;
         margin-bottom: 1em;
-        max-height: 450px;
-        opacity: 1;
         overflow: hidden;
-        padding-bottom: 1em;
-        padding-top: 1em;
         position: relative;
+        backface-visibility: hidden;
         transform: translate3d(0, 0, 0);
-        z-index: 2;
+        transition: max-height .3s ease;
+        z-index: $zaccordion;
     }
     ul {
         list-style: none;
@@ -146,10 +142,7 @@
     }
     [type=checkbox]:checked ~ p {
         margin-top: 0;
-        max-height: 0;
-        opacity: 0;
-        padding: 0;
-        transform: translate3d(0, 0, 0);
+        max-height: 0 !important; // To overwrite inline JS
     }
     [type=checkbox]:checked ~ h3 i::before {
         transform: rotate(0);

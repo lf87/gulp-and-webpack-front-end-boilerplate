@@ -61,6 +61,13 @@
             }
         }
 
+        // Get accordion <p> element height and set CSS
+        var $accordionEl = $('.accordion p');
+        $accordionEl.each(function() {
+            var height = $(this).height();
+            $(this).css('max-height', height + 24);
+        });
+
         // Listen for orientation changes
         window.addEventListener("orientationchange", function() {
             // Do stuff
