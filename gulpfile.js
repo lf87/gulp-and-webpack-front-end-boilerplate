@@ -4,7 +4,6 @@ var fileinclude = require('gulp-file-include'), // Include partials
     gulp = require('gulp'), // Gulp
     sass = require('gulp-sass'), // Libsass Pre-processor
     autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
-    //cssnano = require('gulp-cssnano'), // Minify CSS
     jshint = require('gulp-jshint'), // Lint your JS on the fly
     stylish = require('jshint-stylish'), // Style your jshint results
     uglify = require('gulp-uglify'), // JS minification
@@ -20,11 +19,11 @@ var fileinclude = require('gulp-file-include'), // Include partials
     neat = require('node-neat').includePaths, // The Bourbon Neat grid system
     browserSync = require('browser-sync'), // Live reloading
     scsslint = require('gulp-scss-lint'), // SCSS Linting
-    //combineMq = require('gulp-combine-mq'), // Combine media queries
     ext_replace = require('gulp-ext-replace'), // Small gulp plugin to change a file's extension
     merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
     cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
-    fontmin = require('gulp-fontmin'); // Font minification - Also generates CSS
+    fontmin = require('gulp-fontmin'), // Font minification - Also generates CSS
+    svgmin = require('gulp-svgmin'),
     reload = browserSync.reload;
 
 // Default file extension
@@ -68,7 +67,7 @@ gulp.task('sass', function() {
             browsers: ['last 2 versions'],
             cascade: false
         }))
-        .pipe(cleanCSS({debug: true}, function(details) {
+        .pipe(cleanCSS({ debug: true }, function(details) {
             console.log(details.name + ' file size before: ' + details.stats.originalSize + ' bytes');
             console.log(details.name + ' file size after: ' + details.stats.minifiedSize + ' bytes');
         }))
@@ -140,7 +139,7 @@ gulp.task('fileinclude', function() {
 
 // $ gulp images - Image compression (Don't forget to use save for web in PS first!)
 gulp.task('images', function() {
-    return gulp.src('src/images/**/*.{png,jpg,gif,svg}')
+    return gulp.src('src/images/**/*.{png,jpg,gif}')
         .pipe(newer('dist/assets/img'))
         .pipe(imagemin({
             optimizationLevel: 7,
@@ -149,7 +148,18 @@ gulp.task('images', function() {
         }))
         .pipe(gulp.dest('dist/assets/img'))
         .pipe(notify({
-            message: 'Images task complete',
+            message: 'Images optimised',
+            onLast: true
+        }));
+});
+
+// $ gulp svgs - Optimise SVGs
+gulp.task('svgs', function() {
+    return gulp.src('src/images/svgs/**/*.svg')
+        .pipe(svgmin())
+        .pipe(gulp.dest('dist/assets/img/svg'))
+        .pipe(notify({
+            message: 'SVGs minified',
             onLast: true
         }));
 });
@@ -173,7 +183,7 @@ gulp.task('docs', function() {
     return gulp.src('src/docs/**/*')
         .pipe(gulp.dest('dist/assets/docs'))
         .pipe(notify({
-            message: 'Docs task complete',
+            message: 'Documents task complete',
             onLast: true
         }))
         .pipe(reload({
@@ -200,6 +210,7 @@ gulp.task('watch', function() {
     gulp.watch('src/styles/**/*.scss', ['sass']);
     gulp.watch('src/scripts/**/*.js', ['scripts'], ['bs-reload']);
     gulp.watch('src/images/**/*', ['images']);
+    gulp.watch('src/images/svgs/**/*', ['svgs']);
     gulp.watch('src/fonts/**/*', ['fonts']);
     gulp.watch('src/favicons/**/*', ['favicons']);
     gulp.watch('src/docs/**/*', ['docs']);
@@ -232,12 +243,12 @@ gulp.task('clean', function() {
 var oldExt = '.php',
     newExt = '.html',
     folders = [
-    'src/components/',
-    'src/components/templates/',
-    'src/components/templates/partials/',
-    'src/components/templates/partials/modules/',
-    'src/components/templates/partials/svgs/'
-];
+        'src/components/',
+        'src/components/templates/',
+        'src/components/templates/partials/',
+        'src/components/templates/partials/modules/',
+        'src/components/templates/partials/svgs/'
+    ];
 
 gulp.task('replace', function() {
     var tasks;
@@ -262,11 +273,11 @@ gulp.task('replace', function() {
             'src/components/templates/partials/modules/*' + oldExt,
             'src/components/templates/partials/svgs/*' + oldExt
         ]);
-         return gulp.src("./")
-        .pipe(notify({
-            message: 'Files suffix changed from *' + oldExt + ' to *' + newExt,
-            onLast: true
-        }));
+        return gulp.src("./")
+            .pipe(notify({
+                message: 'Files suffix changed from *' + oldExt + ' to *' + newExt,
+                onLast: true
+            }));
     }
 
     replaceRename();
