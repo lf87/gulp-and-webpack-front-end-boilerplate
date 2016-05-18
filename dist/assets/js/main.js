@@ -131,12 +131,22 @@
         }
         fixnav();
 
-        // Fix for double tap issue on touch devices
-        $('.site-header a').on('click touchend', function() {
+        // Drop down menu fix for - double tap issue on touch devices
+        /* $('.site-header a').on('click touchend', function() {
             var $el = $(this);
             var link = $el.attr('href');
             window.location = link;
-        });
+        }); */
+        
+        // Detect touch device
+        var preliminaryTouch = false;
+        $('body').addClass('no-touch-device');
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            preliminaryTouch = true;
+        }
+        if (preliminaryTouch) {
+            $('body').addClass('is-touch-device');
+        }
     });
 
 
