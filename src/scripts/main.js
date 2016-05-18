@@ -152,7 +152,7 @@
 
     // Do stuff on window load - Strict
     $(window).load(function() {
-        // Do stuff
+        FastClick.attach(document.body);
     });
 
 }());
