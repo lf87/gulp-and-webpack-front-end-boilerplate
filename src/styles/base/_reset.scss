@@ -151,3 +151,14 @@ img {
 main {
     display: block; // IE9 rendering fix
 }
+
+[type=submit] {
+    -webkit-appearance: none; // IOS reset
+}
+
+// Only use the below if you're going to implement an alternative
+
+/* * {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    -webkit-tap-highlight-color: transparent !important;
+} */
