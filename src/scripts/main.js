@@ -81,7 +81,6 @@
             slidesToShow: 1,
             slidesToScroll: 1,
             infinite: true,
-            adaptiveHeight: true,
             speed: 600,
             lazyLoad: 'progressive',
             dots: true,
@@ -137,7 +136,7 @@
             var link = $el.attr('href');
             window.location = link;
         }); */
-        
+
         // Detect touch device
         var preliminaryTouch = false;
         $('body').addClass('no-touch-device');
