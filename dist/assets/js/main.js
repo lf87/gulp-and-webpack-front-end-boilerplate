@@ -87,12 +87,12 @@
             responsive: [{
                 breakpoint: 768,
                 settings: {
-                    // Do stuff
+                    dots: false
                 }
             }, {
                 breakpoint: 380,
                 settings: {
-                    // Do stuff
+                    dots: false
                 }
             }]
         });
@@ -151,7 +151,7 @@
 
     // Do stuff on window load - Strict
     $(window).load(function() {
-        FastClick.attach(document.body);
+        FastClick.attach(document.body); // Warning can be ignored
     });
 
 }());
