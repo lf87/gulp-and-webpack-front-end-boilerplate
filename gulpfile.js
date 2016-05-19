@@ -58,7 +58,7 @@ gulp.task('sass', function() {
     return gulp.src('./src/styles/*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass({
-            includePaths: ['src/styles/*.scss'].concat(neat)
+            includePaths: ['src/styles/*.scss']
         }))
         .on('error', notify.onError(function(error) {
             return 'An error occurred while compiling sass.\nLook in the console for details.\n' + error;

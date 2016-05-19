@@ -1,11 +1,11 @@
 {
-  "name": "gulp-boilerplate",
+  "name": "gulp-barebones-boilerplate",
   "version": "1.0.0",
-  "description": "A HTML, CSS, JS Boilerplate that uses Gulp as the build system.",
+  "description": "A barebones boilerplate that uses Gulp as the build system.",
   "main": "index.html",
   "repository": {
     "type": "git",
-    "url": "https://git.homeagency.co.uk/infrastructure/gulp-boilerplate.git"
+    "url": "https://git.homeagency.co.uk/infrastructure/gulp-barebones-boilerplate.git"
   },
   "devDependencies": {
     "browser-sync": "^2.12.8",
