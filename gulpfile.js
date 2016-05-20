@@ -23,11 +23,13 @@ var fileinclude = require('gulp-file-include'), // Include partials
     merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
     cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
     fontmin = require('gulp-fontmin'), // Font minification - Also generates CSS
-    svgmin = require('gulp-svgmin'),
+    svgmin = require('gulp-svgmin'), // Optimise SVGs
+    htmlv = require('gulp-html-validator'), // Validate HTML
     reload = browserSync.reload;
 
-// Default file extension
-var fileExt = '.html';
+// Format
+var fileFormat = 'html',
+    fileExt = '.' + fileFormat;
 
 // **********************
 // *** Required Tasks ***
@@ -128,6 +130,8 @@ gulp.task('fileinclude', function() {
         }))
         .pipe(gulp.dest(''))
         .pipe(replace(/_/g, ''))
+        .pipe(htmlv({format: fileFormat}))
+        .pipe(gulp.dest('./reports/markup-validation/'))
         .pipe(reload({
             stream: true
         }))
