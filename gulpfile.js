@@ -109,7 +109,7 @@ gulp.task('scripts', function() {
 
 // $ gulp fileinclude (Also runs HTML CLean)
 gulp.task('fileinclude', function() {
-    gulp.src(['src/components/*', 'src/components/templates/*'])
+    gulp.src(['src/components/*' + fileExt, 'src/components/templates/*' + fileExt])
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
@@ -130,7 +130,7 @@ gulp.task('fileinclude', function() {
         }))
         .pipe(gulp.dest(''))
         .pipe(replace(/_/g, ''))
-        .pipe(htmlv({format: fileFormat}))
+        .pipe(htmlv({ format: fileFormat }))
         .pipe(gulp.dest('./reports/markup-validation/'))
         .pipe(reload({
             stream: true
