@@ -189,7 +189,7 @@ gulp.task('watch', function() {
 })
 
 // $ gulp - Default task
-gulp.task('default', ['fileinclude', 'sass', 'scripts', 'images', 'fonts', 'docs', 'favicons', 'browser-sync', 'watch']);
+gulp.task('default', ['fileinclude', 'sass', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons', 'browser-sync', 'watch']);
 
 
 
