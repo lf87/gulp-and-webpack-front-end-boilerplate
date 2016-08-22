@@ -1,4 +1,3 @@
 ignored.js
 another.js
-ignoreimmediatechildren/*.js
-src/scripts/plugins/**
+src/scripts/*.js
