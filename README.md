@@ -1,6 +1,6 @@
 # Gulp Barebones Boilerplate
 
-This is a replica of [the original Gulp workflow](/infrastructure/gulp-boilerplate), the difference being is that the **src** folder has been completely stripped down.
+This is a replica of [the original Gulp workflow](https://gitlab.home-trial.com/infrastructure/gulp-barebones-boilerplate), the difference being is that the **src** folder has been completely stripped down.
 
 Everything else is exactly the same, apart from the removal of the Bourbon Neat framework.
 
