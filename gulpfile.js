@@ -15,7 +15,6 @@ var fileinclude = require('gulp-file-include'), // Include partials
     notify = require('gulp-notify'), // Notifications upon task completion
     sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
     del = require('del'), // Clean folders of files
-    htmlclean = require('gulp-htmlclean'), // Minify HTML
     neat = require('node-neat').includePaths, // The Bourbon Neat grid system
     browserSync = require('browser-sync'), // Live reloading
     scsslint = require('gulp-scss-lint'), // SCSS Linting
@@ -104,12 +103,6 @@ gulp.task('fileinclude', function() {
         }))
         .on('error', notify.onError(function(error) {
             return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
-        }))
-        .pipe(htmlclean({
-            protect: /<\!--%fooTemplate\b.*?%-->/g,
-            edit: function(html) {
-                return html.replace(/\begg(s?)\b/ig, 'omelet$1');
-            }
         }))
         // Remove underscore filename prefix using regular expression
         .pipe(rename(function(opt) {
