@@ -61,7 +61,6 @@ gulp.task('sass', function() {
             return 'An error occurred while compiling sass.\nLook in the console for details.\n' + error;
         }))
         .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
             cascade: false
         }))
         .pipe(cleanCSS({ debug: true }, function(details) {
