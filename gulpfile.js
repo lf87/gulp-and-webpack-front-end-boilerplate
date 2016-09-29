@@ -56,7 +56,7 @@
         return gulp.src('./src/styles/*.scss')
             .pipe(sourcemaps.init())
             .pipe(sass({
-                includePaths: ['src/styles/*.scss']
+                includePaths: ['src/styles/*.scss'] //.concat(neat)
             }))
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling sass.\nLook in the console for details.\n' + error;
@@ -111,8 +111,9 @@
             }))
             .pipe(gulp.dest(''))
             .pipe(replace(/_/g, ''))
-            .pipe(htmlv({ format: fileFormat }))
-            .pipe(gulp.dest('./reports/markup-validation/'))
+            // Validate Generated HTML
+            //.pipe(htmlv({ format: fileFormat }))
+            //.pipe(gulp.dest('./reports/markup-validation/'))
             .pipe(reload({
                 stream: true
             }));
@@ -134,7 +135,10 @@
     gulp.task('svgs', function() {
         return gulp.src('src/images/svgs/**/*.svg')
             .pipe(svgmin())
-            .pipe(gulp.dest('dist/assets/img/svg'));
+            .pipe(gulp.dest('dist/assets/img/svg'))
+            .pipe(reload({
+                stream: true
+            }));
     });
 
     // $ gulp fonts
