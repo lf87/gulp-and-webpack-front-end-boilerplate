@@ -16,14 +16,18 @@
     @return $rem-size * 1rem;
 }
 
-@mixin font-size($size: 14) {
+@mixin font-size($size: 14, $line: $size * 1.5) {
     font-size: $size;
+    line-height: $line;
     font-size: calculate-rem($size);
+    line-height: calculate-rem($line);
 }
 
-@mixin font-size-heading($size: 14) {
+@mixin font-size-heading($size: 14, $line: $size * 1.15) {
     font-size: $size;
+    line-height: $line;
     font-size: calculate-rem($size);
+    line-height: calculate-rem($line);
 }
 
 // Fonts
