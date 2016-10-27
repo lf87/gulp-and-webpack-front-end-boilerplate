@@ -1,0 +1,119 @@
+@font-face {
+  font-family: 'blocheavy';
+  src: 	url("dist//assets/fonts/blocheavy.eot");
+  src: 	url("dist//assets/fonts/blocheavy.eot?#iefix") format("embedded-opentype"),
+  		url("dist//assets/fonts/blocheavy.woff") format("woff"),
+  		url("dist//assets/fonts/blocheavy.ttf") format("truetype"),
+  		url("dist/assets/fonts/blocheavy.svg#svgFontName") format("svg");
+}
+
+body{
+	font-family: "Open Sans", sans-serif;
+}
+
+h1{
+	font-family: "blocheavy";
+}
+
+body,
+h1{
+	color: $dark-copy;
+}
+
+p{
+	@include font-size(16px);
+	line-height: 26px;
+	margin-bottom: 23px;
+
+	&:last-child{
+		margin: 0;
+	}
+}
+
+.background-img{
+	background: url(dist/assets/img/room-set.jpg) no-repeat center / cover;
+	padding: 178px 0 120px;
+}
+
+.colored-block{
+	background: $yellow;
+	text-align: center;
+	@include font-size(31.33px);
+	line-height: 50.91px;
+	font-weight: 700;
+	color: $black;
+	padding: 79px 10px;
+
+	h2{
+		color: #000000;
+	}
+}
+
+.white-copy{
+	h2, p{
+		color: $white;
+	}
+}
+
+.light-blue-bg{
+	background: $light-blue-bg;
+
+	.centered-copy{
+		margin-bottom: 70px;
+	}
+}
+
+.centered-copy{
+	text-align: center;
+}
+
+section ul{
+	display: inline-block;
+	vertical-align: top;
+
+	li{
+		margin-bottom: 17px;
+
+		&:last-child{
+			margin: 0;
+		}
+	}
+}
+
+.aligner{
+	@include bp-sm{
+		display: flex;
+		justify-content: center;
+    	align-items: flex-start;
+	}
+
+	img{
+		margin:  0 auto;
+	}
+}
+
+.colored-section{
+	padding: 35px 0;
+	h2{
+		text-align: center;
+		font-family: 'blocheavy', sans-serif;
+		@include font-size(42px);
+		line-height: 48px;
+	}
+}
+
+.landing .btn{
+	padding: 11px 84px;
+	border: 2px solid $white;
+	border-radius: 5px;
+
+	a{
+		color: $dark-copy;
+		@include font-size(20px);
+		line-height: 26px;
+	}
+}
+
+.tables{
+	margin-bottom: 48px;
+}

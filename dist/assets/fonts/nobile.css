@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "Nobile";
+    src: url("nobile.eot"); /* IE9 */
+    src: url("nobile.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("nobile.woff") format("woff"), /* chrome, firefox */
+    url("nobile.ttf") format("truetype"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url("nobile.svg#Nobile") format("svg"); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+
+
