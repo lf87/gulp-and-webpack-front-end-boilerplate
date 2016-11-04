@@ -1,5 +1,5 @@
 ## **Update 04/11/2016**
-*  Created an area at the top of the gulpfile for 'configuration'
+*  Created an area at the top of the gulpfile for customising your workflow - This has always been possible, I've just made it easier to manage
     *  Paths and file locations are no configurable at the top of the gulpfile
     *  Notifications can easily be enabled or disabled
 *  Removed 2 packages and the task used for file extension renaming - didn't seem like a very popular feature...
