@@ -2,7 +2,7 @@
 *  Created an area at the top of the gulpfile for customising your workflow - This has always been possible, I've just made it easier to manage
     *  Paths and file locations are configurable at the top of the gulpfile
     *  Notifications can easily be enabled or disabled
-    *  The clean and browser sync taasks have been moved up here as well
+    *  The clean and browser sync tasks have been moved up here as well
 *  Removed 2 packages and the task used for file extension renaming - didn't seem like a very popular feature...
 *  General code refactoring
 
