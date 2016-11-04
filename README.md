@@ -1,5 +1,3 @@
-# Gulp workflow set up and usage guide
-
 ## **Update 04/11/2016**
 *  Created an area at the top of the gulpfile for 'configuration'
     *  Paths and file locations are no configurable at the top of the gulpfile
@@ -7,6 +5,7 @@
 *  Removed 2 packages and the task used for file extension renaming - didn't seem like a very popular feature...
 *  General code refactoring
 
+# Gulp workflow set up and usage guide
 This guide will explain how to set up and install the task runner/builder Gulp.
 
 ## Initial set-up
