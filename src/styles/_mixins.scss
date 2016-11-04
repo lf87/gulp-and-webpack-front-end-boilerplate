@@ -108,22 +108,6 @@
     }
 }
 
-// Boost transition performance
-@mixin transop {
-    backface-visibility: hidden;
-    will-change: transform;
-    -webkit-perspective: 1000;
-}
-
-// Zoom in on Tap/Click
-@mixin tapzoom {
-    @include transop;
-    transition: transform .05s ease-in;
-    &:active {
-        transform: scale3d(.99, .99, 1);
-    }
-}
-
 // Clearfix
 @mixin clearfix {
     &::before,
