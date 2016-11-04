@@ -1,5 +1,12 @@
-# Gulp workflow set up and usage guide
+## **Update 04/11/2016**
+*  Created an area at the top of the gulpfile for customising your workflow - This has always been possible, I've just made it easier to manage
+    *  Paths and file locations are configurable at the top of the gulpfile
+    *  Notifications can easily be enabled or disabled
+    *  The clean and browser sync tasks have been moved up here as well
+*  Removed 2 packages and the task used for file extension renaming - didn't seem like a very popular feature...
+*  General code refactoring
 
+# Gulp workflow set up and usage guide
 This guide will explain how to set up and install the task runner/builder Gulp.
 
 ## Initial set-up
@@ -49,7 +56,7 @@ If you'd like more information on what each of the packages inside gulpfile.js d
   + By default, browserSync monitors html files in the current directory for changes, this is defined in the "browser-sync" task inside gulpfile.js
 
 * **File Formats** -  You must update the `fileFormat` variable if you want gulp to work with any file type other than HTML. If you're working with multiple file types i.e. HTML and PHP, then the non-default file type will operate outside of the Gulp workflow
-* **Editing files** -  The *'src/components' folder is where you need to be editing your html/php/etc. files, once processed, these will be sent to the root level.All these files must be prefixed with an underscore e.g. '_index.html'
+* **Editing files** -  The *'src/components' folder is where you need to be editing your html/php/etc. files. These are saved in the root level of your project (by default)
 * **Editing scripts** - Custom scripts go inside the 'scripts/user' folder. Scripts compile in alphabetical order, those inside folders are last in the queue
 
 
