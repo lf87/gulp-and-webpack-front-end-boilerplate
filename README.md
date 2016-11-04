@@ -49,7 +49,7 @@ If you'd like more information on what each of the packages inside gulpfile.js d
   + By default, browserSync monitors html files in the current directory for changes, this is defined in the "browser-sync" task inside gulpfile.js
 
 * **File Formats** -  You must update the `fileFormat` variable if you want gulp to work with any file type other than HTML. If you're working with multiple file types i.e. HTML and PHP, then the non-default file type will operate outside of the Gulp workflow
-* **Editing files** -  The *'src/components' folder is where you need to be editing your html/php/etc. files, once processed, these will be sent to the root level.All these files must be prefixed with an underscore e.g. '_index.html'
+* **Editing files** -  The *'src/components' folder is where you need to be editing your html/php/etc. files. These are saved in the root level of your project (by default)
 * **Editing scripts** - Custom scripts go inside the 'scripts/user' folder. Scripts compile in alphabetical order, those inside folders are last in the queue
 
 
