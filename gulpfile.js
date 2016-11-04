@@ -1,9 +1,8 @@
 (function() {
     'use strict';
-    //process.env.DISABLE_NOTIFIER = true; // U&ncomment to disables all notifications
     var fileinclude = require('gulp-file-include'), // Include partials
         gulp = require('gulp'), // Gulp
-        sass = require('gulp-sass'), // Libsass Pre-processor
+        scss = require('gulp-sass'), // Libscss Pre-processor
         autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
         jshint = require('gulp-jshint'), // Lint your JS on the fly
         stylish = require('jshint-stylish'), // Style your jshint results
@@ -19,48 +18,103 @@
         neat = require('node-neat').includePaths, // The Bourbon Neat grid system
         browserSync = require('browser-sync'), // Live reloading
         scsslint = require('gulp-scss-lint'), // SCSS Linting
-        ext_replace = require('gulp-ext-replace'), // Small gulp plugin to change a file's extension
-        merge = require('merge-stream'), // Create a stream that emits events from multiple other streams
         cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
         fontmin = require('gulp-fontmin'), // Font minification - Also generates CSS
         svgmin = require('gulp-svgmin'), // Optimise SVGs
         htmlv = require('gulp-html-validator'), // Validate HTML
         reload = browserSync.reload;
 
-    // Format
+
+    // *********************** //
+    // **** Configuration **** //
+    // *********************** //
+
+    // File Format
     var fileFormat = 'html',
         fileExt = '.' + fileFormat;
 
-    // **********************
-    // *** Required Tasks ***
-    // **********************
+    // Source files (potential issues when using the ./ glob pattern)
+    var src = {
+        pages: 'src/components/*' + fileExt, // files in here will go in to dist.pages
+        scss: 'src/styles/*.scss',
+        js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
+        img: 'src/images/**/*.{png,jpg,gif}',
+        svg: 'src/images/svgs/**/*.svg',
+        fonts: 'src/fonts/**/*',
+        docs: 'src/docs/**/*',
+        favicons: 'src/favicons/**/*'
+    };
 
-    // $ browser-sync - Initialise static Browser Sync server
+    // Distributions folders
+    var dist = {
+        pages: './',
+        css: './',
+        js: './dist/assets/js',
+        img: './dist/assets/img',
+        svg: './dist/assets/img/svg',
+        fonts: './dist/assets/fonts',
+        docs: './dist/assets/docs',
+        favicons: './dist/assets/favicons'
+    };
+
+    // Miscellaneous paths
+    var misc = {
+        maps: 'maps', // This is where your CSS and JS sourcemaps go
+        reports: 'reports/pages-validation/',
+        lint: 'src/styles/*/**.scss', // Path of SCSS files that you want to lint
+        lintExclude: '!src/styles/vendors/*.scss' // Path of SCSS files that you want to exclude from lint
+    };
+
+    // Browser Sync
     gulp.task('browser-sync', function() {
         browserSync.init({
-            server: "./",
-            //proxy: 'website-proxy.dev',
-            //port: 3000,
-            files: '*.css' // Inject CSS changes
+            server: './',
+            //proxy: 'proxy.dev',
+            files: '*.css' // Injects CSS changes
         });
     });
+
+    // Disable or enable pop up notifications
+    var disableNotifications = false;
+    if (disableNotifications) {
+        process.env.DISABLE_NOTIFIER = true; // U&ncomment to disables all notifications
+    }
+
+    // Files and folders to clean
+    gulp.task('clean', function() {
+        del(['./*.css', 'dist/assets/js', './dist/assets/img', './maps', './reports', './dist/assets/fonts', './dist/assets/docs', './dist/assets/favicons', './*' + fileExt]);
+        return gulp.src('./')
+            .pipe(notify({
+                message: 'Folders cleaned successfully',
+                onLast: true
+            }));
+    });
+
+
+
+    // ********************** //
+    // *** Required Tasks *** //
+    // ********************** //
 
     // $ gulp bs-reload - Browser Sync
     gulp.task('bs-reload', function() {
         browserSync.reload();
-        return gulp.src('*' + fileExt);
+        return gulp.src(dist.pages + '*' + fileExt);
     });
 
-    // $ gulp sass
-    gulp.task('sass', function() {
-        return gulp.src('./src/styles/*.scss')
+    // $ gulp scss
+    gulp.task('scss', function() {
+        return gulp.src(src.scss)
             .pipe(sourcemaps.init())
-            .pipe(sass({
-                includePaths: ['src/styles/*.scss'] //.concat(neat)
+            .pipe(scss({
+                includePaths: [src.scss]
             }))
             .on('error', notify.onError(function(error) {
-                return 'An error occurred while compiling sass.\nLook in the console for details.\n' + error;
+                return 'An error occurred while compiling scss.\nLook in the console for details.\n' + error;
             }))
+            // Comment out the 2 code below to enable exact line number for sourcemaps (workaround for the issue)
+            // Remember to re-enable before testing and/or pushing to staging/prod
+            // FROM HERE:
             .pipe(autoprefixer({
                 cascade: false
             }))
@@ -68,18 +122,19 @@
                 console.log(details.name + ' file size before: ' + details.stats.originalSize + ' bytes');
                 console.log(details.name + ' file size after: ' + details.stats.minifiedSize + ' bytes');
             }))
-            .pipe(sourcemaps.write('maps'))
-            .pipe(gulp.dest(''));
+            // TO HERE
+            .pipe(sourcemaps.write(misc.maps))
+            .pipe(gulp.dest(dist.css));
     });
 
     // $ gulp scripts
     gulp.task('scripts', function() {
-        return gulp.src('src/scripts/**/*.js')
+        return gulp.src(src.js)
             .pipe(jshint('.jshintrc'))
             .pipe(jshint.reporter('jshint-stylish'))
             .pipe(sourcemaps.init())
             .pipe(concat('main.js'))
-            .pipe(gulp.dest('dist/assets/js'))
+            .pipe(gulp.dest(dist.js))
             .pipe(rename({
                 suffix: '.min'
             }))
@@ -87,16 +142,16 @@
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling JS.\nLook in the console for details.\n' + error;
             }))
-            .pipe(sourcemaps.write('maps'))
-            .pipe(gulp.dest('dist/assets/js'))
+            .pipe(sourcemaps.write(misc.maps))
+            .pipe(gulp.dest(dist.js))
             .pipe(reload({
                 stream: true
             }));
     });
 
-    // $ gulp fileinclude (Also runs HTML CLean)
+    // $ gulp fileinclude
     gulp.task('fileinclude', function() {
-        gulp.src(['src/components/*' + fileExt, 'src/components/templates/*' + fileExt])
+        return gulp.src([src.pages])
             .pipe(fileinclude({
                 prefix: '@@',
                 basepath: '@file'
@@ -104,38 +159,39 @@
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
-            // Remove underscore filename prefix using regular expression
             .pipe(rename(function(opt) {
                 opt.basename = opt.basename.replace(/_/g, '');
                 return opt;
             }))
-            .pipe(gulp.dest(''))
+            .pipe(gulp.dest(dist.pages))
             .pipe(replace(/_/g, ''))
-            // Validate Generated HTML
-            //.pipe(htmlv({ format: fileFormat }))
-            //.pipe(gulp.dest('./reports/markup-validation/'))
             .pipe(reload({
                 stream: true
-            }));
+            }))
+            .pipe(htmlv({ format: fileFormat }))
+            .pipe(gulp.dest(misc.reports));
     });
 
-    // $ gulp images - Image compression (Don't forget to use save for web in PS first!)
+    // $ gulp images - Save for web in PS first!
     gulp.task('images', function() {
-        return gulp.src('src/images/**/*.{png,jpg,gif}')
-            .pipe(newer('dist/assets/img'))
+        return gulp.src(src.img)
+            .pipe(newer(dist.img))
             .pipe(imagemin({
                 optimizationLevel: 7,
                 progressive: true,
                 interlaced: true
             }))
-            .pipe(gulp.dest('dist/assets/img'));
+            .pipe(gulp.dest(dist.img))
+            .pipe(reload({
+                stream: true
+            }));
     });
 
-    // $ gulp svgs - Optimise SVGs
+    // $ gulp svgs
     gulp.task('svgs', function() {
-        return gulp.src('src/images/svgs/**/*.svg')
+        return gulp.src(src.svg)
             .pipe(svgmin())
-            .pipe(gulp.dest('dist/assets/img/svg'))
+            .pipe(gulp.dest(dist.svg))
             .pipe(reload({
                 stream: true
             }));
@@ -143,9 +199,9 @@
 
     // $ gulp fonts
     gulp.task('fonts', function() {
-        return gulp.src('src/fonts/**/*')
+        return gulp.src(src.fonts)
             .pipe(fontmin())
-            .pipe(gulp.dest('dist/assets/fonts'))
+            .pipe(gulp.dest(dist.fonts))
             .pipe(reload({
                 stream: true
             }));
@@ -153,8 +209,8 @@
 
     // $ gulp docs
     gulp.task('docs', function() {
-        return gulp.src('src/docs/**/*')
-            .pipe(gulp.dest('dist/assets/docs'))
+        return gulp.src(src.docs)
+            .pipe(gulp.dest(dist.docs))
             .pipe(reload({
                 stream: true
             }));
@@ -162,108 +218,48 @@
 
     // $ gulp favicons
     gulp.task('favicons', function() {
-        return gulp.src('src/favicons/**/*')
-            .pipe(gulp.dest('dist/assets/favicons'))
+        return gulp.src(src.favicons)
+            .pipe(gulp.dest(dist.favicons))
             .pipe(reload({
                 stream: true
             }));
     });
-    /*        .pipe(notify({
-                message: 'Favicons task complete',
-                onLast: true
-            }))*/
+
     // $ gulp watch - This is everything that's being watched when you run the default task
     gulp.task('watch', function() {
-        gulp.watch('src/components/**/*' + fileExt, ['fileinclude']);
-        gulp.watch('src/styles/**/*.scss', ['sass']);
-        gulp.watch('src/scripts/**/*.js', ['scripts'], ['bs-reload']);
-        gulp.watch('src/images/**/*', ['images']);
-        gulp.watch('src/images/svgs/**/*', ['svgs']);
-        gulp.watch('src/fonts/**/*', ['fonts']);
-        gulp.watch('src/favicons/**/*', ['favicons']);
-        gulp.watch('src/docs/**/*', ['docs']);
-        gulp.watch('*' + fileExt, ['bs-reload']);
+        gulp.watch(src.pages, ['fileinclude']);
+        gulp.watch(src.scss, ['scss']);
+        gulp.watch(src.js, ['scripts']);
+        gulp.watch(src.img, ['images']);
+        gulp.watch(src.svg, ['svgs']);
+        gulp.watch(src.font, ['fonts']);
+        gulp.watch(src.favicons, ['favicons']);
+        gulp.watch(src.doc, ['docs']);
+        gulp.watch('*' + fileExt);
     });
 
-    // $ gulp - Default task
-    gulp.task('default', ['fileinclude', 'sass', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons', 'browser-sync', 'watch']);
+    // $ build - Runs all the required tasks
+    gulp.task('build', ['fileinclude', 'scss', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons']);
+
+    // $ gulp - After running all required tasks, this will launch browser sync and watch for changes
+    gulp.task('default', ['build', 'browser-sync', 'watch']);
 
 
 
-    // **********************
-    // ***** Misc Tasks *****
-    // **********************
+    // ********************** //
+    // ** Secondary Tasks *** //
+    // ********************** //
 
-    // $ gulp qs - Quick start task
-    gulp.task('qs', ['browser-sync', 'watch']);
-
-    // $ clean - Emptys everything in the distribution folders and the HTML in the root
-    gulp.task('clean', function() {
-        del(['dist/assets/css', 'dist/assets/js', 'dist/assets/img', 'maps', 'reports', '*' + fileExt, 'dist/assets/fonts', 'src/styles/_svg-symbols.scss']);
-        return gulp.src("./")
-            .pipe(notify({
-                message: 'Folders cleaned successfully',
-                onLast: true
-            }));
-    });
-
-    // $ replace - Rename suffix e.g. change all *.html files to *.php and then delete original files
-    var oldExt = '.php',
-        newExt = '.html',
-        folders = [
-            'src/components/',
-            'src/components/templates/',
-            'src/components/templates/partials/',
-            'src/components/templates/partials/modules/',
-            'src/components/templates/partials/svgs/'
-        ];
-
-    gulp.task('replace', function() {
-        var tasks;
-
-        function replaceRename() {
-            tasks = folders.map(function(element) {
-                return gulp.src(element + '*' + oldExt)
-                    .pipe(ext_replace(newExt))
-                    .pipe(gulp.dest(element));
-            });
-        }
-
-        function replaceMerge() {
-            return merge(tasks);
-        }
-
-        function replaceDelete() {
-            del([
-                'src/components/*' + oldExt,
-                'src/components/templates/*' + oldExt,
-                'src/components/templates/partials/*' + oldExt,
-                'src/components/templates/partials/modules/*' + oldExt,
-                'src/components/templates/partials/svgs/*' + oldExt
-            ]);
-            return gulp.src("./")
-                .pipe(notify({
-                    message: 'Files suffix changed from *' + oldExt + ' to *' + newExt,
-                    onLast: true
-                }));
-        }
-
-        replaceRename();
-        replaceMerge();
-        // Timeout to ensure renaming is complete before deleting original files
-        setTimeout(function() {
-            replaceDelete();
-        }, 2500);
-    });
+    
 
     // $ scss-lint - SCSS Linter
     gulp.task('scss-lint', function() {
-        return gulp.src(['./src/styles/*/**.scss', '!./src/styles/vendors/*.scss'])
+        return gulp.src([misc.lint + ', ' + misc.lintExclude])
             .pipe(scsslint({
                 'reporterOutputFormat': 'Checkstyle',
                 'filePipeOutput': 'scssReport.xml',
                 'config': 'scss-lint.yml'
             }))
-            .pipe(gulp.dest('./reports'));
+            .pipe(gulp.dest(misc.reports));
     });
 }());
