@@ -29,13 +29,15 @@
     // **** Configuration **** //
     // *********************** //
 
+    // potential issues when using the ./ glob pattern
+
     // File Format
     var fileFormat = 'html',
         fileExt = '.' + fileFormat;
 
-    // Source files (potential issues when using the ./ glob pattern)
+    // Source files
     var src = {
-        pages: 'src/components/*' + fileExt, // files in here will go in to dist.pages
+        pages: 'src/components/*' + fileExt, // files in here will go in to ./ (by default)
         scss: 'src/styles/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{png,jpg,gif}',
@@ -45,22 +47,22 @@
         favicons: 'src/favicons/**/*'
     };
 
-    // Distributions folders
+    // Distribution folders
     var dist = {
-        pages: './',
-        css: './',
-        js: './dist/assets/js',
-        img: './dist/assets/img',
-        svg: './dist/assets/img/svg',
-        fonts: './dist/assets/fonts',
-        docs: './dist/assets/docs',
-        favicons: './dist/assets/favicons'
+        pages: '',
+        css: '',
+        js: 'dist/assets/js',
+        img: 'dist/assets/img',
+        svg: 'dist/assets/img/svg',
+        fonts: 'dist/assets/fonts',
+        docs: 'dist/assets/docs',
+        favicons: 'dist/assets/favicons'
     };
 
     // Miscellaneous paths
     var misc = {
         maps: 'maps', // This is where your CSS and JS sourcemaps go
-        reports: 'reports/pages-validation/',
+        reports: 'reports',
         lint: 'src/styles/*/**.scss', // Path of SCSS files that you want to lint
         lintExclude: '!src/styles/vendors/*.scss' // Path of SCSS files that you want to exclude from lint
     };
@@ -77,12 +79,12 @@
     // Disable or enable pop up notifications
     var disableNotifications = false;
     if (disableNotifications) {
-        process.env.DISABLE_NOTIFIER = true; // U&ncomment to disables all notifications
+        process.env.DISABLE_NOTIFIER = true; // Uncomment to disables all notifications
     }
 
     // Files and folders to clean
     gulp.task('clean', function() {
-        del(['./*.css', 'dist/assets/js', './dist/assets/img', './maps', './reports', './dist/assets/fonts', './dist/assets/docs', './dist/assets/favicons', './*' + fileExt]);
+        del([dist.pages + '*' + fileExt, dist.css + '*.css', dist.js, dist.img, dist.fonts, dist.docs, dist.favicons, misc.maps, misc.reports]);
         return gulp.src('./')
             .pipe(notify({
                 message: 'Folders cleaned successfully',
@@ -232,9 +234,9 @@
         gulp.watch(src.js, ['scripts']);
         gulp.watch(src.img, ['images']);
         gulp.watch(src.svg, ['svgs']);
-        gulp.watch(src.font, ['fonts']);
+        gulp.watch(src.fonts, ['fonts']);
         gulp.watch(src.favicons, ['favicons']);
-        gulp.watch(src.doc, ['docs']);
+        gulp.watch(src.docs, ['docs']);
         gulp.watch('*' + fileExt);
     });
 
