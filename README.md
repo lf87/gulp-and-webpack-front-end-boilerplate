@@ -4,6 +4,7 @@
     *  Notifications can easily be enabled or disabled
     *  The clean and browser sync tasks have been moved up here as well
 *  Removed 2 packages and the task used for file extension renaming
+*  Browser sync task now runs independently (Should fix the TCP port issue some of us were getting)
 *  General code refactoring and linting
 
 # Gulp workflow set up and usage guide
