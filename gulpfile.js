@@ -21,7 +21,6 @@
         cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
         fontmin = require('gulp-fontmin'), // Font minification - Also generates CSS
         svgmin = require('gulp-svgmin'), // Optimise SVGs
-        htmlv = require('gulp-html-validator'), // Validate HTML
         reload = browserSync.reload;
 
 
@@ -170,8 +169,6 @@
             .pipe(reload({
                 stream: true
             }))
-            .pipe(htmlv({ format: fileFormat }))
-            .pipe(gulp.dest(misc.reports));
     });
 
     // $ gulp images - Save for web in PS first!

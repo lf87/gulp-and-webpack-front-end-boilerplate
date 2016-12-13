@@ -16,7 +16,6 @@
     "gulp-concat": "^2.6.0",
     "gulp-file-include": "^0.14.0",
     "gulp-fontmin": "^0.7.4",
-    "gulp-html-validator": "0.0.5",
     "gulp-imagemin": "^3.0.3",
     "gulp-jshint": "^2.0.1",
     "gulp-newer": "^1.2.0",
