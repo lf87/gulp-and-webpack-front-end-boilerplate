@@ -10,7 +10,6 @@
         imagemin = require('gulp-imagemin'), // Compress Images
         newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
         rename = require('gulp-rename'), // Rename files i.e. in this case rename minified files to .min
-        replace = require('gulp-replace'), // A string replace plugin for gulp
         concat = require('gulp-concat'), // Merges all files in to 1
         notify = require('gulp-notify'), // Notifications upon task completion
         sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
@@ -20,7 +19,8 @@
         scsslint = require('gulp-scss-lint'), // SCSS Linting
         cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
         fontmin = require('gulp-fontmin'), // Font minification - Also generates CSS
-        svgmin = require('gulp-svgmin'), // Optimise SVGs
+        svgmin = require('gulp-svgmin'),
+        babel = require('gulp-babel'), // Optimise SVGs
         reload = browserSync.reload;
 
 
@@ -138,6 +138,9 @@
             .pipe(gulp.dest(dist.js))
             .pipe(rename({
                 suffix: '.min'
+            }))
+            .pipe(babel({
+                presets: ['es2015']
             }))
             .pipe(uglify())
             .on('error', notify.onError(function(error) {
