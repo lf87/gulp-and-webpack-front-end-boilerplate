@@ -160,12 +160,7 @@
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
-            .pipe(rename(function(opt) {
-                opt.basename = opt.basename.replace(/_/g, '');
-                return opt;
-            }))
             .pipe(gulp.dest(dist.pages))
-            .pipe(replace(/_/g, ''))
             .pipe(reload({
                 stream: true
             }))
