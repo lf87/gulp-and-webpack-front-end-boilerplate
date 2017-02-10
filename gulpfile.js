@@ -142,10 +142,10 @@
             .pipe(babel({
                 presets: ['es2015']
             }))
-            .pipe(uglify())
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling JS.\nLook in the console for details.\n' + error;
             }))
+            .pipe(uglify())
             .pipe(sourcemaps.write(misc.maps))
             .pipe(gulp.dest(dist.js))
             .pipe(reload({
