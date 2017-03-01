@@ -17,6 +17,7 @@
     "gulp-file-include": "^0.14.0",
     "gulp-fontmin": "^0.7.4",
     "gulp-imagemin": "^3.0.3",
+    "gulp-inline-css": "^3.1.0",
     "gulp-jshint": "^2.0.1",
     "gulp-newer": "^1.2.0",
     "gulp-notify": "^2.2.0",
