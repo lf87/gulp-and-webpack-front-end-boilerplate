@@ -148,9 +148,6 @@
             .pipe(uglify())
             .pipe(sourcemaps.write(misc.maps))
             .pipe(gulp.dest(dist.js))
-            .pipe(reload({
-                stream: true
-            }));
     });
 
     // $ gulp fileinclude
@@ -164,9 +161,6 @@
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
             .pipe(gulp.dest(dist.pages))
-            .pipe(reload({
-                stream: true
-            }))
     });
 
     // $ gulp images - Save for web in PS first!
@@ -179,9 +173,6 @@
                 interlaced: true
             }))
             .pipe(gulp.dest(dist.img))
-            .pipe(reload({
-                stream: true
-            }));
     });
 
     // $ gulp svgs
@@ -189,9 +180,6 @@
         return gulp.src(src.svg)
             .pipe(svgmin())
             .pipe(gulp.dest(dist.svg))
-            .pipe(reload({
-                stream: true
-            }));
     });
 
     // $ gulp fonts
@@ -199,27 +187,18 @@
         return gulp.src(src.fonts)
             .pipe(fontmin())
             .pipe(gulp.dest(dist.fonts))
-            .pipe(reload({
-                stream: true
-            }));
     });
 
     // $ gulp docs
     gulp.task('docs', function() {
         return gulp.src(src.docs)
             .pipe(gulp.dest(dist.docs))
-            .pipe(reload({
-                stream: true
-            }));
     });
 
     // $ gulp favicons
     gulp.task('favicons', function() {
         return gulp.src(src.favicons)
             .pipe(gulp.dest(dist.favicons))
-            .pipe(reload({
-                stream: true
-            }));
     });
 
     // $ gulp watch - This is everything that's being watched when you run the default task
@@ -232,7 +211,7 @@
         gulp.watch(src.fonts, ['fonts']);
         gulp.watch(src.favicons, ['favicons']);
         gulp.watch(src.docs, ['docs']);
-        gulp.watch('*' + fileExt);
+        gulp.watch('*' + fileExt, ['bs-reload']);
     });
 
     // $ build - Runs all the required tasks
