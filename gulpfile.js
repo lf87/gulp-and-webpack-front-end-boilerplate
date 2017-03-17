@@ -36,7 +36,7 @@
 
     // Source files
     var src = {
-        pages: 'src/components/**/*' + fileExt, // files in here will go in to ./ (by default)
+        pages: 'src/components/*/' + fileExt, // files in here will go in to ./ (by default)
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{png,jpg,gif}',
