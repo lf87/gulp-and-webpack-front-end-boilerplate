@@ -76,8 +76,8 @@
     });
 
     // Disable or enable pop up notifications
-    var disableNotifications = false;
-    if (disableNotifications) {
+    var notifications = false;
+    if (notifications) {
         process.env.DISABLE_NOTIFIER = true; // Uncomment to disables all notifications
     }
 
