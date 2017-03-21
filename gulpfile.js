@@ -36,8 +36,8 @@
 
     // Source files
     var src = {
-        pages: 'src/components/*' + fileExt, // files in here will go in to ./ (by default)
-        pagesWatch: 'src/components/**/*' + fileExt, // files in here will go in to ./ (by default)
+        pages: 'src/components/*' + fileExt,
+        pagesWatch: 'src/components/**/*' + fileExt,
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{png,jpg,gif}',
@@ -84,7 +84,7 @@
 
     // Files and folders to clean
     gulp.task('clean', function() {
-        del([dist.pages + '*' + fileExt, dist.css + '*.css', dist.js, dist.img, dist.fonts, dist.docs, dist.favicons, misc.maps, misc.reports]);
+        del([dist.pages + '*/' + fileExt, dist.css + '/*.css', dist.js, dist.img, dist.fonts, dist.docs, dist.favicons, misc.maps, misc.reports]);
         return gulp.src('./')
             .pipe(notify({
                 message: 'Folders cleaned successfully',
@@ -156,7 +156,7 @@
 
     // $ gulp fileinclude
     gulp.task('fileinclude', function() {
-        return gulp.src([src.pages])
+        return gulp.src(src.pages)
             .pipe(fileinclude({
                 prefix: '@@',
                 basepath: '@file'
