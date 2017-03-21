@@ -36,7 +36,8 @@
 
     // Source files
     var src = {
-        pages: 'src/components/**/*' + fileExt, // files in here will go in to ./ (by default)
+        pages: 'src/components/*' + fileExt, // files in here will go in to ./ (by default)
+        pagesWatch: 'src/components/**/*' + fileExt, // files in here will go in to ./ (by default)
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{png,jpg,gif}',
@@ -70,7 +71,6 @@
     gulp.task('browser-sync', function() {
         browserSync.init({
             server: './',
-            reloadThrottle: 2000,
             //proxy: 'proxy.dev',
             files: '*.css' // Injects CSS changes
         });
@@ -225,7 +225,7 @@
 
     // $ gulp watch - This is everything that's being watched when you run the default task
     gulp.task('watch', function() {
-        gulp.watch(src.pages, ['fileinclude']);
+        gulp.watch(src.pagesWatch, ['fileinclude']);
         gulp.watch(src.scss, ['scss']);
         gulp.watch(src.js, ['scripts']);
         gulp.watch(src.img, ['images']);
