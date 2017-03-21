@@ -152,9 +152,6 @@
             .pipe(reload({
                 stream: true
             }))
-            .pipe(reload({
-                stream: true
-            }))
     });
 
     // $ gulp fileinclude
@@ -168,6 +165,9 @@
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
             .pipe(gulp.dest(dist.pages))
+            .pipe(reload({
+                stream: true
+            }))
     });
 
     // $ gulp images - Save for web in PS first!
@@ -233,7 +233,7 @@
         gulp.watch(src.fonts, ['fonts']);
         gulp.watch(src.favicons, ['favicons']);
         gulp.watch(src.docs, ['docs']);
-        gulp.watch('*' + fileExt, ['bs-reload']);
+        gulp.watch('*' + fileExt);
     });
 
     // $ build - Runs all the required tasks
