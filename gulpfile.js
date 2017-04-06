@@ -1,43 +1,35 @@
 (function() {
     'use strict';
     var fileinclude = require('gulp-file-include'), // Include partials
-        gulp = require('gulp'), // Gulp
-        scss = require('gulp-sass'), // Libscss Pre-processor
         autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
-        jshint = require('gulp-jshint'), // Lint your JS on the fly
+        neat = require('node-neat').includePaths, // The Bourbon Neat grid system
+        sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
+        browserSync = require('browser-sync'), // Live reloading
+        cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
+        scsslint = require('gulp-scss-lint'), // SCSS Linting
         stylish = require('jshint-stylish'), // Style your jshint results
-        uglify = require('gulp-uglify'), // JS minification
         imagemin = require('gulp-imagemin'), // Compress Images
-        newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
+        fontmin = require('gulp-fontmin'), // Font minification - Also generates CSS
         rename = require('gulp-rename'), // Rename files i.e. in this case rename minified files to .min
         concat = require('gulp-concat'), // Merges all files in to 1
+        jshint = require('gulp-jshint'), // Lint your JS on the fly
+        uglify = require('gulp-uglify'), // JS minification
         notify = require('gulp-notify'), // Notifications upon task completion
-        sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
-        del = require('del'), // Clean folders of files
-        neat = require('node-neat').includePaths, // The Bourbon Neat grid system
-        browserSync = require('browser-sync'), // Live reloading
-        scsslint = require('gulp-scss-lint'), // SCSS Linting
-        cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
-        fontmin = require('gulp-fontmin'), // Font minification - Also generates CSS
-        svgmin = require('gulp-svgmin'),
+        svgmin = require('gulp-svgmin'), // Minimises SVGs
+        newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
         babel = require('gulp-babel'), // Optimise SVGs
+        scss = require('gulp-sass'), // Libscss Pre-processor
+        gulp = require('gulp'), // Gulp
+        del = require('del'), // Clean folders of files
         reload = browserSync.reload;
-
-
-    // *********************** //
-    // **** Configuration **** //
-    // *********************** //
-
-    // potential issues when using the ./ glob pattern
 
     // File Format
     var fileFormat = 'html',
         fileExt = '.' + fileFormat;
 
-    // Source files
+    // Paths object
     var src = {
-        pages: 'src/components/*' + fileExt,
-        pagesWatch: 'src/components/**/*' + fileExt,
+        pages: 'src/components/**/*' + fileExt,
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{png,jpg,gif}',
@@ -47,7 +39,6 @@
         favicons: 'src/favicons/**/*'
     };
 
-    // Distribution folders
     var dist = {
         pages: '',
         css: '',
@@ -59,7 +50,6 @@
         favicons: 'dist/assets/favicons'
     };
 
-    // Miscellaneous paths
     var misc = {
         maps: 'maps', // This is where your CSS and JS sourcemaps go
         reports: 'reports',
@@ -84,7 +74,7 @@
 
     // Files and folders to clean
     gulp.task('clean', function() {
-        del([dist.pages + '*/' + fileExt, dist.css + '/*.css', dist.js, dist.img, dist.fonts, dist.docs, dist.favicons, misc.maps, misc.reports]);
+        del([dist.pages + '*' + fileExt, dist.css + '/*.css', dist.js, dist.img, dist.fonts, dist.docs, dist.favicons, misc.maps, misc.reports]);
         return gulp.src('./')
             .pipe(notify({
                 message: 'Folders cleaned successfully',
@@ -92,19 +82,21 @@
             }));
     });
 
-
+    // $ scss-lint - SCSS Linter
+    gulp.task('scss-lint', function() {
+        return gulp.src([misc.lint + ', ' + misc.lintExclude])
+            .pipe(scsslint({
+                'reporterOutputFormat': 'Checkstyle',
+                'filePipeOutput': 'scssReport.xml',
+                'config': 'scss-lint.yml'
+            }))
+            .pipe(gulp.dest(misc.reports));
+    });
 
     // ********************** //
     // *** Required Tasks *** //
     // ********************** //
 
-    // $ gulp bs-reload - Browser Sync
-    gulp.task('bs-reload', function() {
-        browserSync.reload();
-        return gulp.src(dist.pages + '*' + fileExt);
-    });
-
-    // $ gulp scss
     gulp.task('scss', function() {
         return gulp.src(src.scss)
             .pipe(sourcemaps.init())
@@ -129,7 +121,6 @@
             .pipe(gulp.dest(dist.css));
     });
 
-    // $ gulp scripts
     gulp.task('scripts', function() {
         return gulp.src(src.js)
             .pipe(jshint('.jshintrc'))
@@ -151,10 +142,9 @@
             .pipe(gulp.dest(dist.js))
             .pipe(reload({
                 stream: true
-            }))
+            }));
     });
 
-    // $ gulp fileinclude
     gulp.task('fileinclude', function() {
         return gulp.src(src.pages)
             .pipe(fileinclude({
@@ -165,12 +155,9 @@
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
             .pipe(gulp.dest(dist.pages))
-            .pipe(reload({
-                stream: true
-            }))
     });
 
-    // $ gulp images - Save for web in PS first!
+    // Save for web in PS first!
     gulp.task('images', function() {
         return gulp.src(src.img)
             .pipe(newer(dist.img))
@@ -182,50 +169,52 @@
             .pipe(gulp.dest(dist.img))
             .pipe(reload({
                 stream: true
-            }))
+            }));
     });
 
-    // $ gulp svgs
     gulp.task('svgs', function() {
         return gulp.src(src.svg)
             .pipe(svgmin())
             .pipe(gulp.dest(dist.svg))
             .pipe(reload({
                 stream: true
-            }))
+            }));
     });
 
-    // $ gulp fonts
     gulp.task('fonts', function() {
         return gulp.src(src.fonts)
             .pipe(fontmin())
             .pipe(gulp.dest(dist.fonts))
             .pipe(reload({
                 stream: true
-            }))
+            }));
     });
 
-    // $ gulp docs
     gulp.task('docs', function() {
         return gulp.src(src.docs)
             .pipe(gulp.dest(dist.docs))
             .pipe(reload({
                 stream: true
-            }))
+            }));
     });
 
-    // $ gulp favicons
     gulp.task('favicons', function() {
         return gulp.src(src.favicons)
             .pipe(gulp.dest(dist.favicons))
             .pipe(reload({
                 stream: true
-            }))
+            }));
+    });
+
+    // Runs after fileinclude task has fully completed
+    gulp.task('fileinclude-watch', ['fileinclude'], function(done) {
+        browserSync.reload();
+        done();
     });
 
     // $ gulp watch - This is everything that's being watched when you run the default task
     gulp.task('watch', function() {
-        gulp.watch(src.pagesWatch, ['fileinclude']);
+        gulp.watch(src.pages, ['fileinclude']);
         gulp.watch(src.scss, ['scss']);
         gulp.watch(src.js, ['scripts']);
         gulp.watch(src.img, ['images']);
@@ -233,31 +222,13 @@
         gulp.watch(src.fonts, ['fonts']);
         gulp.watch(src.favicons, ['favicons']);
         gulp.watch(src.docs, ['docs']);
-        gulp.watch('*' + fileExt);
+        gulp.watch('*' + fileExt, ['fileinclude-watch']);
     });
 
     // $ build - Runs all the required tasks
     gulp.task('build', ['fileinclude', 'scss', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons']);
 
     // $ gulp - After running all required tasks, this will launch browser sync and watch for changes
-    gulp.task('default', ['build', 'browser-sync', 'watch']);
+    gulp.task('default', ['browser-sync', 'watch']);
 
-
-
-    // ********************** //
-    // ** Secondary Tasks *** //
-    // ********************** //
-
-
-
-    // $ scss-lint - SCSS Linter
-    gulp.task('scss-lint', function() {
-        return gulp.src([misc.lint + ', ' + misc.lintExclude])
-            .pipe(scsslint({
-                'reporterOutputFormat': 'Checkstyle',
-                'filePipeOutput': 'scssReport.xml',
-                'config': 'scss-lint.yml'
-            }))
-            .pipe(gulp.dest(misc.reports));
-    });
 }());
