@@ -229,6 +229,6 @@
     gulp.task('build', ['fileinclude', 'scss', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons']);
 
     // $ gulp - After running all required tasks, this will launch browser sync and watch for changes
-    gulp.task('default', ['browser-sync', 'watch']);
+    gulp.task('default', ['build', 'browser-sync', 'watch']);
 
 }());
