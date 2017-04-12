@@ -5,6 +5,7 @@
         neat = require('node-neat').includePaths, // The Bourbon Neat grid system
         sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
         browserSync = require('browser-sync'), // Live reloading
+        runSequence = require('run-sequence'), // Run tasks sequentially rather than async
         cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
         scsslint = require('gulp-scss-lint'), // SCSS Linting
         stylish = require('jshint-stylish'), // Style your jshint results
@@ -21,7 +22,7 @@
         scss = require('gulp-sass'), // Libscss Pre-processor
         gulp = require('gulp'), // Gulp
         del = require('del'), // Clean folders of files
-        reload = browserSync.reload;
+        browserSync = require('browser-sync').create();
 
     // File Format
     var fileFormat = 'html',
@@ -29,7 +30,8 @@
 
     // Paths object
     var src = {
-        pages: 'src/components/**/*' + fileExt,
+        pages: 'src/components/*' + fileExt,
+        pagesWatch: 'src/components/**/*' + fileExt,
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{png,jpg,gif}',
@@ -61,8 +63,7 @@
     gulp.task('browser-sync', function() {
         browserSync.init({
             server: './',
-            //proxy: 'proxy.dev',
-            files: '*.css' // Injects CSS changes
+            files: '*.css' // Inject CSS changes
         });
     });
 
@@ -140,9 +141,7 @@
             .pipe(uglify())
             .pipe(sourcemaps.write(misc.maps))
             .pipe(gulp.dest(dist.js))
-            .pipe(reload({
-                stream: true
-            }));
+            .pipe(browserSync.stream({ once: true }))
     });
 
     gulp.task('fileinclude', function() {
@@ -155,6 +154,7 @@
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
             .pipe(gulp.dest(dist.pages))
+            .pipe(browserSync.stream({ once: true }))
     });
 
     // Save for web in PS first!
@@ -167,54 +167,38 @@
                 interlaced: true
             }))
             .pipe(gulp.dest(dist.img))
-            .pipe(reload({
-                stream: true
-            }));
+            .pipe(browserSync.stream({ once: true }))
     });
 
     gulp.task('svgs', function() {
         return gulp.src(src.svg)
             .pipe(svgmin())
             .pipe(gulp.dest(dist.svg))
-            .pipe(reload({
-                stream: true
-            }));
+            .pipe(browserSync.stream({ once: true }))
     });
 
     gulp.task('fonts', function() {
         return gulp.src(src.fonts)
             .pipe(fontmin())
             .pipe(gulp.dest(dist.fonts))
-            .pipe(reload({
-                stream: true
-            }));
+            .pipe(browserSync.stream({ once: true }))
     });
 
     gulp.task('docs', function() {
         return gulp.src(src.docs)
             .pipe(gulp.dest(dist.docs))
-            .pipe(reload({
-                stream: true
-            }));
+            .pipe(browserSync.stream({ once: true }))
     });
 
     gulp.task('favicons', function() {
         return gulp.src(src.favicons)
             .pipe(gulp.dest(dist.favicons))
-            .pipe(reload({
-                stream: true
-            }));
-    });
-
-    // Runs after fileinclude task has fully completed
-    gulp.task('fileinclude-watch', ['fileinclude'], function(done) {
-        browserSync.reload();
-        done();
+            .pipe(browserSync.stream({ once: true }))
     });
 
     // $ gulp watch - This is everything that's being watched when you run the default task
     gulp.task('watch', function() {
-        gulp.watch(src.pages, ['fileinclude']);
+        gulp.watch(src.pagesWatch, ['fileinclude']);
         gulp.watch(src.scss, ['scss']);
         gulp.watch(src.js, ['scripts']);
         gulp.watch(src.img, ['images']);
@@ -222,13 +206,21 @@
         gulp.watch(src.fonts, ['fonts']);
         gulp.watch(src.favicons, ['favicons']);
         gulp.watch(src.docs, ['docs']);
-        gulp.watch('*' + fileExt, ['fileinclude-watch']);
     });
 
-    // $ build - Runs all the required tasks
+    // $ build - Runs all the required tasks then launches browser sync and watch for changes
+    gulp.task('default', function() {
+        runSequence('clean',
+            ['fileinclude', 'scss', 'scripts'],
+            ['images', 'svgs', 'fonts', 'docs', 'favicons'],
+            'browser-sync',
+            'watch');
+    });
+
+/*    // $ build - Runs all the required tasks
     gulp.task('build', ['fileinclude', 'scss', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons']);
 
     // $ gulp - After running all required tasks, this will launch browser sync and watch for changes
-    gulp.task('default', ['build', 'browser-sync', 'watch']);
+    gulp.task('default', ['build', 'browser-sync', 'watch']);*/
 
 }());
