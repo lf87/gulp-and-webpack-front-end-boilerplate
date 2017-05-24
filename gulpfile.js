@@ -17,6 +17,7 @@
         uglify = require('gulp-uglify'), // JS minification
         notify = require('gulp-notify'), // Notifications upon task completion
         svgmin = require('gulp-svgmin'), // Minimises SVGs
+        cache = require('gulp-cached'),
         newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
         babel = require('gulp-babel'), // Optimise SVGs
         scss = require('gulp-sass'), // Libscss Pre-processor
@@ -146,6 +147,7 @@
 
     gulp.task('fileinclude', function() {
         return gulp.src(src.pages)
+            .pipe(cache('markup'))
             .pipe(fileinclude({
                 prefix: '@@',
                 basepath: '@file'
@@ -210,17 +212,15 @@
 
     // $ build - Runs all the required tasks then launches browser sync and watch for changes
     gulp.task('default', function() {
-        runSequence('clean',
-            ['fileinclude', 'scss', 'scripts'],
-            ['images', 'svgs', 'fonts', 'docs', 'favicons'],
+        runSequence('clean', ['fileinclude', 'scss', 'scripts'], ['images', 'svgs', 'fonts', 'docs', 'favicons'],
             'browser-sync',
             'watch');
     });
 
-/*    // $ build - Runs all the required tasks
-    gulp.task('build', ['fileinclude', 'scss', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons']);
+    /*    // $ build - Runs all the required tasks
+        gulp.task('build', ['fileinclude', 'scss', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons']);
 
-    // $ gulp - After running all required tasks, this will launch browser sync and watch for changes
-    gulp.task('default', ['build', 'browser-sync', 'watch']);*/
+        // $ gulp - After running all required tasks, this will launch browser sync and watch for changes
+        gulp.task('default', ['build', 'browser-sync', 'watch']);*/
 
 }());
