@@ -1,10 +1,9 @@
 (function() {
     'use strict';
-    var fileinclude = require('gulp-file-include'), // Include partials
+    var nunjucksRender = require('gulp-nunjucks-render'),
         autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
         neat = require('node-neat').includePaths, // The Bourbon Neat grid system
         sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
-        browserSync = require('browser-sync'), // Live reloading
         runSequence = require('run-sequence'), // Run tasks sequentially rather than async
         cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
         scsslint = require('gulp-scss-lint'), // SCSS Linting
@@ -23,7 +22,9 @@
         scss = require('gulp-sass'), // Libscss Pre-processor
         gulp = require('gulp'), // Gulp
         del = require('del'), // Clean folders of files
-        browserSync = require('browser-sync').create();
+        browserSync = require('browser-sync').create(),
+        htmlInjector = require('bs-html-injector');
+
 
     // File Format
     var fileFormat = 'html',
@@ -31,8 +32,9 @@
 
     // Paths object
     var src = {
-        pages: 'src/components/*' + fileExt,
-        pagesWatch: 'src/components/**/*' + fileExt,
+        pages: 'src/pages/**/*' + fileExt,
+        templates: 'src/templates/**/*',
+        //pagesWatch: 'src/components/**/*' + fileExt,
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{png,jpg,gif}',
@@ -60,13 +62,18 @@
         lintExclude: '!src/styles/vendors/*.scss' // Path of SCSS files that you want to exclude from lint
     };
 
-    // Browser Sync
+    // Browser Sync with HTML injection
     gulp.task('browser-sync', function() {
+        browserSync.use(htmlInjector, {
+            files: './*.html'
+        });
         browserSync.init({
             server: './',
-            files: '*.css' // Inject CSS changes
+            files: '.css',
+            port: 3002
         });
     });
+
 
     // Disable or enable pop up notifications
     var notifications = false;
@@ -145,18 +152,22 @@
             .pipe(browserSync.stream({ once: true }))
     });
 
-    gulp.task('fileinclude', function() {
-        return gulp.src(src.pages)
-            .pipe(cache('markup'))
-            .pipe(fileinclude({
-                prefix: '@@',
-                basepath: '@file'
+    gulp.task('nunjucks', function() {
+        nunjucksRender.nunjucks.configure(['src/templates/**/*']);
+        return gulp.src('src/pages/**.html')
+            //.pipe(cache('markup'))
+            .pipe(nunjucksRender({
+                path: ['src/templates/'],
+                ext: '.html',
+                envOptions: {
+                    //watch: true,
+                    noCache : false
+                },
             }))
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
             .pipe(gulp.dest(dist.pages))
-            .pipe(browserSync.stream({ once: true }))
     });
 
     // Save for web in PS first!
@@ -198,23 +209,22 @@
             .pipe(browserSync.stream({ once: true }))
     });
 
-    // $ gulp watch - This is everything that's being watched when you run the default task
-    gulp.task('watch', function() {
-        gulp.watch(src.pagesWatch, ['fileinclude']);
-        gulp.watch(src.scss, ['scss']);
-        gulp.watch(src.js, ['scripts']);
-        gulp.watch(src.img, ['images']);
-        gulp.watch(src.svg, ['svgs']);
-        gulp.watch(src.fonts, ['fonts']);
-        gulp.watch(src.favicons, ['favicons']);
-        gulp.watch(src.docs, ['docs']);
-    });
 
     // $ build - Runs all the required tasks then launches browser sync and watch for changes
     gulp.task('default', function() {
-        runSequence('clean', ['fileinclude', 'scss', 'scripts'], ['images', 'svgs', 'fonts', 'docs', 'favicons'],
-            'browser-sync',
-            'watch');
+        runSequence(['nunjucks', 'scss', 'scripts'], ['images', 'svgs', 'fonts', 'docs', 'favicons'], ['browser-sync'], function() {
+            // $ gulp watch - This is everything that's being watched when you run the default task
+            gulp.watch(src.pages, ['nunjucks']);
+            gulp.watch(src.templates, ['nunjucks']);
+            gulp.watch('./*/**.html', htmlInjector);
+            gulp.watch(src.scss, ['scss']);
+            gulp.watch(src.js, ['scripts']);
+            gulp.watch(src.img, ['images']);
+            gulp.watch(src.svg, ['svgs']);
+            gulp.watch(src.fonts, ['fonts']);
+            gulp.watch(src.favicons, ['favicons']);
+            gulp.watch(src.docs, ['docs']);
+        });
     });
 
     /*    // $ build - Runs all the required tasks
