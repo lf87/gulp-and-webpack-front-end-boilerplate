@@ -1,12 +1,3 @@
-## **Update 04/11/2016**
-*  Created an area at the top of the gulpfile for customisation
-    *  Paths and file locations are configurable
-    *  Notifications can easily be enabled or disabled
-    *  The clean and browser sync tasks have been moved up here as well
-*  Removed 2 packages and the task used for file extension renaming
-*  Browser sync task now runs independently (Should fix the TCP port issue some of us were getting)
-*  General code refactoring and linting
-
 # Gulp workflow set up and usage guide
 This guide will explain how to set up and install the task runner/builder Gulp.
 
