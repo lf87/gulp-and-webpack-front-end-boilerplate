@@ -1,30 +1,29 @@
 (function() {
     'use strict';
-    var nunjucksRender = require('gulp-nunjucks-render'),
+    var nunjucksRender = require('gulp-nunjucks-render'), // Nunjucks templating system
         autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
         neat = require('node-neat').includePaths, // The Bourbon Neat grid system
         sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
-        runSequence = require('run-sequence'), // Run tasks sequentially rather than async
-        cleanCSS = require('gulp-clean-css'), // Replaces css-nano, this will also combine MQs
+        runSequence = require('run-sequence'), // Run tasks sequentially
+        cleanCSS = require('gulp-clean-css'), // Refactors CSS and combines MQs (Prod only)
         scsslint = require('gulp-scss-lint'), // SCSS Linting
         stylish = require('jshint-stylish'), // Style your jshint results
         imagemin = require('gulp-imagemin'), // Compress Images
-        fontmin = require('gulp-fontmin'), // Font minification - Also generates CSS
+        fontmin = require('gulp-fontmin'), // Font minification - Can also generates CSS
         rename = require('gulp-rename'), // Rename files i.e. in this case rename minified files to .min
         concat = require('gulp-concat'), // Merges all files in to 1
         jshint = require('gulp-jshint'), // Lint your JS on the fly
-        uglify = require('gulp-uglify'), // JS minification
+        uglify = require('gulp-uglify'), // JS minification (Prod only)
         notify = require('gulp-notify'), // Notifications upon task completion
         svgmin = require('gulp-svgmin'), // Minimises SVGs
-        cache = require('gulp-cached'),
         newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
-        babel = require('gulp-babel'), // Optimise SVGs
+        babel = require('gulp-babel'), // Legacy support for non ES2015 compatible browsers
         scss = require('gulp-sass'), // Libscss Pre-processor
+        util = require('gulp-util'), // Used for prod deployment
         gulp = require('gulp'), // Gulp
-        del = require('del'), // Clean folders of files
-        browserSync = require('browser-sync').create(),
-        htmlInjector = require('bs-html-injector');
-
+        del = require('del'), // Clean folders and files
+        browserSync = require('browser-sync').create(), // Create BS server
+        htmlInjector = require('bs-html-injector'); // Injects markup
 
     // File Format
     var fileFormat = 'html',
@@ -34,7 +33,6 @@
     var src = {
         pages: 'src/pages/**/*' + fileExt,
         templates: 'src/templates/**/*',
-        //pagesWatch: 'src/components/**/*' + fileExt,
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{png,jpg,gif}',
@@ -46,6 +44,7 @@
 
     var dist = {
         pages: '',
+        pagesWatch: './**/*',
         css: '',
         js: 'dist/assets/js',
         img: 'dist/assets/img',
@@ -55,11 +54,12 @@
         favicons: 'dist/assets/favicons'
     };
 
-    var misc = {
+    var config = {
         maps: 'maps', // This is where your CSS and JS sourcemaps go
-        reports: 'reports',
+        reports: 'reports', // Lint reports go here
         lint: 'src/styles/*/**.scss', // Path of SCSS files that you want to lint
-        lintExclude: '!src/styles/vendors/*.scss' // Path of SCSS files that you want to exclude from lint
+        lintExclude: '!src/styles/vendors/*.scss', // Path of SCSS files that you want to exclude from lint
+        production: !!util.env.production // Used for prod deployment
     };
 
     // Browser Sync with HTML injection
@@ -69,8 +69,7 @@
         });
         browserSync.init({
             server: './',
-            files: '.css',
-            port: 3002
+            files: './*.css'
         });
     });
 
@@ -83,7 +82,7 @@
 
     // Files and folders to clean
     gulp.task('clean', function() {
-        del([dist.pages + '*' + fileExt, dist.css + '/*.css', dist.js, dist.img, dist.fonts, dist.docs, dist.favicons, misc.maps, misc.reports]);
+        del([dist.pages + '*' + fileExt, dist.css + '/*.css', dist.js, dist.img, dist.fonts, dist.docs, dist.favicons, config.maps, config.reports]);
         return gulp.src('./')
             .pipe(notify({
                 message: 'Folders cleaned successfully',
@@ -93,13 +92,13 @@
 
     // $ scss-lint - SCSS Linter
     gulp.task('scss-lint', function() {
-        return gulp.src([misc.lint + ', ' + misc.lintExclude])
+        return gulp.src([config.lint + ', ' + config.lintExclude])
             .pipe(scsslint({
                 'reporterOutputFormat': 'Checkstyle',
                 'filePipeOutput': 'scssReport.xml',
                 'config': 'scss-lint.yml'
             }))
-            .pipe(gulp.dest(misc.reports));
+            .pipe(gulp.dest(config.reports));
     });
 
     // ********************** //
@@ -115,18 +114,16 @@
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling scss.\nLook in the console for details.\n' + error;
             }))
-            // Comment out the 2 code below to enable exact line number for sourcemaps (workaround for the issue)
-            // Remember to re-enable before testing and/or pushing to staging/prod
             // FROM HERE:
-            .pipe(autoprefixer({
+            .pipe(config.production ? autoprefixer({
                 cascade: false
-            }))
-            .pipe(cleanCSS({ debug: true }, function(details) {
+            }) : util.noop())
+            .pipe(config.production ? cleanCSS({ debug: true }, function(details) {
                 console.log(details.name + ' file size before: ' + details.stats.originalSize + ' bytes');
                 console.log(details.name + ' file size after: ' + details.stats.minifiedSize + ' bytes');
-            }))
+            }) : util.noop())
             // TO HERE
-            .pipe(sourcemaps.write(misc.maps))
+            .pipe(sourcemaps.write(config.maps))
             .pipe(gulp.dest(dist.css));
     });
 
@@ -146,8 +143,8 @@
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling JS.\nLook in the console for details.\n' + error;
             }))
-            .pipe(uglify())
-            .pipe(sourcemaps.write(misc.maps))
+            .pipe(config.production ? uglify() : util.noop())
+            .pipe(sourcemaps.write(config.maps))
             .pipe(gulp.dest(dist.js))
             .pipe(browserSync.stream({ once: true }))
     });
