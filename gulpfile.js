@@ -70,6 +70,7 @@
         });
         browserSync.init({
             server: dist.pages,
+            // proxy: 'proxy.dev',
             files: dist.css + '*.css'
         });
     });
@@ -116,9 +117,10 @@
                 return 'An error occurred while compiling scss.\nLook in the console for details.\n' + error;
             }))
             // FROM HERE:
-            .pipe(config.production ? autoprefixer({
+            .pipe(autoprefixer({
+                browsers: ['last 2 versions', 'ie 6-10'],
                 cascade: false
-            }) : util.noop())
+            }))
             .pipe(config.production ? cleanCSS({ debug: true }, function(details) {
                 console.log(details.name + ' file size before: ' + details.stats.originalSize + ' bytes');
                 console.log(details.name + ' file size after: ' + details.stats.minifiedSize + ' bytes');
