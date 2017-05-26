@@ -15,10 +15,10 @@
     <main>
         <!-- Add this syntax to the page where you're extending this template -->
         
-	<!-- Main content -->
-	<h1>Index file</h1>
 	<!-- How to include a partial file -->
 	<p>Partial file</p>
+	<!-- Main content -->
+	<h1>Index File</h1>
 
     </main>
     <footer>

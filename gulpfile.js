@@ -17,7 +17,7 @@
         notify = require('gulp-notify'), // Notifications upon task completion
         svgmin = require('gulp-svgmin'), // Minimises SVGs
         newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
-        babel = require('gulp-babel'), // Legacy support for non ES2015 compatible browsers
+        babel = require('gulp-babel'), // ALlows for ES2015 support with this build system
         scss = require('gulp-sass'), // Libscss Pre-processor
         util = require('gulp-util'), // Used for prod deployment
         gulp = require('gulp'), // Gulp
@@ -43,9 +43,8 @@
     };
 
     var dist = {
-        pages: '',
-        pagesWatch: './**/*',
-        css: '',
+        pages: './',
+        css: './',
         js: 'dist/assets/js',
         img: 'dist/assets/img',
         svg: 'dist/assets/img/svg',
@@ -59,17 +58,19 @@
         reports: 'reports', // Lint reports go here
         lint: 'src/styles/*/**.scss', // Path of SCSS files that you want to lint
         lintExclude: '!src/styles/vendors/*.scss', // Path of SCSS files that you want to exclude from lint
+        templates: 'src/templates/',
+        pagesWatch: './*/**' + fileExt, // Directory where pages are output (Not sure why this glob pattern works)
         production: !!util.env.production // Used for prod deployment
     };
 
-    // Browser Sync with HTML injection
+    // Browser Sync with code/HTML injection
     gulp.task('browser-sync', function() {
         browserSync.use(htmlInjector, {
-            files: './*.html'
+            files: dist.pages + '*' + fileExt
         });
         browserSync.init({
-            server: './',
-            files: './*.css'
+            server: dist.pages,
+            files: dist.css + '*.css'
         });
     });
 
@@ -150,14 +151,12 @@
     });
 
     gulp.task('nunjucks', function() {
-        nunjucksRender.nunjucks.configure(['src/templates/**/*']);
-        return gulp.src('src/pages/**.html')
-            //.pipe(cache('markup'))
+        nunjucksRender.nunjucks.configure([src.templates]);
+        return gulp.src(src.pages)
             .pipe(nunjucksRender({
-                path: ['src/templates/'],
-                ext: '.html',
+                path: [config.templates],
+                ext: fileExt,
                 envOptions: {
-                    //watch: true,
                     noCache : false
                 },
             }))
@@ -207,13 +206,12 @@
     });
 
 
-    // $ build - Runs all the required tasks then launches browser sync and watch for changes
+    // $ build - Runs all the required tasks (in order), launches browser sync, and watch for changes
     gulp.task('default', function() {
         runSequence(['nunjucks', 'scss', 'scripts'], ['images', 'svgs', 'fonts', 'docs', 'favicons'], ['browser-sync'], function() {
-            // $ gulp watch - This is everything that's being watched when you run the default task
             gulp.watch(src.pages, ['nunjucks']);
             gulp.watch(src.templates, ['nunjucks']);
-            gulp.watch('./*/**.html', htmlInjector);
+            gulp.watch(config.pagesWatch, htmlInjector);
             gulp.watch(src.scss, ['scss']);
             gulp.watch(src.js, ['scripts']);
             gulp.watch(src.img, ['images']);
@@ -223,11 +221,5 @@
             gulp.watch(src.docs, ['docs']);
         });
     });
-
-    /*    // $ build - Runs all the required tasks
-        gulp.task('build', ['fileinclude', 'scss', 'scripts', 'images', 'svgs', 'fonts', 'docs', 'favicons']);
-
-        // $ gulp - After running all required tasks, this will launch browser sync and watch for changes
-        gulp.task('default', ['build', 'browser-sync', 'watch']);*/
 
 }());
