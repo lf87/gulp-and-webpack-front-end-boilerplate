@@ -14,6 +14,7 @@
 
 (function() {
     'use strict';
+    console.log("test");
     // this anonymous function is strict...
 }());
 

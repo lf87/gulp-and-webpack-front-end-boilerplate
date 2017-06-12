@@ -3,6 +3,8 @@
     var nunjucksRender = require('gulp-nunjucks-render'), // Nunjucks templating system
         autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
         neat = require('node-neat').includePaths, // The Bourbon Neat grid system
+        stripDebug = require('gulp-strip-debug'), // Strip console logs on --production
+        gulpPngquant = require('gulp-pngquant'), // Optmise PNGs
         sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
         runSequence = require('run-sequence'), // Run tasks sequentially
         cleanCSS = require('gulp-clean-css'), // Refactors CSS and combines MQs (Prod only)
@@ -35,7 +37,7 @@
         templates: 'src/templates/**/*',
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
-        img: 'src/images/**/*.{png,jpg,gif}',
+        img: 'src/images/**/*.{jpg,gif,png}',
         svg: 'src/images/svgs/**/*.svg',
         fonts: 'src/fonts/**/*',
         docs: 'src/docs/**/*',
@@ -135,6 +137,7 @@
             .pipe(jshint('.jshintrc'))
             .pipe(jshint.reporter('jshint-stylish'))
             .pipe(sourcemaps.init())
+            .pipe(config.production ? stripDebug() : util.noop())
             .pipe(concat('main.js'))
             .pipe(gulp.dest(dist.js))
             .pipe(rename({
@@ -159,7 +162,7 @@
                 path: [config.templates],
                 ext: fileExt,
                 envOptions: {
-                    noCache : false
+                    noCache: false
                 },
             }))
             .on('error', notify.onError(function(error) {
@@ -171,11 +174,13 @@
     // Save for web in PS first!
     gulp.task('images', function() {
         return gulp.src(src.img)
-            .pipe(newer(dist.img))
             .pipe(imagemin({
                 optimizationLevel: 7,
                 progressive: true,
                 interlaced: true
+            }))
+            .pipe(gulpPngquant({
+                quality: '65-80'
             }))
             .pipe(gulp.dest(dist.img))
             .pipe(browserSync.stream({ once: true }))
