@@ -14,7 +14,6 @@
 
 (function() {
     'use strict';
-    void 0;
     // this anonymous function is strict...
 }());
 

@@ -1,6 +1,7 @@
 (function() {
     'use strict';
     var nunjucksRender = require('gulp-nunjucks-render'), // Nunjucks templating system
+        htmlbeautify = require('gulp-html-beautify'), // Beautifies HTML
         autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
         neat = require('node-neat').includePaths, // The Bourbon Neat grid system
         stripDebug = require('gulp-strip-debug'), // Strip console logs on --production
@@ -167,6 +168,11 @@
             }))
             .on('error', notify.onError(function(error) {
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
+            }))
+            .pipe(htmlbeautify({
+                indentSize: 2,
+                indent_with_tabs: true,
+                preserve_newlines: false
             }))
             .pipe(gulp.dest(dist.pages))
     });
