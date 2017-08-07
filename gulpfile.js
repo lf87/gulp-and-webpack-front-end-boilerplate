@@ -12,6 +12,7 @@
         scsslint = require('gulp-scss-lint'), // SCSS Linting
         stylish = require('jshint-stylish'), // Style your jshint results
         imagemin = require('gulp-imagemin'), // Compress Images
+        changed = require('gulp-changed'), // Required for BS-Inject to work
         fontmin = require('gulp-fontmin'), // Font minification - Can also generates CSS
         rename = require('gulp-rename'), // Rename files i.e. in this case rename minified files to .min
         concat = require('gulp-concat'), // Merges all files in to 1
@@ -159,6 +160,7 @@
     gulp.task('nunjucks', function() {
         nunjucksRender.nunjucks.configure([src.templates]);
         return gulp.src(src.pages)
+            .pipe(changed(dist.pages, { hasChanged: changed.compareLastModifiedTime }))
             .pipe(nunjucksRender({
                 path: [config.templates],
                 ext: fileExt,
