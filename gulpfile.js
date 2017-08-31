@@ -160,7 +160,7 @@
     gulp.task('nunjucks', function() {
         nunjucksRender.nunjucks.configure([src.templates]);
         return gulp.src(src.pages)
-            .pipe(changed(dist.pages, { hasChanged: changed.compareLastModifiedTime }))
+            //.pipe(changed(dist.pages, { hasChanged: changed.compareLastModifiedTime }))
             .pipe(nunjucksRender({
                 path: [config.templates],
                 ext: fileExt,
