@@ -6,3 +6,4 @@ reports
 dist
 *.html
 *.php
+*.css
