@@ -157,10 +157,32 @@
             .pipe(browserSync.stream({ once: true }))
     });
 
-    gulp.task('nunjucks', function() {
+    gulp.task('nunjucks-pages', function() {
         nunjucksRender.nunjucks.configure([src.templates]);
         return gulp.src(src.pages)
             .pipe(changed(dist.pages, { hasChanged: changed.compareLastModifiedTime }))
+            .pipe(nunjucksRender({
+                path: [config.templates],
+                ext: fileExt,
+                envOptions: {
+                    noCache: false
+                },
+            }))
+            .on('error', notify.onError(function(error) {
+                return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
+            }))
+            .pipe(htmlbeautify({
+                indentSize: 2,
+                indent_with_tabs: true,
+                preserve_newlines: false
+            }))
+            .pipe(gulp.dest(dist.pages))
+    });
+
+    // Temporary workaround to get HTML injection working when editing pages is to create duplicate task and not include the caching plugin
+    gulp.task('nunjucks-templates', function() {
+        nunjucksRender.nunjucks.configure([src.templates]);
+        return gulp.src(src.pages)
             .pipe(nunjucksRender({
                 path: [config.templates],
                 ext: fileExt,
@@ -223,9 +245,9 @@
 
     // $ build - Runs all the required tasks (in order), launches browser sync, and watch for changes
     gulp.task('default', function() {
-        runSequence(['nunjucks', 'scss', 'scripts'], ['images', 'svgs', 'fonts', 'docs', 'favicons'], ['browser-sync'], function() {
-            gulp.watch(src.pages, ['nunjucks']);
-            gulp.watch(src.templates, ['nunjucks']);
+        runSequence(['nunjucks-pages', 'scss', 'scripts'], ['images', 'svgs', 'fonts', 'docs', 'favicons'], ['browser-sync'], function() {
+            gulp.watch(src.pages, ['nunjucks-pages']);
+            gulp.watch(src.templates, ['nunjucks-templates']);
             gulp.watch(config.pagesWatch, htmlInjector);
             gulp.watch(src.scss, ['scss']);
             gulp.watch(src.js, ['scripts']);
