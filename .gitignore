@@ -4,6 +4,6 @@ ngrok.exe
 maps
 reports
 dist
-*.html
-*.php
-*.css
+/*.html
+/*.php
+/*.css
