@@ -39,7 +39,8 @@
         templates: 'src/templates/**/*',
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
-        img: 'src/images/**/*.{jpg,gif,png}',
+        img: 'src/images/**/*.{jpg,gif}',
+        imgPng: 'src/images/**/*.png',
         svg: 'src/images/svgs/**/*.svg',
         fonts: 'src/fonts/**/*',
         docs: 'src/docs/**/*',
@@ -216,6 +217,15 @@
             .pipe(browserSync.stream({ once: true }))
     });
 
+    gulp.task('images-png', function() {
+        return gulp.src(src.imgPng)
+            .pipe(gulpPngquant({
+                quality: '65-80'
+            }))
+            .pipe(gulp.dest(dist.img))
+            .pipe(browserSync.stream({ once: true }))
+    });
+
     gulp.task('svgs', function() {
         return gulp.src(src.svg)
             .pipe(svgmin())
@@ -245,13 +255,14 @@
 
     // $ build - Runs all the required tasks (in order), launches browser sync, and watch for changes
     gulp.task('default', function() {
-        runSequence(['nunjucks-pages', 'scss', 'scripts'], ['images', 'svgs', 'fonts', 'docs', 'favicons'], ['browser-sync'], function() {
+        runSequence(['nunjucks-pages', 'scss', 'scripts'], ['images', 'images-png', 'svgs', 'fonts', 'docs', 'favicons'], ['browser-sync'], function() {
             gulp.watch(src.pages, ['nunjucks-pages']);
             gulp.watch(src.templates, ['nunjucks-templates']);
             gulp.watch(config.pagesWatch, htmlInjector);
             gulp.watch(src.scss, ['scss']);
             gulp.watch(src.js, ['scripts']);
             gulp.watch(src.img, ['images']);
+            gulp.watch(src.img, ['images-png']);
             gulp.watch(src.svg, ['svgs']);
             gulp.watch(src.fonts, ['fonts']);
             gulp.watch(src.favicons, ['favicons']);
