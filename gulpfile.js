@@ -262,7 +262,7 @@
             gulp.watch(src.scss, ['scss']);
             gulp.watch(src.js, ['scripts']);
             gulp.watch(src.img, ['images']);
-            gulp.watch(src.img, ['images-png']);
+            gulp.watch(src.imgPng, ['images-png']);
             gulp.watch(src.svg, ['svgs']);
             gulp.watch(src.fonts, ['fonts']);
             gulp.watch(src.favicons, ['favicons']);
