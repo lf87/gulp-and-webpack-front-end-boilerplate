@@ -148,10 +148,15 @@ img {
     max-width: 100%;
 }
 
+button {
+    border-radius: 0;
+    border: none;
+}
+
 main {
     display: block; // IE9 rendering fix
 }
-/* sdegfyusgdfiusbgd */
+
 [type=submit] {
     -webkit-appearance: none; // IOS reset
 }
