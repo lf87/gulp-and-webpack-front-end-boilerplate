@@ -210,9 +210,6 @@
                 progressive: true,
                 interlaced: true
             }))
-            .pipe(gulpPngquant({
-                quality: '65-80'
-            }))
             .pipe(gulp.dest(dist.img))
             .pipe(browserSync.stream({ once: true }))
     });
