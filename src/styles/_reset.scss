@@ -157,8 +157,14 @@ main {
     display: block; // IE9 rendering fix
 }
 
-[type=submit] {
+[type="submit"] {
     -webkit-appearance: none; // IOS reset
+    border-radius: 0;
+}
+
+input[type="text"] {
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
 // Only use the below if you're going to implement an alternative
