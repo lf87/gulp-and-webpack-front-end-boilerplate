@@ -61,8 +61,8 @@
     var config = {
         maps: 'maps', // This is where your CSS and JS sourcemaps go
         reports: 'reports', // Lint reports go here
-        lint: 'src/styles/*/**.scss', // Path of SCSS files that you want to lint
-        lintExclude: '!src/styles/vendors/*.scss', // Path of SCSS files that you want to exclude from lint
+        lint: 'src/styles/**/*.scss', // Path of SCSS files that you want to lint
+        lintExclude: '!src/styles/vendor/**/*.scss', // Path of SCSS files that you want to exclude from lint
         templates: 'src/templates/',
         pagesWatch: './*/**' + fileExt, // Directory where pages are output (Not sure why this glob pattern works)
         production: !!util.env.production // Used for prod deployment
@@ -99,7 +99,7 @@
 
     // $ scss-lint - SCSS Linter
     gulp.task('scss-lint', function() {
-        return gulp.src([config.lint + ', ' + config.lintExclude])
+        return gulp.src([config.lint, config.lintExclude])
             .pipe(scsslint({
                 'reporterOutputFormat': 'Checkstyle',
                 'filePipeOutput': 'scssReport.xml',
