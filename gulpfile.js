@@ -22,6 +22,7 @@
         svgmin = require('gulp-svgmin'), // Minimises SVGs
         newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
         babel = require('gulp-babel'), // ALlows for ES2015 support with this build system
+        gutil = require('gulp-util'), // Useful for error logging
         scss = require('gulp-sass'), // Libscss Pre-processor
         util = require('gulp-util'), // Used for prod deployment
         gulp = require('gulp'), // Gulp
@@ -76,7 +77,10 @@
         browserSync.init({
             server: dist.pages,
             // proxy: 'proxy.dev',
-            files: dist.css + '*.css'
+            files: dist.css + '*.css',
+            watchOptions: {
+                awaitWriteFinish : true
+            }
         });
     });
 
@@ -178,6 +182,7 @@
                 preserve_newlines: false
             }))
             .pipe(gulp.dest(dist.pages))
+            .on('data', function() { gutil.log('1!'); })
     });
 
     // Temporary workaround to get HTML injection working when editing pages is to create duplicate task and not include the caching plugin
@@ -200,6 +205,7 @@
                 preserve_newlines: false
             }))
             .pipe(gulp.dest(dist.pages))
+            .on('data', function() { gutil.log('2!'); })
     });
 
     // Save for web in PS first!
