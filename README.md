@@ -43,7 +43,7 @@ This guide will explain how to set up and install the task runner/builder Gulp.
 
 If you'd like more information on what each of the packages inside gulpfile.js do, simply Google the name of the package, the first result should be the NPM page associated with it.
 
-* **Running Gulp** - To use gulp, run the command `$ gulp` in the same folder as your gulpfile.js. This is the default task that will run all the other tasks, including launching browser sync, and then watching files for changes. Running Gulp with the flag `--production` will enable CSS minification and JS uglifying. JS uglifying/compression can be very time consuming, which is why omitting this dlag during dvelopment can be useful
+* **Running Gulp** - To use gulp, run the command `$ gulp` in the same folder as your gulpfile.js. This is the default task that will run all the other tasks, including launching browser sync, and then watching files for changes.
 * **File Formats** -  You must update the `fileFormat` variable if you want gulp to work with any file type other than HTML.
 * **Editing files** -  The *'src/pages' is where your pages such as index.html are located. *'src/templates' is where all your templates and partials etc. are located. These references can be changed in the config at the top of the gulpfile, and sub-folders can be created, but new folders won't be picked up you run the Gulp task again.
 * **Editing scripts** - Custom scripts go inside the 'scripts/user' folder. Vendor scripts go in the root of the 'scripts' folder. Scripts compile in alphabetical order (folders first).
