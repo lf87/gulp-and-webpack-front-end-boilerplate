@@ -73,7 +73,7 @@ These are some additional tasks. These are not required for the *default* Gulp t
 ## Additional configuration
 * **Notifications** - By default, notifications only show when there's an error. If you'd like to completely disable notifications you can do so by setting the 'notifications' variable in your 'gulpfile.js' to false
 * **.jshintignore** - By default, this ignores *.js files in the root of the 'scripts' folder, this is to prevent endless Lint warnings from vendor plugins
-* **.jshintsrc** - You may want to edit the `globals`property if you're using vendor plugins. Here you can add custom global variables, that aren't variables of your own, more specifically, variables that exist within 3rd party scripts and not your main.js file. Similarly, if you're splitting your scripts in to 'modules', then you may want to update this to prevent warnings from flooding through every time you save your JS
+* **.jshintsrc** - You may want to add properties to the `globals` object if you're using vendor plugins. This will prevent undefined variable warning messages.
 
 ## Cross device browser synchronisation
 This isn't required locally, but due to nearly all our ports being blocked, if you'd like the cross-browser functionality remotely, you'll need to use a tool called **ngrok**. Currently this only works with static HTML files. WordPress builds may be possible too, but it's probably more hassle than it's worth to attempt to get it working, considering all the cross device testing is usually done during the front end phase of a build.
