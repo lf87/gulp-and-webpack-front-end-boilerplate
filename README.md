@@ -85,8 +85,7 @@ By default every rule that contains critical: this; is extracted into the critic
 
 If you want to extract Selectors matching a RegExp or selectors that does not contain critical: this; take a look at the options.
 
-```// This Selector will be extracted
-.my-selector {
+```.my-selector {
     critical: this;
     color: red;
 }
