@@ -47,7 +47,10 @@ If you'd like more information on what each of the packages inside gulpfile.js d
 * **File Formats** -  You must update the `fileFormat` variable if you want gulp to work with any file type other than HTML.
 * **Editing files** -  The *'src/pages' is where your pages such as index.html are located. *'src/templates' is where all your templates and partials etc. are located. These references can be changed in the config at the top of the gulpfile, and sub-folders can be created, but new folders won't be picked up you run the Gulp task again.
 * **Editing scripts** - Custom scripts go inside the 'scripts/user' folder. Vendor scripts go in the root of the 'scripts' folder. Scripts compile in alphabetical order (folders first).
-* **Prod deployment** - To do this run gulp with the `--production` flag, this will - Minify CSS, Uglify JS, and Strip out JS alert and console logs
+
+## Production deployment
+* **The production flag** Run Gulp using the `--production` flag, this will - Minify CSS, Uglify JS, and Strip out all JS alert and console logs.
+* **Critical CSS** - Run this seperately using `gulp critical` This plugin will inline "above the fold" CSS in to the head of your document. For help, refer to the documentation - https://github.com/addyosmani/critical
 
 
 ## Tasks
@@ -79,9 +82,6 @@ This isn't required locally, but due to nearly all our ports being blocked, if y
  1. Run the following command with your auth token, which you can found on the dashboard once logged in to the website - `$ ngrok authtoken .6ytrV1TnA2t6VrQ1mQeRA_De9RRRSFun6soQtpDUnF`
  1. Run the command `$ ngrok http -region=eu 3000` inside your working directory. In this case, 3000 is the port number assigned by browserSync.
  1. Use the web address provided within the terminal window to access your build anywhere you like
-
-## Critical CSS
-This plugin will inline "above the fold" CSS in to the head of your document. For help, refer to the documentation - https://github.com/addyosmani/critical
 
 ## Updating packages
 Probably bets left untouched. But if required please refer to this: https://www.npmjs.com/package/npm-check-updates
