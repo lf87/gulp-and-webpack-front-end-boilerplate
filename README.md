@@ -85,7 +85,9 @@ By default every rule that contains critical: this; is extracted into the critic
 
 If you want to extract Selectors matching a RegExp or selectors that does not contain critical: this; take a look at the options.
 
-```.my-selector {
+```
+// This Selector will be extracted
+.my-selector {
     critical: this;
     color: red;
 }
@@ -94,6 +96,7 @@ If you want to extract Selectors matching a RegExp or selectors that does not co
 .my-other-selector {
     color: green;
 }
+```
 
 ## Updating packages
 Probably bets left untouched. But if required please refer to this: https://www.npmjs.com/package/npm-check-updates
