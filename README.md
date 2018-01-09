@@ -3,7 +3,7 @@ This guide will explain how to set up and install the task runner/builder Gulp.
 
 ## Initial set-up
 
-1.  Download and install the latest version of Node. Make sure to download the 64bit version, if you're running a 64 bit OS. If given the option to install for all users or to your own profile only, choose the latter.
+1.  Download and install the latest (stable) version of Node. Make sure to download the 64bit version, if you're running a 64 bit OS. If given the option to install for all users or to your own profile only, choose the latter.
 
 1. Now you need Node Package Manager. Node comes with NPM installed, but NPM is updated more frequently than Node, so run the following command to make sure it’s up to date:  
 `$ npm install npm -g`  
