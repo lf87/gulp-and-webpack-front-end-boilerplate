@@ -8,6 +8,7 @@
         gulpPngquant = require('gulp-pngquant'), // Optmise PNGs
         sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
         runSequence = require('run-sequence'), // Run tasks sequentially
+        critical = require('critical').stream, // Inlines above the fold CSS
         cleanCSS = require('gulp-clean-css'), // Refactors CSS and combines MQs (Prod only)
         scsslint = require('gulp-scss-lint'), // SCSS Linting
         stylish = require('jshint-stylish'), // Style your jshint results
@@ -22,7 +23,7 @@
         svgmin = require('gulp-svgmin'), // Minimises SVGs
         newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
         babel = require('gulp-babel'), // ALlows for ES2015 support with this build system
-        gutil = require('gulp-util'), // Useful for error logging
+        gutil = require('gulp-util'), // Used for debugging
         scss = require('gulp-sass'), // Libscss Pre-processor
         util = require('gulp-util'), // Used for prod deployment
         gulp = require('gulp'), // Gulp
@@ -65,8 +66,9 @@
         lint: 'src/styles/**/*.scss', // Path of SCSS files that you want to lint
         lintExclude: '!src/styles/vendor/**/*.scss', // Path of SCSS files that you want to exclude from lint
         templates: 'src/templates/',
-        pagesWatch: './*/**' + fileExt, // Directory where pages are output (Not sure why this glob pattern works)
-        production: !!util.env.production // Used for prod deployment
+        pagesWatch: './**/*' + fileExt, // Directory where pages are output (Not sure why this glob pattern works)
+        production: !!util.env.production, // DON'T CHANGE - Used for prod deployment
+        criticalCss: dist.css + '/style.css' // Add multiple stylesheets like so - [dist.css + '/components.css', dist.css + '/main.css']
     };
 
     // Browser Sync with code/HTML injection
@@ -79,7 +81,7 @@
             // proxy: 'proxy.dev',
             files: dist.css + '*.css',
             watchOptions: {
-                awaitWriteFinish : true
+                awaitWriteFinish: true
             }
         });
     });
@@ -182,7 +184,6 @@
                 preserve_newlines: false
             }))
             .pipe(gulp.dest(dist.pages))
-            .on('data', function() { gutil.log('1!'); })
     });
 
     // Temporary workaround to get HTML injection working when editing pages is to create duplicate task and not include the caching plugin
@@ -205,7 +206,6 @@
                 preserve_newlines: false
             }))
             .pipe(gulp.dest(dist.pages))
-            .on('data', function() { gutil.log('2!'); })
     });
 
     // Save for web in PS first!
@@ -253,6 +253,20 @@
         return gulp.src(src.favicons)
             .pipe(gulp.dest(dist.favicons))
             .pipe(browserSync.stream({ once: true }))
+    });
+
+    // Generate & Inline Critical-path CSS
+    gulp.task('critical', function() {
+        return gulp.src(dist.pages + '/*' + fileExt)
+            .pipe(critical({
+                base: dist.pages,
+                inline: true,
+                css: config.criticalCss,
+                width: 1300,
+                height: 900
+            }))
+            .on('error', function(err) { gutil.log(gutil.colors.red(err.message)); })
+            .pipe(gulp.dest(dist.pages));
     });
 
 
