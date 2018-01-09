@@ -80,5 +80,21 @@ This isn't required locally, but due to nearly all our ports being blocked, if y
  1. Run the command `$ ngrok http -region=eu 3000` inside your working directory. In this case, 3000 is the port number assigned by browserSync.
  1. Use the web address provided within the terminal window to access your build anywhere you like
 
+## Critical CSS
+By default every rule that contains critical: this; is extracted into the critical file.
+
+If you want to extract Selectors matching a RegExp or selectors that does not contain critical: this; take a look at the options.
+
+```// This Selector will be extracted
+.my-selector {
+    critical: this;
+    color: red;
+}
+ 
+// This Selector will not
+.my-other-selector {
+    color: green;
+}
+
 ## Updating packages
 Probably bets left untouched. But if required please refer to this: https://www.npmjs.com/package/npm-check-updates
