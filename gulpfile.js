@@ -78,7 +78,7 @@
         });
         browserSync.init({
             server: dist.pages,
-            // proxy: 'proxy.dev',
+            // proxy: 'taveners.dev',
             files: dist.css + '*.css',
             watchOptions: {
                 awaitWriteFinish: true
@@ -211,6 +211,7 @@
     // Save for web in PS first!
     gulp.task('images', function() {
         return gulp.src(src.img)
+            .pipe(changed(dist.img, { hasChanged: changed.compareLastModifiedTime }))
             .pipe(imagemin({
                 optimizationLevel: 7,
                 progressive: true,
@@ -222,6 +223,7 @@
 
     gulp.task('images-png', function() {
         return gulp.src(src.imgPng)
+            .pipe(changed(dist.img, { hasChanged: changed.compareLastModifiedTime }))
             .pipe(gulpPngquant({
                 quality: '65-80'
             }))
@@ -231,6 +233,7 @@
 
     gulp.task('svgs', function() {
         return gulp.src(src.svg)
+            .pipe(changed(dist.svg, { hasChanged: changed.compareLastModifiedTime }))
             .pipe(svgmin())
             .pipe(gulp.dest(dist.svg))
             .pipe(browserSync.stream({ once: true }))
@@ -238,23 +241,25 @@
 
     gulp.task('fonts', function() {
         return gulp.src(src.fonts)
+            .pipe(changed(dist.fonts, { hasChanged: changed.compareLastModifiedTime }))
             .pipe(fontmin())
             .pipe(gulp.dest(dist.fonts))
             .pipe(browserSync.stream({ once: true }))
     });
 
     gulp.task('docs', function() {
-        return gulp.src(src.docs)
+        return gulp.src(dist.docs)
+            .pipe(changed(dist.docs, { hasChanged: changed.compareLastModifiedTime }))
             .pipe(gulp.dest(dist.docs))
             .pipe(browserSync.stream({ once: true }))
     });
 
     gulp.task('favicons', function() {
-        return gulp.src(src.favicons)
+        return gulp.src(dist.favicons)
+            .pipe(changed(dist.favicons, { hasChanged: changed.compareLastModifiedTime }))
             .pipe(gulp.dest(dist.favicons))
             .pipe(browserSync.stream({ once: true }))
     });
-
     // Generate & Inline Critical-path CSS
     gulp.task('critical', function() {
         return gulp.src(dist.pages + '/*' + fileExt)
