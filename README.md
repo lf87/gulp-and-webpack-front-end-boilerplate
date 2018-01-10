@@ -51,7 +51,7 @@ If you'd like more information on what each of the packages inside gulpfile.js d
 ## Production deployment
 Don't forget to run these before sending the final build off to QA and/or production.
 * **The production flag** Run Gulp using the `--production` flag, this will - Minify CSS, Uglify JS, and Strip out all JS alert and console logs. Running this will allow you to work as normal, the major difference is that the Scripts tasks will take longer to compile.
-* **Critical CSS** - Run this seperately using `gulp critical` This plugin will inline "above the fold" CSS in to the head of your document. The CSS path(s) can be modified inside the config object within the gulpfile. The output can be testedt by running the `browser-sync` task. For further help and configuration, refer to the documentation - https://github.com/addyosmani/critical
+* **Critical CSS** - Run this seperately using `gulp critical` This plugin will inline "above the fold" CSS in to the head of your document. The CSS path(s) can be modified inside the config object within the gulpfile. The output can be tested by running the `browser-sync` task. For further help and configuration, refer to the documentation - https://github.com/addyosmani/critical
 
 
 ## Tasks
