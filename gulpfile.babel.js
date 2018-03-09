@@ -7,7 +7,6 @@
         stripDebug = require('gulp-strip-debug'), // Strip console logs on --production
         gulpPngquant = require('gulp-pngquant'), // Optmise PNGs
         sourcemaps = require('gulp-sourcemaps'), // Line numbers pointing to your SCSS files
-        runSequence = require('run-sequence'), // Run tasks sequentially
         critical = require('critical').stream, // Inlines above the fold CSS
         cleanCSS = require('gulp-clean-css'), // Refactors CSS and combines MQs (Prod only)
         scsslint = require('gulp-scss-lint'), // SCSS Linting
@@ -38,7 +37,7 @@
     // Paths object
     var src = {
         pages: 'src/pages/**/*' + fileExt,
-        templates: 'src/templates/**/*',
+        templates: 'src/templates/**/*' + fileExt,
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
         img: 'src/images/**/*.{jpg,gif}',
@@ -66,9 +65,9 @@
         lint: 'src/styles/**/*.scss', // Path of SCSS files that you want to lint
         lintExclude: '!src/styles/vendor/**/*.scss', // Path of SCSS files that you want to exclude from lint
         templates: 'src/templates/',
-        pagesWatch: './*' + fileExt, // Directory where pages are output (Not sure why this glob pattern works)
-        production: !!util.env.production, // DON'T CHANGE - Used for prod deployment
-        criticalCss: dist.css + '/style.css' // Add multiple stylesheets like so - [dist.css + '/components.css', dist.css + '/main.css']
+        pagesWatch: './*' + fileExt, // Directory where pages are output
+        production: !!util.env.production, // Used for prod deployment
+        criticalCss: dist.css + '/style.css' // Accepts arrays e.g. [dist.css + '/components.css', dist.css + '/main.css']
     };
 
     // Browser Sync with code/HTML injection
@@ -170,16 +169,16 @@
 
     function nunjucksPages() {
         nunjucksRender.nunjucks.configure([src.templates]);
-        return gulp.src(src.pages)
+        return gulp.src([src.pages])
+            .pipe(changed(dist.pages, {
+                hasChanged: changed.compareLastModifiedTime
+            }))
             .on('data', function () {
                 gutil.log('1!');
             })
             .pipe(nunjucksRender({
                 path: [config.templates],
-                ext: fileExt,
-                envOptions: {
-                    noCache: false
-                },
+                ext: fileExt
             }))
             .on('data', function () {
                 gutil.log('2!');
@@ -202,9 +201,6 @@
             .on('data', function () {
                 gutil.log('4.5!');
             })
-            // .pipe(changed(dist.pages, {
-            //     hasChanged: changed.compareLastModifiedTime
-            // }))
             .on('data', function () {
                 gutil.log('5!');
             })
@@ -234,7 +230,9 @@
 
     // Save for web in PS first!
     function images() {
-        return gulp.src(src.img, { allowEmpty: true })
+        return gulp.src(src.img, {
+                allowEmpty: true
+            })
             .pipe(changed(dist.img, {
                 hasChanged: changed.compareLastModifiedTime
             }))
@@ -250,7 +248,9 @@
     }
 
     function imagesPng() {
-        return gulp.src(src.imgPng, { allowEmpty: true })
+        return gulp.src(src.imgPng, {
+                allowEmpty: true
+            })
             .pipe(changed(dist.img, {
                 hasChanged: changed.compareLastModifiedTime
             }))
@@ -264,7 +264,9 @@
     }
 
     function svgs() {
-        return gulp.src(src.svg, { allowEmpty: true })
+        return gulp.src(src.svg, {
+                allowEmpty: true
+            })
             .pipe(changed(dist.svg, {
                 hasChanged: changed.compareLastModifiedTime
             }))
@@ -276,7 +278,9 @@
     }
 
     function fonts() {
-        return gulp.src(src.fonts, { allowEmpty: true })
+        return gulp.src(src.fonts, {
+                allowEmpty: true
+            })
             .pipe(changed(dist.fonts, {
                 hasChanged: changed.compareLastModifiedTime
             }))
@@ -288,7 +292,9 @@
     }
 
     function docs() {
-        return gulp.src(dist.docs, { allowEmpty: true })
+        return gulp.src(dist.docs, {
+                allowEmpty: true
+            })
             .pipe(changed(dist.docs, {
                 hasChanged: changed.compareLastModifiedTime
             }))
@@ -299,7 +305,9 @@
     }
 
     function favicons() {
-        return gulp.src(dist.favicons, { allowEmpty: true })
+        return gulp.src(dist.favicons, {
+                allowEmpty: true
+            })
             .pipe(changed(dist.favicons, {
                 hasChanged: changed.compareLastModifiedTime
             }))
@@ -308,7 +316,7 @@
                 once: true
             }))
     }
-    // Generate & Inline Critical-path CSS
+    // Generate & inline critical-path CSS
     function critical() {
         return gulp.src(dist.pages + '/*' + fileExt)
             .pipe(critical({
@@ -324,10 +332,17 @@
             .pipe(gulp.dest(dist.pages));
     }
 
+function bsReload() {
+    return gulp.src(dist.pages)
+    .pipe(browserSync.stream({
+        once: true
+    }))
+}
+
     function watch() {
-        gulp.watch(src.pages, gulp.series('nunjucksPages'));
-        gulp.watch(src.templates, gulp.series('nunjucksPages'));
-        gulp.watch(config.pagesWatch, htmlInjector);
+        gulp.watch(src.templates, gulp.series('nunjucksPages', 'bsReload'));
+        gulp.watch([src.pages, src.templates], gulp.series('nunjucksPages'));
+        gulp.watch(config.pagesWatch, gulp.series('nunjucksPages', htmlInjector));
         gulp.watch(src.scss, gulp.series('styles'));
         gulp.watch(src.js, gulp.series('scripts'));
         gulp.watch(src.img, gulp.series('images'));
@@ -350,6 +365,7 @@
     exports.docs = docs;
     exports.bs = bs;
     exports.watch = watch;
+    exports.bsReload = bsReload;
 
     // Runs all the required tasks (in order), launches browser sync, and watches for changes
     var build = gulp.series(clean, gulp.parallel(nunjucksPages, styles, images, imagesPng, svgs, fonts, docs, favicons));

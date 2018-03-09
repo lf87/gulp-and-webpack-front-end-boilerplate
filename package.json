@@ -39,8 +39,7 @@
         "imagemin-pngquant": "^5.0.1",
         "jshint": "^2.9.5",
         "jshint-stylish": "^2.2.1",
-        "node-neat": "^2.0.0-beta.0",
-        "run-sequence": "^2.2.0"
+        "node-neat": "^2.0.0-beta.0"
     },
     "dependencies": {}
 }
