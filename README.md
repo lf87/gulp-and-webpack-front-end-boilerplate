@@ -28,7 +28,7 @@ This guide will explain how to set up and install the task runner/builder Gulp.
 ## Creating a new site
 
 1.  Open a Git bash terminal in the root directory of your newly created site, and clone this repository using the following command:  
- `$ git clone https://gitlab.home-trial.com/infrastructure/lukestrap.git .`
+ `$ git clone https://gitlab.home-trial.com/infrastructure/gulp-barebones-boilerplate .`
 
 1. Associate this folder with your repository by first deleting the **.git** folder, and then by entering the follow commands:
   1. git init
@@ -38,6 +38,8 @@ This guide will explain how to set up and install the task runner/builder Gulp.
   1. git push origin master
 
 1. Now install all the node packages, this can be done by typing `npm install` - This uses the package.json file to determine which packages to download.
+
+1. As of 09.03.18 gulp v4 has been added. To make sure your local version uses v4 and not v3.9 run `$ npm install gulpjs/gulp#4.0 --save-dev`
 
 ## Using Gulp
 
@@ -60,7 +62,7 @@ Below is a a brief description of tasks that you may need to reconfigure on a pe
     + Comment out the `server` line
     + Uncomment the `proxy` line
     + Update the 'proxy' property with the correct URL
- * `$ sass` - 
+ * `$ styles` - 
     + You may need to edit the specificity of supported browsers for the Autoprefixer plugin. Leaving this blank doesn't mean all browsers are supported, so by default it has been configured to the last 2 versions, and IE6 - IE10. You can find a full list of options here - https://github.com/postcss/autoprefixer#options Or if you want to target based on usage data - https://github.com/ai/browserslist#custom-usage-data.
     + If you have heavily nested styles, then it may be beneficial to disable autoprefixer, as autoprefixer prevents sourcemaps from reference exact line numbers references the top level parent instead)
  * `images` - The image optimisation level is set to 7 by default. This shouldn't need to be changed. You can experiment with the quality setting for the pngQuant plugin, but it's recommended to leave it as it is.
@@ -68,7 +70,7 @@ Below is a a brief description of tasks that you may need to reconfigure on a pe
 ## Additional tasks
 These are some additional tasks. These are not required for the *default* Gulp task to properly function
  * `$ gulp clean` - Empty's everything in the distribution folders and the page files in the root
- * `$ gulp scss-lint` - Checks SCSS for errors and warns of any bad practices - This requires ruby and SCSS Lint. Run `$ gem install scss_lint scss_lint_reporter_checkstyle` to install the required files. Lint reports are saved in the 'reports' folder
+ * `$ gulp scssLint` - Checks SCSS for errors and warns of any bad practices - This requires ruby and SCSS Lint. Run `$ gem install scss_lint scss_lint_reporter_checkstyle` to install the required files. Lint reports are saved in the 'reports' folder
 
 ## Additional configuration
 * **Notifications** - By default, notifications only show when there's an error. If you'd like to completely disable notifications you can do so by setting the 'notifications' variable in your 'gulpfile.js' to false
@@ -80,7 +82,7 @@ This isn't required locally, but due to nearly all our ports being blocked, if y
 
  1. Register on https://ngrok.com/ 
  1. Download ngrok and add the executable to your working directory
- 1. Run the following command with your auth token, which you can found on the dashboard once logged in to the website - `$ ngrok authtoken .6ytrV1TnA2t6VrQ1mQeRA_De9RRRSFun6soQtpDUnF`
+ 1. Run the following command with your auth token, which you can found on the dashboard once logged in to the website - `$ ngrok authtoken .yourAuthToken`
  1. Run the command `$ ngrok http -region=eu 3000` inside your working directory. In this case, 3000 is the port number assigned by browserSync.
  1. Use the web address provided within the terminal window to access your build anywhere you like
 

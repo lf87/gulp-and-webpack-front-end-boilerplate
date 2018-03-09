@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     var nunjucksRender = require('gulp-nunjucks-render'), // Nunjucks templating system
         htmlbeautify = require('gulp-html-beautify'), // Beautifies HTML
@@ -66,25 +66,25 @@
         lint: 'src/styles/**/*.scss', // Path of SCSS files that you want to lint
         lintExclude: '!src/styles/vendor/**/*.scss', // Path of SCSS files that you want to exclude from lint
         templates: 'src/templates/',
-        pagesWatch: './**/*' + fileExt, // Directory where pages are output (Not sure why this glob pattern works)
+        pagesWatch: './*' + fileExt, // Directory where pages are output (Not sure why this glob pattern works)
         production: !!util.env.production, // DON'T CHANGE - Used for prod deployment
         criticalCss: dist.css + '/style.css' // Add multiple stylesheets like so - [dist.css + '/components.css', dist.css + '/main.css']
     };
 
     // Browser Sync with code/HTML injection
-    gulp.task('browser-sync', function() {
+    function bs() {
         browserSync.use(htmlInjector, {
             files: dist.pages + '*' + fileExt
         });
         browserSync.init({
             server: dist.pages,
-            // proxy: 'taveners.dev',
+            // proxy: 'website.test',
             files: dist.css + '*.css'
             // watchOptions: {
             //     awaitWriteFinish: true
             // }
         });
-    });
+    }
 
 
     // Disable or enable pop up notifications
@@ -94,17 +94,17 @@
     }
 
     // Files and folders to clean
-    gulp.task('clean', function() {
+    function clean() {
         del([dist.pages + '*' + fileExt, dist.css + '/*.css', dist.js, dist.img, dist.fonts, dist.docs, dist.favicons, config.maps, config.reports]);
         return gulp.src('./')
             .pipe(notify({
                 message: 'Folders cleaned successfully',
                 onLast: true
             }));
-    });
+    }
 
     // $ scss-lint - SCSS Linter
-    gulp.task('scss-lint', function() {
+    function scssLint() {
         return gulp.src([config.lint, config.lintExclude])
             .pipe(scsslint({
                 'reporterOutputFormat': 'Checkstyle',
@@ -112,19 +112,19 @@
                 'config': 'scss-lint.yml'
             }))
             .pipe(gulp.dest(config.reports));
-    });
+    }
 
     // ********************** //
     // *** Required Tasks *** //
     // ********************** //
 
-    gulp.task('scss', function() {
+    function styles() {
         return gulp.src(src.scss)
             .pipe(sourcemaps.init())
             .pipe(scss({
                 includePaths: [src.scss]
             }))
-            .on('error', notify.onError(function(error) {
+            .on('error', notify.onError(function (error) {
                 return 'An error occurred while compiling scss.\nLook in the console for details.\n' + error;
             }))
             // FROM HERE:
@@ -132,16 +132,18 @@
                 browsers: ['last 2 versions', 'ie 6-10'],
                 cascade: false
             }))
-            .pipe(config.production ? cleanCSS({ debug: true }, function(details) {
+            .pipe(config.production ? cleanCSS({
+                debug: true
+            }, function (details) {
                 console.log(details.name + ' file size before: ' + details.stats.originalSize + ' bytes');
                 console.log(details.name + ' file size after: ' + details.stats.minifiedSize + ' bytes');
             }) : util.noop())
             // TO HERE
             .pipe(sourcemaps.write(config.maps))
             .pipe(gulp.dest(dist.css));
-    });
+    }
 
-    gulp.task('scripts', function() {
+    function scripts() {
         return gulp.src(src.js)
             .pipe(jshint('.jshintrc'))
             .pipe(jshint.reporter('jshint-stylish'))
@@ -155,19 +157,23 @@
             .pipe(babel({
                 presets: ['es2015']
             }))
-            .on('error', notify.onError(function(error) {
+            .on('error', notify.onError(function (error) {
                 return 'An error occurred while compiling JS.\nLook in the console for details.\n' + error;
             }))
             .pipe(config.production ? uglify() : util.noop())
             .pipe(sourcemaps.write(config.maps))
             .pipe(gulp.dest(dist.js))
-            .pipe(browserSync.stream({ once: true }))
-    });
+            .pipe(browserSync.stream({
+                once: true
+            }))
+    }
 
-    gulp.task('nunjucks-pages', function() {
+    function nunjucksPages() {
         nunjucksRender.nunjucks.configure([src.templates]);
         return gulp.src(src.pages)
-            .pipe(changed(dist.pages, { hasChanged: changed.compareLastModifiedTime }))
+            .on('data', function () {
+                gutil.log('1!');
+            })
             .pipe(nunjucksRender({
                 path: [config.templates],
                 ext: fileExt,
@@ -175,19 +181,37 @@
                     noCache: false
                 },
             }))
-            .on('error', notify.onError(function(error) {
+            .on('data', function () {
+                gutil.log('2!');
+            })
+            .on('error', notify.onError(function (error) {
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
+            .on('data', function () {
+                gutil.log('3!');
+            })
             .pipe(htmlbeautify({
                 indentSize: 2,
                 indent_with_tabs: true,
                 preserve_newlines: false
             }))
+            .on('data', function () {
+                gutil.log('4!');
+            })
             .pipe(gulp.dest(dist.pages))
-    });
+            .on('data', function () {
+                gutil.log('4.5!');
+            })
+            // .pipe(changed(dist.pages, {
+            //     hasChanged: changed.compareLastModifiedTime
+            // }))
+            .on('data', function () {
+                gutil.log('5!');
+            })
+    }
 
     // Temporary workaround to get HTML injection working when editing pages is to create duplicate task and not include the caching plugin
-    gulp.task('nunjucks-templates', function() {
+    function nunjucksTemplates() {
         nunjucksRender.nunjucks.configure([src.templates]);
         return gulp.src(src.pages)
             .pipe(nunjucksRender({
@@ -197,7 +221,7 @@
                     noCache: false
                 },
             }))
-            .on('error', notify.onError(function(error) {
+            .on('error', notify.onError(function (error) {
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
             .pipe(htmlbeautify({
@@ -206,62 +230,86 @@
                 preserve_newlines: false
             }))
             .pipe(gulp.dest(dist.pages))
-    });
+    }
 
     // Save for web in PS first!
-    gulp.task('images', function() {
-        return gulp.src(src.img)
-            .pipe(changed(dist.img, { hasChanged: changed.compareLastModifiedTime }))
+    function images() {
+        return gulp.src(src.img, { allowEmpty: true })
+            .pipe(changed(dist.img, {
+                hasChanged: changed.compareLastModifiedTime
+            }))
             .pipe(imagemin({
                 optimizationLevel: 7,
                 progressive: true,
                 interlaced: true
             }))
             .pipe(gulp.dest(dist.img))
-            .pipe(browserSync.stream({ once: true }))
-    });
+            .pipe(browserSync.stream({
+                once: true
+            }))
+    }
 
-    gulp.task('images-png', function() {
-        return gulp.src(src.imgPng)
-            .pipe(changed(dist.img, { hasChanged: changed.compareLastModifiedTime }))
+    function imagesPng() {
+        return gulp.src(src.imgPng, { allowEmpty: true })
+            .pipe(changed(dist.img, {
+                hasChanged: changed.compareLastModifiedTime
+            }))
             .pipe(gulpPngquant({
                 quality: '65-80'
             }))
             .pipe(gulp.dest(dist.img))
-            .pipe(browserSync.stream({ once: true }))
-    });
+            .pipe(browserSync.stream({
+                once: true
+            }))
+    }
 
-    gulp.task('svgs', function() {
-        return gulp.src(src.svg)
-            .pipe(changed(dist.svg, { hasChanged: changed.compareLastModifiedTime }))
+    function svgs() {
+        return gulp.src(src.svg, { allowEmpty: true })
+            .pipe(changed(dist.svg, {
+                hasChanged: changed.compareLastModifiedTime
+            }))
             .pipe(svgmin())
             .pipe(gulp.dest(dist.svg))
-            .pipe(browserSync.stream({ once: true }))
-    });
+            .pipe(browserSync.stream({
+                once: true
+            }))
+    }
 
-    gulp.task('fonts', function() {
-        return gulp.src(src.fonts)
-            .pipe(changed(dist.fonts, { hasChanged: changed.compareLastModifiedTime }))
+    function fonts() {
+        return gulp.src(src.fonts, { allowEmpty: true })
+            .pipe(changed(dist.fonts, {
+                hasChanged: changed.compareLastModifiedTime
+            }))
             .pipe(fontmin())
             .pipe(gulp.dest(dist.fonts))
-            .pipe(browserSync.stream({ once: true }))
-    });
+            .pipe(browserSync.stream({
+                once: true
+            }))
+    }
 
-    gulp.task('docs', function() {
-        return gulp.src(dist.docs)
-            .pipe(changed(dist.docs, { hasChanged: changed.compareLastModifiedTime }))
+    function docs() {
+        return gulp.src(dist.docs, { allowEmpty: true })
+            .pipe(changed(dist.docs, {
+                hasChanged: changed.compareLastModifiedTime
+            }))
             .pipe(gulp.dest(dist.docs))
-            .pipe(browserSync.stream({ once: true }))
-    });
+            .pipe(browserSync.stream({
+                once: true
+            }))
+    }
 
-    gulp.task('favicons', function() {
-        return gulp.src(dist.favicons)
-            .pipe(changed(dist.favicons, { hasChanged: changed.compareLastModifiedTime }))
+    function favicons() {
+        return gulp.src(dist.favicons, { allowEmpty: true })
+            .pipe(changed(dist.favicons, {
+                hasChanged: changed.compareLastModifiedTime
+            }))
             .pipe(gulp.dest(dist.favicons))
-            .pipe(browserSync.stream({ once: true }))
-    });
+            .pipe(browserSync.stream({
+                once: true
+            }))
+    }
     // Generate & Inline Critical-path CSS
-    gulp.task('critical', function() {
+    function critical() {
         return gulp.src(dist.pages + '/*' + fileExt)
             .pipe(critical({
                 base: dist.pages,
@@ -270,26 +318,43 @@
                 width: 1300,
                 height: 900
             }))
-            .on('error', function(err) { gutil.log(gutil.colors.red(err.message)); })
+            .on('error', function (err) {
+                gutil.log(gutil.colors.red(err.message));
+            })
             .pipe(gulp.dest(dist.pages));
-    });
+    }
 
+    function watch() {
+        gulp.watch(src.pages, gulp.series('nunjucksPages'));
+        gulp.watch(src.templates, gulp.series('nunjucksPages'));
+        gulp.watch(config.pagesWatch, htmlInjector);
+        gulp.watch(src.scss, gulp.series('styles'));
+        gulp.watch(src.js, gulp.series('scripts'));
+        gulp.watch(src.img, gulp.series('images'));
+        gulp.watch(src.imgPng, gulp.series('imagesPng'));
+        gulp.watch(src.svg, gulp.series('svgs'));
+        gulp.watch(src.fonts, gulp.series('fonts'));
+        gulp.watch(src.favicons, gulp.series('favicons'));
+        gulp.watch(src.docs, gulp.series('docs'));
+    }
 
-    // $ build - Runs all the required tasks (in order), launches browser sync, and watch for changes
-    gulp.task('default', function() {
-        runSequence(['nunjucks-pages', 'scss', 'scripts'], ['images', 'images-png', 'svgs', 'fonts', 'docs', 'favicons'], ['browser-sync'], function() {
-            gulp.watch(src.pages, ['nunjucks-pages']);
-            gulp.watch(src.templates, ['nunjucks-templates']);
-            gulp.watch(config.pagesWatch, htmlInjector);
-            gulp.watch(src.scss, ['scss']);
-            gulp.watch(src.js, ['scripts']);
-            gulp.watch(src.img, ['images']);
-            gulp.watch(src.imgPng, ['images-png']);
-            gulp.watch(src.svg, ['svgs']);
-            gulp.watch(src.fonts, ['fonts']);
-            gulp.watch(src.favicons, ['favicons']);
-            gulp.watch(src.docs, ['docs']);
-        });
-    });
+    // Use CommonJS 'exports' module notation to declare tasks
+    exports.nunjucksPages = nunjucksPages;
+    exports.styles = styles;
+    exports.scripts = scripts;
+    exports.images = images;
+    exports.imagesPng = imagesPng;
+    exports.svgs = svgs;
+    exports.fonts = fonts;
+    exports.favicons = favicons;
+    exports.docs = docs;
+    exports.bs = bs;
+    exports.watch = watch;
+
+    // Runs all the required tasks (in order), launches browser sync, and watches for changes
+    var build = gulp.series(clean, gulp.parallel(nunjucksPages, styles, images, imagesPng, svgs, fonts, docs, favicons));
+    var run = gulp.parallel(bs, watch);
+
+    gulp.task('default', gulp.series(build, run));
 
 }());
