@@ -26,7 +26,7 @@ This guide will explain how to set up and install the task runner/builder Gulp.
   +  `--save-dev` installs packages to your working directory, this is preferable, as it means all the files are added to our git repository. This template includes all packages you should need, you'll only need to use this command if you decide to add extra packages.
 
 1. Finally - install gulp v4 as a dev dependancy
-2. `$ npm install gulpjs/gulp#4.0 --save-dev`
+`$ npm install gulpjs/gulp#4.0 --save-dev`
 
 ## Creating a new site
 
