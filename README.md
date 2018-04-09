@@ -21,9 +21,12 @@ This guide will explain how to set up and install the task runner/builder Gulp.
 `"atomic_save": true,`
 
 1.  Now install gulp globally using the following command:  
-`$ npm install -g gulp`
+`$ npm install gulp gulpjs/gulp-cli -g`
   +  `-g` Installs packages globally i.e. to your Node installation directory
   +  `--save-dev` installs packages to your working directory, this is preferable, as it means all the files are added to our git repository. This template includes all packages you should need, you'll only need to use this command if you decide to add extra packages.
+
+1. Finally - install gulp v4 as a dev dependancy
+2. `$ npm install gulpjs/gulp#4.0 --save-dev`
 
 ## Creating a new site
 
