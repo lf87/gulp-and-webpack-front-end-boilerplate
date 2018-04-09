@@ -20,12 +20,12 @@ This guide will explain how to set up and install the task runner/builder Gulp.
 1. If you're using Sublime Text as your IDE, then adding the following line to your user preferences file will prevent the @import error that sometimes crops up when compiling your stylesheet:
 `"atomic_save": true,`
 
-1.  Now install gulp globally using the following command:  
+1.  Now install gulp and gulp-cli globally using the following command:  
 `$ npm install gulp gulpjs/gulp-cli -g`
   +  `-g` Installs packages globally i.e. to your Node installation directory
   +  `--save-dev` installs packages to your working directory, this is preferable, as it means all the files are added to our git repository. This template includes all packages you should need, you'll only need to use this command if you decide to add extra packages.
 
-1. Finally - install gulp v4 as a dev dependancy:
+1. As of 09.03.18 gulp v4 has been added. To make sure your local version uses v4 and not v3.9 run:
 `$ npm install gulpjs/gulp#4.0 --save-dev`
 
 ## Creating a new site
