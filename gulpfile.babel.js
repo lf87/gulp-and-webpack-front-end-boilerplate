@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     var nunjucksRender = require('gulp-nunjucks-render'), // Nunjucks templating system
+        changedInPlace = require('gulp-changed-in-place'), // Check to see if source file(s) has updated
         htmlbeautify = require('gulp-html-beautify'), // Beautifies HTML
         autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
         neat = require('node-neat').includePaths, // The Bourbon Neat grid system
@@ -12,7 +13,7 @@
         scsslint = require('gulp-scss-lint'), // SCSS Linting
         stylish = require('jshint-stylish'), // Style your jshint results
         imagemin = require('gulp-imagemin'), // Compress Images
-        changed = require('gulp-changed'), // Required for BS-Inject to work
+        changed = require('gulp-changed'), // Caching
         fontmin = require('gulp-fontmin'), // Font minification - Can also generates CSS
         rename = require('gulp-rename'), // Rename files i.e. in this case rename minified files to .min
         concat = require('gulp-concat'), // Merges all files in to 1
@@ -20,7 +21,7 @@
         uglify = require('gulp-uglify'), // JS minification (Prod only)
         notify = require('gulp-notify'), // Notifications upon task completion
         svgmin = require('gulp-svgmin'), // Minimises SVGs
-        newer = require('gulp-newer'), // A Gulp plugin for passing through only those source files that are newer than corresponding destination files.
+        debug = require('gulp-debug'), // Used for debugging
         babel = require('gulp-babel'), // ALlows for ES2015 support with this build system
         gutil = require('gulp-util'), // Used for debugging
         scss = require('gulp-sass'), // Libscss Pre-processor
@@ -36,7 +37,7 @@
 
     // Paths object
     var src = {
-        pages: 'src/pages/**/*' + fileExt,
+        pages: 'src/pages/*' + fileExt,
         templates: 'src/templates/**/*' + fileExt,
         scss: 'src/styles/**/*.scss',
         js: 'src/scripts/**/*.js', // - if you change this path, then you'll need to update your .jshintignore file
@@ -64,7 +65,7 @@
         reports: 'reports', // Lint reports go here
         lint: 'src/styles/**/*.scss', // Path of SCSS files that you want to lint
         lintExclude: '!src/styles/vendor/**/*.scss', // Path of SCSS files that you want to exclude from lint
-        templates: 'src/templates/',
+        templates: ['src/templates/', 'src/templates/partials/'],
         pagesWatch: './*' + fileExt, // Directory where pages are output
         production: !!util.env.production, // Used for prod deployment
         criticalCss: dist.css + '/style.css' // Accepts arrays e.g. [dist.css + '/components.css', dist.css + '/main.css']
@@ -77,14 +78,14 @@
         });
         browserSync.init({
             server: dist.pages,
-            // proxy: 'website.test',
-            files: dist.css + '*.css'
-            // watchOptions: {
-            //     awaitWriteFinish: true
-            // }
+            files: dist.css + '*.css',
+            watchOptions: {
+                awaitWriteFinish: {
+                    stabilityThreshold: 500
+                }
+            }
         });
     }
-
 
     // Disable or enable pop up notifications
     var notifications = false;
@@ -126,7 +127,6 @@
             .on('error', notify.onError(function (error) {
                 return 'An error occurred while compiling scss.\nLook in the console for details.\n' + error;
             }))
-            // FROM HERE:
             .pipe(autoprefixer({
                 browsers: ['last 2 versions', 'ie 6-10'],
                 cascade: false
@@ -137,7 +137,6 @@
                 console.log(details.name + ' file size before: ' + details.stats.originalSize + ' bytes');
                 console.log(details.name + ' file size after: ' + details.stats.minifiedSize + ' bytes');
             }) : util.noop())
-            // TO HERE
             .pipe(sourcemaps.write(config.maps))
             .pipe(gulp.dest(dist.css));
     }
@@ -169,62 +168,54 @@
 
     function nunjucksPages() {
         nunjucksRender.nunjucks.configure([src.templates]);
-        return gulp.src([src.pages])
+        return gulp.src(src.pages)
+            .pipe(debug({
+                title: 'nunjucks pages:'
+            }))
+
             .pipe(changed(dist.pages, {
                 hasChanged: changed.compareLastModifiedTime
             }))
-            .on('data', function () {
-                gutil.log('1!');
-            })
             .pipe(nunjucksRender({
-                path: [config.templates],
+                path: config.templates,
                 ext: fileExt
             }))
-            .on('data', function () {
-                gutil.log('2!');
-            })
             .on('error', notify.onError(function (error) {
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
+            // .pipe(htmlbeautify({
+            //     indentSize: 2,
+            //     indent_with_tabs: true,
+            //     preserve_newlines: false
+            // }))
             .on('data', function () {
-                gutil.log('3!');
-            })
-            .pipe(htmlbeautify({
-                indentSize: 2,
-                indent_with_tabs: true,
-                preserve_newlines: false
-            }))
-            .on('data', function () {
-                gutil.log('4!');
+                gutil.log('Alert nunjucksPages()!');
             })
             .pipe(gulp.dest(dist.pages))
-            .on('data', function () {
-                gutil.log('4.5!');
-            })
-            .on('data', function () {
-                gutil.log('5!');
-            })
     }
 
     // Temporary workaround to get HTML injection working when editing pages is to create duplicate task and not include the caching plugin
     function nunjucksTemplates() {
         nunjucksRender.nunjucks.configure([src.templates]);
-        return gulp.src(src.pages)
+        return gulp.src([src.pages])
+            .pipe(debug({
+                title: 'nunjucks templates:'
+            }))
             .pipe(nunjucksRender({
-                path: [config.templates],
-                ext: fileExt,
-                envOptions: {
-                    noCache: false
-                },
+                path: config.templates,
+                ext: fileExt
             }))
             .on('error', notify.onError(function (error) {
                 return 'An error occurred while compiling files.\nLook in the console for details.\n' + error;
             }))
-            .pipe(htmlbeautify({
-                indentSize: 2,
-                indent_with_tabs: true,
-                preserve_newlines: false
-            }))
+            // .pipe(htmlbeautify({
+            //     indentSize: 2,
+            //     indent_with_tabs: true,
+            //     preserve_newlines: false
+            // }))
+            .on('data', function () {
+                gutil.log('Alert nunjucksTemplates()!');
+            })
             .pipe(gulp.dest(dist.pages))
     }
 
@@ -332,17 +323,17 @@
             .pipe(gulp.dest(dist.pages));
     }
 
-function bsReload() {
-    return gulp.src(dist.pages)
-    .pipe(browserSync.stream({
-        once: true
-    }))
-}
+    function bsReload() {
+        return gulp.src(dist.pages)
+            .pipe(browserSync.stream({
+                once: true
+            }))
+    }
 
     function watch() {
-        gulp.watch(src.templates, gulp.series('nunjucksPages', 'bsReload'));
-        gulp.watch([src.pages, src.templates], gulp.series('nunjucksPages'));
-        gulp.watch(config.pagesWatch, gulp.series('nunjucksPages', htmlInjector));
+        gulp.watch(src.pages, gulp.series(nunjucksPages));
+        gulp.watch(src.templates, gulp.series(nunjucksTemplates));
+        gulp.watch(config.pagesWatch, gulp.series(htmlInjector));
         gulp.watch(src.scss, gulp.series('styles'));
         gulp.watch(src.js, gulp.series('scripts'));
         gulp.watch(src.img, gulp.series('images'));
@@ -355,6 +346,7 @@ function bsReload() {
 
     // Use CommonJS 'exports' module notation to declare tasks
     exports.nunjucksPages = nunjucksPages;
+    exports.nunjucksTemplates = nunjucksTemplates;
     exports.styles = styles;
     exports.scripts = scripts;
     exports.images = images;
@@ -371,6 +363,7 @@ function bsReload() {
     var build = gulp.series(clean, gulp.parallel(nunjucksPages, styles, images, imagesPng, svgs, fonts, docs, favicons));
     var run = gulp.parallel(bs, watch);
 
+    gulp.task('clean', gulp.series(clean));
     gulp.task('default', gulp.series(build, run));
 
 }());
