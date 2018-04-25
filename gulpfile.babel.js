@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var nunjucksRender = require('gulp-nunjucks-render'), // Nunjucks templating system
+    const nunjucksRender = require('gulp-nunjucks-render'), // Nunjucks templating system
         changedInPlace = require('gulp-changed-in-place'), // Check to see if source file(s) has updated
         htmlbeautify = require('gulp-html-beautify'), // Beautifies HTML
         autoprefixer = require('gulp-autoprefixer'), // Autoprefixes CSS using regular CSS
@@ -28,15 +28,18 @@
         util = require('gulp-util'), // Used for prod deployment
         gulp = require('gulp'), // Gulp
         del = require('del'), // Clean folders and files
+        webpack = require('webpack'),
+        webpackStream = require('webpack-stream'),
+        webpackConfig = require('./webpack.config.js'),
         browserSync = require('browser-sync').create(), // Create BS server
         htmlInjector = require('bs-html-injector'); // Injects markup
 
     // File Format
-    var fileFormat = 'html',
+    const fileFormat = 'html',
         fileExt = '.' + fileFormat;
 
     // Paths object
-    var src = {
+    const src = {
         pages: 'src/pages/*' + fileExt,
         templates: 'src/templates/**/*' + fileExt,
         scss: 'src/styles/**/*.scss',
@@ -49,7 +52,7 @@
         favicons: 'src/favicons/**/*'
     };
 
-    var dist = {
+    const dist = {
         pages: './',
         css: './',
         js: 'dist/assets/js',
@@ -60,7 +63,7 @@
         favicons: 'dist/assets/favicons'
     };
 
-    var config = {
+    const config = {
         maps: 'maps', // This is where your CSS and JS sourcemaps go
         reports: 'reports', // Lint reports go here
         lint: 'src/styles/**/*.scss', // Path of SCSS files that you want to lint
@@ -78,17 +81,17 @@
         });
         browserSync.init({
             server: dist.pages,
-            files: dist.css + '*.css',
-            watchOptions: {
-                awaitWriteFinish: {
-                    stabilityThreshold: 500
-                }
-            }
+            files: dist.css + '*.css'
+            // watchOptions: {
+            //     awaitWriteFinish: {
+            //         stabilityThreshold: 500
+            //     }
+            // }
         });
     }
 
     // Disable or enable pop up notifications
-    var notifications = false;
+    const notifications = false;
     if (notifications) {
         process.env.DISABLE_NOTIFIER = true; // Uncomment to disables all notifications
     }
@@ -141,29 +144,38 @@
             .pipe(gulp.dest(dist.css));
     }
 
-    function scripts() {
+    // function scriptsOld() {
+    //     return gulp.src(src.js)
+    //         .pipe(jshint('.jshintrc'))
+    //         .pipe(jshint.reporter('jshint-stylish'))
+    //         .pipe(sourcemaps.init())
+    //         .pipe(config.production ? stripDebug() : util.noop())
+    //         .pipe(concat('main.js'))
+    //         .pipe(gulp.dest(dist.js))
+    //         .pipe(rename({
+    //             suffix: '.min'
+    //         }))
+    //         .pipe(babel({
+    //             presets: ['es2015']
+    //         }))
+    //         .on('error', notify.onError(function (error) {
+    //             return 'An error occurred while compiling JS.\nLook in the console for details.\n' + error;
+    //         }))
+    //         .pipe(config.production ? uglify() : util.noop())
+    //         .pipe(sourcemaps.write(config.maps))
+    //         .pipe(gulp.dest(dist.js))
+    //         .pipe(browserSync.stream({
+    //             once: true
+    //         }))
+    // }
+
+       function scripts() {
         return gulp.src(src.js)
-            .pipe(jshint('.jshintrc'))
-            .pipe(jshint.reporter('jshint-stylish'))
-            .pipe(sourcemaps.init())
-            .pipe(config.production ? stripDebug() : util.noop())
-            .pipe(concat('main.js'))
-            .pipe(gulp.dest(dist.js))
-            .pipe(rename({
-                suffix: '.min'
-            }))
-            .pipe(babel({
-                presets: ['es2015']
-            }))
-            .on('error', notify.onError(function (error) {
-                return 'An error occurred while compiling JS.\nLook in the console for details.\n' + error;
-            }))
-            .pipe(config.production ? uglify() : util.noop())
-            .pipe(sourcemaps.write(config.maps))
-            .pipe(gulp.dest(dist.js))
-            .pipe(browserSync.stream({
-                once: true
-            }))
+          .pipe(webpackStream(webpackConfig), webpack)
+          .pipe(gulp.dest(dist.js))
+          .pipe(browserSync.stream({
+              once: true
+          }))
     }
 
     function nunjucksPages() {
@@ -308,7 +320,7 @@
             }))
     }
     // Generate & inline critical-path CSS
-    function critical() {
+    function criticalCss() {
         return gulp.src(dist.pages + '/*' + fileExt)
             .pipe(critical({
                 base: dist.pages,
@@ -358,12 +370,14 @@
     exports.bs = bs;
     exports.watch = watch;
     exports.bsReload = bsReload;
+    exports.bsReload = criticalCss;
 
     // Runs all the required tasks (in order), launches browser sync, and watches for changes
-    var build = gulp.series(clean, gulp.parallel(nunjucksPages, styles, images, imagesPng, svgs, fonts, docs, favicons));
-    var run = gulp.parallel(bs, watch);
+    const build = gulp.series(clean, gulp.parallel(nunjucksPages, styles, images, imagesPng, svgs, fonts, docs, favicons));
+    const run = gulp.parallel(bs, watch);
 
     gulp.task('clean', gulp.series(clean));
+    gulp.task('critical', gulp.series(criticalCss));
     gulp.task('default', gulp.series(build, run));
 
 }());
