@@ -20,15 +20,15 @@ This guide will explain how to set up and install the task runner/builder Gulp.
 1. If you're using Sublime Text as your IDE, then adding the following line to your user preferences file will prevent the @import error that sometimes crops up when compiling your stylesheet:
 `"atomic_save": true,`
 
-1.  Now install gulp and gulp-cli globally using the following command:  
-`$ npm install gulp gulpjs/gulp-cli -g`
-  +  `-g` Installs packages globally i.e. to your Node installation directory
-  +  `--save-dev` installs packages to your working directory, this is preferable, as it means all the files are added to our git repository. This template includes all packages you should need, you'll only need to use this command if you decide to add extra packages.
+1. **Before continuing** - Download and install the latest stable version of NodeJS, and also the latest stable version of Git
 
-1. As of 09.03.18 gulp v4 has been added. To make sure your local version uses v4 and not v3.9 run:
-`$ npm install gulpjs/gulp#4.0 --save-dev`
+1.  Now install gulp and gulp-cli globally using the following command:  
+`$ npm install gulp -g` and `$ npm i -g gulp-cli` If you have issues installing this, then try running the install from git bash
+  +  `-g` installs packages globally i.e. to your Node installation directory
+  +  `--save-dev` installs packages to your project folder, and adds a dependancy in your package.json.
 
 ## Creating a new site
+**Update**: Although the steps below (first 2) still work, it is better practice to import this repository when creating a new repository.
 
 1.  Open a Git bash terminal in the root directory of your newly created site, and clone this repository using the following command:  
  `$ git clone https://gitlab.home-trial.com/infrastructure/gulp-barebones-boilerplate .`
@@ -41,8 +41,6 @@ This guide will explain how to set up and install the task runner/builder Gulp.
   1. git push origin master
 
 1. Now install all the node packages, this can be done by typing `npm install` - This uses the package.json file to determine which packages to download.
-
-1. As of 09.03.18 gulp v4 has been added. To make sure your local version uses v4 and not v3.9 run `$ npm install gulpjs/gulp#4.0 --save-dev`
 
 ## Using Gulp
 
@@ -90,4 +88,4 @@ This isn't required locally, but due to nearly all our ports being blocked, if y
  1. Use the web address provided within the terminal window to access your build anywhere you like
 
 ## Updating packages
-Probably bets left untouched. But if required please refer to this: https://www.npmjs.com/package/npm-check-updates
+You can update packages with the `$ ncu -u` command, or just `$ ncu` to check the current and most recent version. Please refer to this for my information: https://www.npmjs.com/package/npm-check-updates

@@ -1,22 +1,20 @@
-// Strict Mode is a new feature in ECMAScript 5 that allows you to place a program, or a function, in a "strict" operating context.
-// This strict context prevents certain actions from being taken and throws more exceptions.
-// And:
-
-// Strict mode helps out in a couple ways:
-
-// It catches some common coding bloopers, throwing exceptions.
-// It prevents, or throws errors, when relatively "unsafe" actions are taken (such as gaining access to the global object).
-// It disables features that are confusing or poorly thought out.
-
-// When the below is set to true, the comment below enables use strict globally
-
-/*jshint strict: false */
-
+import { Dog, Wolf } from './zoo';
 (function() {
-    'use strict';
-    // this anonymous function is strict...
-}());
+  'use strict';
+  // main.js
 
-(function() {
-    // this anonymous function is sloppy...
-}());
+  var myDog = new Dog('Sherlock', 'beagle');
+  document.getElementById('content').innerHTML += myDog.bark();
+
+  var myWolf = new Wolf('Direwolf');
+  document.getElementById('content').innerHTML += `<br/>${myWolf.bark()}`;
+
+  document.getElementById('loadCat').addEventListener('click', e => {
+    require.ensure([], () => {
+      var Cat = require('./cat');
+
+      var myCat = new Cat('Bugsy');
+      document.getElementById('content').innerHTML += `<br/>${myCat.meow()}`;
+    });
+  });
+})();
