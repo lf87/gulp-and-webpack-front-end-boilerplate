@@ -110,7 +110,7 @@
   // *** Required Tasks *** //
   // ********************** //
 
-  function styles() {
+  const styles = () => {
     return gulp.src(src.scss)
       .pipe(sourcemaps.init())
       .pipe(scss({
@@ -134,8 +134,16 @@
   }
 
   function scripts() {
+    var options = {
+      plugins: [
+        new webpack.DefinePlugin({
+          'process.env': { 'NODE_ENV': "'production'" }
+        }),
+        new webpack.optimize.UglifyJsPlugin()
+      ]
+    }
     return gulp.src(src.js)
-      .pipe(webpackStream(webpackConfig), webpack)
+      .pipe(webpackStream(options, webpack))
       .on('error', function handleError() {
         this.emit('end')
       })
