@@ -15,7 +15,6 @@
     "bs-html-injector": "^3.0.3",
     "critical": "^1.1.0",
     "del": "^3.0.0",
-    "error-overlay-webpack-plugin": "^0.1.4",
     "eslint": "^4.19.1",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.0.0",
