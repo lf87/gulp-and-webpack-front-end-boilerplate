@@ -1,5 +1,5 @@
 (function() {
-  const nunjucksRender = require('gulp-nunjucks-render') // Nunjucks templating system
+  const nunjucksRender = require('gulp-nunjucks-render') // Templating system
   const autoprefixer = require('gulp-autoprefixer') // Autoprefixes CSS using regular CSS
   const gulpPngquant = require('gulp-pngquant') // Optmise PNGs
   const sourcemaps = require('gulp-sourcemaps') // Line numbers pointing to your SCSS files
@@ -17,8 +17,8 @@
   const util = require('gulp-util') // Used for prod deployment
   const gulp = require('gulp') // Gulp
   const del = require('del') // Clean folders and files
-  const webpack = require('webpack')
   const webpackStream = require('webpack-stream')
+  const webpack = require('webpack')
   const webpackConfig = require('./webpack.config.js')
   const browserSync = require('browser-sync').create() // Create BS server
   const htmlInjector = require('bs-html-injector') // Injects markup
@@ -136,6 +136,9 @@
   function scripts() {
     return gulp.src(src.js)
       .pipe(webpackStream(webpackConfig), webpack)
+      .on('error', function handleError() {
+        this.emit('end')
+      })
       .pipe(gulp.dest(dist.js))
       .pipe(browserSync.stream({
         once: true
