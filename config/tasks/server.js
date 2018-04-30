@@ -7,7 +7,7 @@ const Config = require('../config')
 // Browser Sync with code/HTML injection
 export function bs() {
   browserSync.use(htmlInjector, {
-    files: `${Config.dist.pages}*fileExt`
+    files: `${Config.dist.pages}*${Config.fileExt}`
   })
   browserSync.init({
     server: Config.dist.pages,
