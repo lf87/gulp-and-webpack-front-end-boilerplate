@@ -5,7 +5,11 @@
   "main": "index.html",
   "repository": {
     "type": "git",
-    "url": "#"
+    "url": "https://gitlab.jaywingdev.co.uk/epiphany/gulp-webpack-boilerplate"
+  },
+  "scripts": {
+    "dev": "gulp",
+    "prod": "gulp --production"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -34,6 +38,7 @@
     "gulp-svgmin": "^1.2.4",
     "gulp-util": "^3.0.8",
     "imagemin-pngquant": "^5.0.1",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.6.0",
     "webpack-stream": "^4.0.3"
   },
