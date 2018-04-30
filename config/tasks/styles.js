@@ -27,36 +27,36 @@ export function sass() {
     .pipe(Config.config.production ? cleanCSS({
       debug: true
     }, function(details) {
-      console.log(details.name + ' file size before: ' + details.stats.originalSize + ' bytes')
-      console.log(details.name + ' file size after: ' + details.stats.minifiedSize + ' bytes')
+      console.log(`${details.name} file size before: ${details.stats.originalSize} bytes`)
+      console.log(`${details.name} file size after: ${details.stats.minifiedSize} bytes`)
     }) : util.noop())
     .pipe(sourcemaps.write(Config.config.maps))
     .pipe(gulp.dest(Config.dist.css))
 }
 
-  // Generate & inline critical-Config CSS
-  export function criticalCss() {
-    return gulp.src(`${Config.dist.pages}/*fileExt`)
-      .pipe(critical({
-        base: Config.dist.pages,
-        inline: true,
-        css: Config.config.criticalCss,
-        width: 1300,
-        height: 900
-      }))
-      .on('error', function(err) {
-        gutil.log(gutil.colors.red(err.message))
-      })
-      .pipe(gulp.dest(Config.dist.pages))
-  }
+// Generate & inline critical-Config CSS
+export function criticalCss() {
+  return gulp.src(`${Config.dist.pages}/*fileExt`)
+    .pipe(critical({
+      base: Config.dist.pages,
+      inline: true,
+      css: Config.config.criticalCss,
+      width: 1300,
+      height: 900
+    }))
+    .on('error', function(err) {
+      gutil.log(gutil.colors.red(err.message))
+    })
+    .pipe(gulp.dest(Config.dist.pages))
+}
 
 // $ scss-lint - SCSS Linter
 export function scssLint() {
-    return gulp.src([Config.config.lint, Config.config.lintExclude])
-      .pipe(scsslint({
-        'reporterOutputFormat': 'Checkstyle',
-        'filePipeOutput': 'scssReport.xml',
-        'config': 'scss-lint.yml'
-      }))
-      .pipe(gulp.dest(Config.config.reports))
-  }
+  return gulp.src([Config.config.lint, Config.config.lintExclude])
+    .pipe(scsslint({
+      'reporterOutputFormat': 'Checkstyle',
+      'filePipeOutput': 'scssReport.xml',
+      'config': 'scss-lint.yml'
+    }))
+    .pipe(gulp.dest(Config.config.reports))
+}
