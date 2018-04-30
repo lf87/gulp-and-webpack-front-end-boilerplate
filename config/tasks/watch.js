@@ -1,6 +1,5 @@
 import gulp from 'gulp'
 import htmlInjector from 'bs-html-injector'
-// import browserSync from 'browser-sync'
 
 const Config = require('../config')
 
@@ -20,4 +19,3 @@ export function watch() {
 module.exports = {
   watch
 }
-

@@ -49,8 +49,3 @@ export function nunjucksTemplates() {
     })
     .pipe(gulp.dest(Config.dist.pages))
 }
-
-// module.exports = {
-//   nunjucksPages,
-//   nunjucksTemplates
-// }

@@ -1,10 +1,10 @@
-import gulp from 'gulp' // Gulp
-import htmlInjector from 'bs-html-injector' // Injects markup
+import gulp from 'gulp'
+import htmlInjector from 'bs-html-injector'
 
-const browserSync = require('browser-sync').create() // Create BS server
+const browserSync = require('browser-sync').create()
 const Config = require('../config')
 
-// Browser Sync with code/HTML injection
+// Browser Sync with markup injection
 export function bs() {
   browserSync.use(htmlInjector, {
     files: `${Config.dist.pages}*${Config.fileExt}`
@@ -12,11 +12,6 @@ export function bs() {
   browserSync.init({
     server: Config.dist.pages,
     files: `${Config.dist.css}*.css`
-    // watchOptions: {
-    //     awaitWriteFinish: {
-    //         stabilityThreshold: 500
-    //     }
-    // }
   })
 }
 
@@ -27,8 +22,3 @@ export function bsReload() {
     })
   )
 }
-
-// module.exports = {
-//   bs,
-//   bsReload
-// }

@@ -1,6 +1,6 @@
-import gulp from 'gulp' // Gulp
-import del from 'del' // Clean folders and files
-import notify from 'gulp-notify' // Notifications upon task completion
+import gulp from 'gulp'
+import del from 'del'
+import notify from 'gulp-notify'
 
 const Config = require('../config')
 
@@ -24,7 +24,3 @@ export function clean() {
     })
   )
 }
-
-// module.exports = {
-//   clean
-// }

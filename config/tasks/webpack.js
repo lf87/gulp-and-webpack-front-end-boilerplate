@@ -7,26 +7,12 @@ import gulp from 'gulp'
 const Config = require('../config')
 
 export function webpackBundle() {
-// const options = {
-//   plugins: [
-//     new webpack.DefinePlugin({
-//       'process.env': {'NODE_ENV': 'production'}
-//     }),
-//     // new webpack.optimize.UglifyJsPlugin()
-//   ]
-// }
 return gulp.src(Config.src.webpack)
-
+  // If production flag set during build, then use webpacks production config file
   .pipe(Config.config.production ? webpackStream(webpackConfigProd, webpack) : webpackStream(webpackConfigDev, webpack))
   .on('error', function handleError() {
     this.emit('end')
   })
   .pipe(gulp.dest(Config.dist.webpack))
-  // .pipe(browserSync.stream({
-  //   once: true
-  // }))
 }
 
-// module.exports = {
-//   webpack
-// }
