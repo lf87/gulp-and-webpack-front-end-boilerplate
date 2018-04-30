@@ -1,6 +1,6 @@
 import gulp from 'gulp'
 
-// Import tasks as functions
+// Import tasks/functions
 import {clean} from './config/tasks/clean'
 import {nunjucksPages, nunjucksTemplates} from './config/tasks/templating'
 import {sass, criticalCss, scssLint} from './config/tasks/styles'
