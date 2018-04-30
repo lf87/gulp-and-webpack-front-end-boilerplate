@@ -1,19 +1,16 @@
-import gulp from 'gulp' // Gulp
-import changed from 'gulp-changed' // Caching
+import gulp from 'gulp'
+import changed from 'gulp-changed'
 
 const Config = require('../config')
 
 export function duplicateFiles() {
-  return gulp.src([Config.dist.docs, Config.dist.favicons], {
+  return gulp.src([Config.src.docs, Config.src.favicons], {
       allowEmpty: true
     })
     .pipe(changed(Config.dist.docs, {
       hasChanged: changed.compareLastModifiedTime
     }))
     .pipe(gulp.dest(Config.dist.docs))
-    // .pipe(browserSync.stream({
-    //   once: true
-    // }))
 }
 
 // below shouldn't be needed but will keep in case
