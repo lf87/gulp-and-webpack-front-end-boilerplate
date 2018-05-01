@@ -37,6 +37,7 @@
     "gulp-nunjucks-render": "^2.2.1",
     "gulp-pngquant": "^1.0.12",
     "gulp-sass": "^4.0.1",
+    "gulp-sass-glob": "^1.0.9",
     "gulp-scss-lint": "^0.6.1",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-svgmin": "^1.2.4",
