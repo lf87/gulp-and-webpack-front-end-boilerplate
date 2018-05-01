@@ -28,14 +28,16 @@ exports.watch = watch
 exports.bs = bs
 exports.bsReload = bsReload
 
-// Define build and run order
-const build = gulp.series(clean, gulp.parallel(nunjucksPages, sass, webpackBundle, images, imagesPng, svgs, fonts, duplicateFiles))
+// Define build and run tasks
+const build = gulp.parallel(nunjucksPages, sass, webpackBundle, images, imagesPng, svgs, fonts, duplicateFiles)
 const run = gulp.parallel(bs, watch)
-
-// Runs all the required tasks (in order), launches browser sync, and watches for changes
-gulp.task('default', gulp.series(build, run))
 
 // Additional tasks
 gulp.task('clean', gulp.series(clean))
 gulp.task('critical', gulp.series(criticalCss))
 gulp.task('scss-lint', gulp.series(scssLint))
+gulp.task('duplicate-files', gulp.series(duplicateFiles))
+
+// Default task - Cleans dist files/folders, Runs all the build tasks, launches browser sync, and watches for changes
+gulp.task('default', gulp.series(build, run))
+
