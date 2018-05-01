@@ -4,11 +4,11 @@ import changed from 'gulp-changed'
 const Config = require('../config')
 
 export function duplicateFiles() {
-  return gulp.src([Config.src.docs, Config.src.favicons], {
+  return gulp.src(Config.src.static, {
       allowEmpty: true
     })
-    .pipe(changed(Config.dist.docs, {
+    .pipe(changed(Config.dist.static, {
       hasChanged: changed.compareLastModifiedTime
     }))
-    .pipe(gulp.dest(Config.dist.docs))
+    .pipe(gulp.dest(Config.dist.static))
 }
