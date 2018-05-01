@@ -1,5 +1,5 @@
 // webpack.config.js
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const {GenerateSW} = require('workbox-webpack-plugin')
 
 module.exports = {
   output: {
@@ -17,5 +17,9 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    // Workbox - Generate Service Worker
+    new GenerateSW()
+  ]
 }
