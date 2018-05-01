@@ -9,7 +9,7 @@ if (notifications) {
 // Paths
 const fileExt = '.html' // Default file extension
 const source = 'src'
-const root = './'
+const root = '.'
 const dest = 'dist'
 const assets = 'assets'
 
@@ -22,17 +22,18 @@ const src = {
   imgPng: `${source}/img/**/*.png`,
   svg: `${source}/img/svgs/**/*.svg`,
   fonts: `${source}/fonts/**/*`,
-  static: `${source}/static/**/*`,
+  static: `${source}/static/**/*`
 }
 
 const dist = {
-  pages: `${root}${dest}`,
-  css: `${root}${dest}`,
+  pages: `${root}/${dest}`,
+  css: `${root}/${dest}`,
   static: `${dest}/${assets}`,
   webpack: `${dest}/${assets}/js`,
   img: `${dest}/${assets}/img`,
   svg: `${dest}/${assets}/img/svgs`,
   fonts: `${dest}/${assets}/fonts`,
+  production: `${root}/production`
 }
 
 const config = {
