@@ -1,2 +1,2 @@
 // partial.js
-export class Something {}
+// export class Something {}
