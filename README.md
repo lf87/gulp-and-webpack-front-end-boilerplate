@@ -1,3 +1,5 @@
+#TODO - Only create maps when not in prod environment
+
 # WIKI NEEDS UPDATING 27/04/18
 
 # Gulp workflow set up and usage guide
