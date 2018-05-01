@@ -11,7 +11,7 @@ export function bs() {
   })
   browserSync.init({
     server: Config.dist.pages,
-    files: `${Config.dist.css}*.css`
+    files: `${Config.dist.css}/*.css`
   })
 }
 
