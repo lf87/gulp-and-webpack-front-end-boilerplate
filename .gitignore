@@ -19,6 +19,7 @@ reports
 node_modules
 dist
 .vscode
+production
 /*.html
 /*.php
 /*.css
