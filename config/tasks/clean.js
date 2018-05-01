@@ -16,6 +16,8 @@ export function clean() {
     `${Config.dist.production}`,
     `${Config.config.maps}`,
     `${Config.config.reports}`,
+    './maps',
+    './reports',
   ])
   return gulp.src(`${root}`).pipe(
     notify({
