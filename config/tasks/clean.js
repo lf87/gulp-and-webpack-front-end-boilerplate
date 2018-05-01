@@ -26,3 +26,15 @@ export function clean() {
     })
   )
 }
+
+export function cleanProd() {
+  del([
+    `${Config.dist.production}`,
+  ])
+  return gulp.src(`${root}`).pipe(
+    notify({
+      message: 'Production folder cleaned successfully',
+      onLast: true
+    })
+  )
+}
