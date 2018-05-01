@@ -1,0 +1,26 @@
+{
+    "default": {
+        "image": {
+            "src": "img/image-ref.png",
+            "alt": "img alt",
+            "url": "#"
+        },
+        "heading": "Heading",
+        "copy": {
+            "call": "This ",
+            "me": "content ",
+            "what": "is ",
+            "you": "in ",
+            "want": "a ",
+            "lol": "loop "
+        }
+    },
+    "alternative": {
+        "image": {
+            "src": "img/image-ref.png",
+            "alt": "img alt",
+            "url": "#"
+        },
+        "heading": "Another Heading"
+    }
+}
