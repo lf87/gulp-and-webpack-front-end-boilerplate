@@ -14,7 +14,7 @@ const Config = require('../config')
 
 export function sass() {
   return gulp.src(Config.src.scss)
-    .pipe(sourcemaps.init())
+    .pipe(Config.config.production ? util.noop() : sourcemaps.init())
     .pipe(sassGlob())
     .pipe(scss({
       includeConfigs: [Config.src.scss]
@@ -32,7 +32,7 @@ export function sass() {
       console.log(`${details.name} file size before: ${details.stats.originalSize} bytes`)
       console.log(`${details.name} file size after: ${details.stats.minifiedSize} bytes`)
     }) : util.noop())
-    .pipe(sourcemaps.write(Config.config.maps))
+    .pipe(Config.config.production ? util.noop() : sourcemaps.write(Config.config.maps))
     .pipe(gulp.dest(Config.dist.css))
 }
 
