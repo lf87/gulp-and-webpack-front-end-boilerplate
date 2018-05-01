@@ -1,6 +1,6 @@
-#TODO - Only create maps when not in prod environment
+#TODO - Don't copy static/docs or static/favicons, if no files exist inside them
 
-# WIKI NEEDS UPDATING 27/04/18
+# WIKI NEEDS UPDATING 01/05/18
 
 # Gulp workflow set up and usage guide
 
