@@ -14,6 +14,7 @@ const dest = 'dist'
 const assets = 'assets'
 
 const src = {
+  dataFile: `${source}/data/data.json`,
   pages: `${source}/pages/*${fileExt}`,
   templates: `${source}/templates/**/*${fileExt}`,
   scss: `${source}/styles/**/*.scss`,
@@ -37,7 +38,6 @@ const dist = {
 }
 
 const config = {
-  maps: `.${root}/maps`, // This is where your CSS sourcemaps are saved
   reports: `.${root}/reports`, // Lint reports saved here
   lint: `${source}/styles/**/*.scss`, // Path of SCSS files that you want to lint
   lintExclude: `!${source}/styles/vendor/**/*.scss`, // Path of SCSS files that you want to exclude from lint
