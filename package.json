@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "gulp",
     "prod": "gulp --production",
+    "build": "gulp build --production",
     "clean": "gulp clean",
     "critical": "gulp critical",
     "scss-lint": "gulp scss-lint"

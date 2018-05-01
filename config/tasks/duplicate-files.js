@@ -12,3 +12,8 @@ export function duplicateFiles() {
     }))
     .pipe(gulp.dest(Config.dist.static))
 }
+
+export function duplicateProdFiles() {
+  return gulp.src(`${Config.dest}/**/*`)
+    .pipe(gulp.dest(Config.dist.production))
+}

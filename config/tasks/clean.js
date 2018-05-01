@@ -13,6 +13,7 @@ export function clean() {
     `${Config.dist.fonts}`,
     `${Config.dist.static}`,
     `${Config.dest}`,
+    `${Config.dist.production}`,
     `${Config.config.maps}`,
     `${Config.config.reports}`,
   ])
