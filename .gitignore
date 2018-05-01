@@ -20,7 +20,7 @@ node_modules
 dist
 .vscode
 production
-package-lock.json
 /*.html
 /*.php
 /*.css
+package-lock.json
