@@ -8,16 +8,15 @@ export function clean() {
   del([
     `${Config.dist.pages}*${Config.fileExt}`,
     `${Config.dist.css}/*.css`,
-    `${Config.dest}`,
     `${Config.dist.webpack}`,
     `${Config.dist.img}`,
     `${Config.dist.fonts}`,
-    `${Config.dist.docs}`,
-    `${Config.dist.favicons}`,
+    `${Config.dist.static}`,
+    `${Config.dest}`,
     `${Config.config.maps}`,
-    `${Config.config.reports}`
+    `${Config.config.reports}`,
   ])
-  return gulp.src('./').pipe(
+  return gulp.src(`${root}`).pipe(
     notify({
       message: 'Folders cleaned successfully',
       onLast: true
