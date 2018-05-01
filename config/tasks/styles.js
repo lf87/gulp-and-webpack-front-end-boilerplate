@@ -7,6 +7,7 @@ import gutil from 'gulp-util'
 import autoprefixer from 'gulp-autoprefixer'
 import cleanCSS from 'gulp-clean-css'
 import notify from 'gulp-notify'
+import sassGlob from 'gulp-sass-glob'
 
 const critical = require('critical').stream
 const Config = require('../config')
@@ -14,6 +15,7 @@ const Config = require('../config')
 export function sass() {
   return gulp.src(Config.src.scss)
     .pipe(sourcemaps.init())
+    .pipe(sassGlob())
     .pipe(scss({
       includeConfigs: [Config.src.scss]
     }))
