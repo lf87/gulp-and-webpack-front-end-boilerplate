@@ -1,7 +1,7 @@
 import gulp from 'gulp'
 
 // Import tasks/functions
-import {clean} from './config/tasks/clean'
+import {clean, cleanProd} from './config/tasks/clean'
 import {nunjucksPages, nunjucksTemplates} from './config/tasks/templating'
 import {sass, criticalCss, scssLint} from './config/tasks/styles'
 import {fonts} from './config/tasks/fonts'
@@ -13,6 +13,7 @@ import {webpackBundle} from './config/tasks/webpack'
 
 // Use CommonJS 'exports' module notation to declare tasks
 exports.clean = clean
+exports.cleanProd = cleanProd
 exports.nunjucksPages = nunjucksPages
 exports.nunjucksTemplates = nunjucksTemplates
 exports.webpackBundle = webpackBundle
@@ -42,5 +43,5 @@ gulp.task('duplicate-prod-files', gulp.series(duplicateFiles))
 
 // Default task - Cleans dist files/folders, Runs all the build tasks, launches browser sync, and watches for changes
 gulp.task('default', gulp.series(build, run))
-gulp.task('build', gulp.series(build, duplicateProdFiles))
+gulp.task('build', gulp.series(cleanProd, build, duplicateProdFiles))
 
