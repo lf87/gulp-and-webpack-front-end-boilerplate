@@ -38,9 +38,9 @@ export function sass() {
 
 // Generate & inline critical-Config CSS
 export function criticalCss() {
-  return gulp.src(`${Config.dist.pages}/*fileExt`)
+  return gulp.src(`${Config.dist.production}/**/*${Config.fileExt}`)
     .pipe(critical({
-      base: Config.dist.pages,
+      base: `${Config.dist.production}`,
       inline: true,
       css: Config.config.criticalCss,
       width: 1300,
@@ -49,7 +49,7 @@ export function criticalCss() {
     .on('error', function(err) {
       gutil.log(gutil.colors.red(err.message))
     })
-    .pipe(gulp.dest(Config.dist.pages))
+    .pipe(gulp.dest(Config.dist.production))
 }
 
 // $ scss-lint - SCSS Linter
