@@ -14,37 +14,37 @@ const dest = 'dist'
 const assets = 'assets'
 
 const src = {
-  dataFile: `${source}/data/data.json`,
-  pages: `${source}/pages/*${fileExt}`,
-  templates: `${source}/templates/**/*${fileExt}`,
-  scss: `${source}/styles/**/*.scss`,
-  webpack: `${source}/scripts/**/*.js`,
-  img: `${source}/img/**/*.{jpg,gif}`,
-  imgPng: `${source}/img/**/*.png`,
-  svg: `${source}/img/svgs/**/*.svg`,
-  fonts: `${source}/fonts/**/*`,
-  static: `${source}/static/**/*`
+  dataFile: `${root}/${source}/data/data.json`,
+  pages: `${root}/${source}/pages/*${fileExt}`,
+  templates: `${root}/${source}/templates/**/*${fileExt}`,
+  scss: `${root}/${source}/styles/**/*.scss`,
+  webpack: `${root}/${source}/scripts/**/*.js`,
+  img: `${root}/${source}/img/**/*.{jpg,gif}`,
+  imgPng: `${root}/${source}/img/**/*.png`,
+  svg: `${root}/${source}/img/svgs/**/*.svg`,
+  fonts: `${root}/${source}/fonts/**/*`,
+  static: `${root}/${source}/static/**/*`
 }
 
 const dist = {
   pages: `${root}/${dest}`,
   css: `${root}/${dest}`,
-  static: `${dest}/${assets}`,
-  webpack: `${dest}/${assets}/js`,
-  img: `${dest}/${assets}/img`,
-  svg: `${dest}/${assets}/img/svgs`,
-  fonts: `${dest}/${assets}/fonts`,
+  static: `${root}/${dest}/${assets}`,
+  webpack: `${root}/${dest}/${assets}/js`,
+  img: `${root}/${dest}/${assets}/img`,
+  svg: `${root}/${dest}/${assets}/img/svgs`,
+  fonts: `${root}/${dest}/${assets}/fonts`,
   production: `${root}/production`
 }
 
 const config = {
   reports: `.${root}/reports`, // Lint reports saved here
-  lint: `${source}/styles/**/*.scss`, // Path of SCSS files that you want to lint
-  lintExclude: `!${source}/styles/vendor/**/*.scss`, // Path of SCSS files that you want to exclude from lint
-  templates: [`${source}/templates/`, `${source}/templates/partials/`], // Default file paths for nunjucks
+  lint: `${root}/${source}/styles/**/*.scss`, // Path of SCSS files that you want to lint
+  lintExclude: `!${root}/${source}/styles/vendor/**/*.scss`, // Path of SCSS files that you want to exclude from lint
+  templates: [`${root}/${source}/templates/`, `${source}/templates/partials/`], // Default file paths for nunjucks
   pagesWatch: `${root}*${fileExt}`, // HTML injection  - This is the directory where pages are output
   production: !!util.env.production, // Used for production deployment
-  criticalCss: dist.css + '/style.css' // Accepts arrays e.g. [dist.css + '/components.css', dist.css + '/main.css']
+  criticalCss: `${dist.css}/style.css` // Accepts arrays
 }
 
 module.exports = {
