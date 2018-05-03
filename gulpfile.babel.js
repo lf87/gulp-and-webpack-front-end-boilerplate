@@ -38,8 +38,6 @@ const run = gulp.parallel(bs, watch)
 gulp.task('clean', gulp.series(clean))
 gulp.task('critical', gulp.series(criticalCss))
 gulp.task('scss-lint', gulp.series(scssLint))
-gulp.task('duplicate-files', gulp.series(duplicateFiles))
-gulp.task('duplicate-prod-files', gulp.series(duplicateFiles))
 
 // Default task - Cleans dist files/folders, Runs all the build tasks, launches browser sync, and watches for changes
 gulp.task('default', gulp.series(build, run))
