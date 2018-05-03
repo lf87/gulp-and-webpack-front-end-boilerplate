@@ -34,7 +34,7 @@ exports.bsReload = bsReload
 const build = gulp.parallel(nunjucksPages, sass, webpackBundle, images, imagesPng, svgs, fonts, duplicateFiles)
 const run = gulp.parallel(bs, watch)
 
-// Additional tasks
+// Additional tasks that may/will need to be run individually
 gulp.task('clean', gulp.series(clean))
 gulp.task('critical', gulp.series(criticalCss))
 gulp.task('scss-lint', gulp.series(scssLint))
