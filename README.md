@@ -1,59 +1,27 @@
-#TODO - Don't copy static/docs or static/favicons, if no files exist inside them
+# Gulp/Webpack workflow set up and usage guide
 
-# WIKI NEEDS UPDATING 01/05/18
-
-# Gulp workflow set up and usage guide
-
-This guide will explain how to set up and install the task runner/builder Gulp.
+This guide will explain how to set up and use the Gulp/Webpack Front End Boilerplate
 
 ## Initial set-up
 
-1.  Download and install the latest (stable) version of Node. Make sure to download the 64bit version, if you're running a 64 bit OS. If given the option to install for all users or to your own profile only, choose the latter.
-
-1.  Now you need Node Package Manager. Node comes with NPM installed, but NPM is updated more frequently than Node, so run the following command to make sure it’s up to date:
-    `$ npm install npm -g`
-
-1.  The git:// protocol is blocked on our networked. If you ever need to install bower, or any other application that uses this as the default installation protocol, then you need to run the following command:
-    `$ git config --global url."https://".insteadOf git://`
-
-1.  Due to the complex folder hierarchy of the Node packages, some of the file paths exceed 4096 characters. 4096 characters is the limit that git imposes. To get around this, run the following command:
-    `$ git config --system core.longpaths true`
-
-1.  There is a package that can lint your SCSS. You must install this dependency, or it'll error when you try and run `npm install`. To install the dependency, run this command:
+1.  To get linting working with Gulp, you first need Ruby installed, and then the following 2 gems:
     `$ gem install scss_lint scss_lint_reporter_checkstyle`
 
-1.  If you're using Sublime Text as your IDE, then adding the following line to your user preferences file will prevent the @import error that sometimes crops up when compiling your stylesheet:
-    `"atomic_save": true,`
+1.  Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
 
-1.  **Before continuing** - Download and install the latest stable version of NodeJS, and also the latest stable version of Git
+1.  Install gulp and gulp-cli globally using the following command:
+    `$ npm i gulp gulp-cli -g`
 
-1.  Now install gulp and gulp-cli globally using the following command:
-    `$ npm install gulp -g` and `$ npm i -g gulp-cli` If you have issues installing this, then try running the install from git bash
+## Using this workflow
 
-* `-g` installs packages globally i.e. to your Node installation directory
-* `--save-dev` installs packages to your project folder, and adds a dependancy in your package.json.
+To use gulp, run the command `$ npm start dev`. Do this in the same folder as your gulpfile.babel.js. This is the default task that will run all the other tasks, including launching browser sync, and watching files for changes.
 
-## Creating a new site
+There are a few other tasks, which will help aid the development process:
 
-**Update**: Although the steps below (first 2) still work, it is better practice to import this repository when creating a new repository.
+* `npm run critical` - This will inline "above the fold" CSS in to the head of your document. The CSS path(s) can be modified inside the config file, it accepts arrays for multiple stylesheets. This must be . For further help and configuration, refer to the documentation - https://github.com/addyosmani/critical
+* `$ npm run clean` - Empty's everything in the distribution folders and the page files in the root
+* `$ npm run scss-lint` - Checks SCSS for errors and warns of any bad practices - This requires ruby and SCSS Lint. Run `$ gem install scss_lint scss_lint_reporter_checkstyle` to install the required files. Lint reports are saved in the 'reports' folder
 
-1.  Open a Git bash terminal in the root directory of your newly created site, and clone this repository using the following command:
-    `$ git clone https://gitlab.home-trial.com/infrastructure/gulp-barebones-boilerplate .`
-
-1.  Associate this folder with your repository by first deleting the **.git** folder, and then by entering the follow commands:
-1.  git init
-1.  git add --all
-1.  git commit -m 'first commit'
-1.  git remote add origin https://git.homeagency.co.uk/luke/test.git (Use your repository)
-1.  git push origin master
-
-1.  Now install all the node packages, this can be done by typing `npm install` - This uses the package.json file to determine which packages to download.
-
-## Using Gulp
-
-If you'd like more information on what each of the packages inside gulpfile.js do, simply Google the name of the package, the first result should be the NPM page associated with it.
-
-* **Running Gulp** - To use gulp, run the command `$ gulp` in the same folder as your gulpfile.js. This is the default task that will run all the other tasks, including launching browser sync, and then watching files for changes.
 * **File Formats** - You must update the `fileFormat` variable if you want gulp to work with any file type other than HTML.
 * **Editing files** - The _'src/pages' is where your pages such as index.html are located. _'src/templates' is where all your templates and partials etc. are located. These references can be changed in the config at the top of the gulpfile, and sub-folders can be created, but new folders won't be picked up you run the Gulp task again.
 * **Editing scripts** - Custom scripts go inside the 'scripts/user' folder. Vendor scripts go in the root of the 'scripts' folder. Scripts compile in alphabetical order (folders first).
@@ -63,7 +31,7 @@ If you'd like more information on what each of the packages inside gulpfile.js d
 Don't forget to run these before sending the final build off to QA and/or production.
 
 * **The production flag** Run Gulp using the `--production` flag, this will - Minify CSS, Uglify JS, and Strip out all JS alert and console logs. Running this will allow you to work as normal, the major difference is that the Scripts tasks will take longer to compile.
-* **Critical CSS** - Run this seperately using `gulp critical` This plugin will inline "above the fold" CSS in to the head of your document. The CSS path(s) can be modified inside the config object within the gulpfile. The output can be tested by running the `browser-sync` task. For further help and configuration, refer to the documentation - https://github.com/addyosmani/critical
+
 
 ## Tasks
 
@@ -82,8 +50,7 @@ Below is a a brief description of tasks that you may need to reconfigure on a pe
 
 These are some additional tasks. These are not required for the _default_ Gulp task to properly function
 
-* `$ gulp clean` - Empty's everything in the distribution folders and the page files in the root
-* `$ gulp scssLint` - Checks SCSS for errors and warns of any bad practices - This requires ruby and SCSS Lint. Run `$ gem install scss_lint scss_lint_reporter_checkstyle` to install the required files. Lint reports are saved in the 'reports' folder
+
 
 ## Additional configuration
 
