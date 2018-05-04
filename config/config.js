@@ -44,7 +44,7 @@ const config = {
   templates: [`${root}/${source}/templates/`, `${source}/templates/partials/`], // Default file paths for nunjucks
   pagesWatch: `${root}*${fileExt}`, // HTML injection  - This is the directory where pages are output
   production: !!util.env.production, // Used for production deployment
-  criticalCss: `${dist.css}/style.css` // Accepts arrays
+  criticalCss: `${dist.production}/style.css` // Accepts arrays
 }
 
 module.exports = {
