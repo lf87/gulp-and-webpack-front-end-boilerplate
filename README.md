@@ -47,12 +47,10 @@ If you're working with any files other than HTML, then inside config.js you'll n
 
 Don't forget to run these before sending the final build off to QA and/or production.
 
-  
-
 *  **The production flag** Run Gulp using the `--production` flag, this will - Minify CSS, Uglify JS, and Strip out all JS alert and console logs. Running this will allow you to work as normal, the major difference is that the Scripts tasks will take longer to compile.
 
 ## Primary Functions
-Below is a a brief description of each function, some of which may need to reconfiguring on a project per project basis.
+Below is a brief description of each function, all of which can be reconfigured on a project per project basis.
 
 ### Browser Sync
 **File**: server.js
@@ -60,6 +58,42 @@ Below is a a brief description of each function, some of which may need to recon
 **Default behaviour**: Launches a local development server and watches for changes to HTML and CSS. HTML is injected to the DOM when a change is made*. CSS is also injected.
 **Live HTML injection doesn't work when working with multiple pages, but will always at least fallback to page reload.*
 **Additional info**: You can configure browser sync to run through a proxy. To do this, inside server.js - Remove the `server` line, add a property for `proxy`, and update this value with the appropiate URL
+
+### Browser Sync Reload
+**File**: server.js
+**Function name**: `bsReload`  
+**Default behaviour**: This triggers a page reload, it's triggered as a callback after certain other tasks are completed
+
+### SASS
+**File**: styles.js
+**Function name**: `sass`  
+**Default behaviour**: This compiles your SASS to CSS. it will add sourcemaps to your stylesheet. and autoprefix all your styles
+**Production behaviour**: Running in production mode will exclude sourcemaps and minify/clean your CSS
+**Additional info**: SASS globbing is included, so you can includes directories with patterns such as `*/**`
+
+
+
+
+
+## Additional Tasks
+Here are a few additonal tasks that may benefit your development process
+
+### Critical CSS
+**File**: styles.js
+**Function name**: `criticalCss`  
+**Default behaviour**: This will launch Chromium and determine which styles are "above the fold" for all pages specified, and inline those styles to the head of your page. By default it will run against all HTML files inside the production folder.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 *  `$ styles` -
@@ -76,11 +110,9 @@ Below is a a brief description of each function, some of which may need to recon
 
   
 
-Here are a few additonal tasks that may benefit your development process
+
 
   
-
-*  `npm run critical` - This will inline "above the fold" CSS in to the head of your document. The CSS path(s) can be modified inside the config file, it accepts arrays for multiple stylesheets. This must be . For further help and configuration, refer to the documentation at https://github.com/addyosmani/critical
 
 *  `$ npm run clean` - Deletes all the distribution files and folders
 
