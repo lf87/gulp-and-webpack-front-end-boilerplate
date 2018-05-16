@@ -29,7 +29,6 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
     - [Clean](#clean)
   - [Updating packages](#updating-packages)
 
----
 
 ## Initial set-up
 1. Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
@@ -38,8 +37,8 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 `$ npm i gulp -g`
 
 `$ npm i gulp-cli -g`
-
----
+&nbsp;
+&nbsp;
 
 ## Configuration
 
@@ -59,7 +58,8 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 
 - **webpack.prod.config.js** - Running in production mode will trigger this config file, code uglification and minifying runs by default in this mode. It includes the workbox plugin for generating yourself a PWA - additional config is likely required to get this working effectively.
 
----
+&nbsp;
+&nbsp;
 
 ## Primary Functions
 
@@ -157,7 +157,8 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **production behaviour**: Running in production mode will use an alternative webpack config file.
 
----
+&nbsp;
+&nbsp;
 
 ## Primary Tasks
 
@@ -185,7 +186,8 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **Default behaviour**: Generates your production ready files in to the 'production' folder
 
----
+&nbsp;
+&nbsp;
 
 ## Additional Tasks
 
@@ -223,7 +225,8 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **Additional Notes**: If modifying this function, be careful not to delete your source files!
 
----
+&nbsp;
+&nbsp;
 
 ## Updating packages
 
