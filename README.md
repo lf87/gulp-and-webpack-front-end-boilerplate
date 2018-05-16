@@ -51,8 +51,9 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 
 - **.babelrc** - The preset 'env' allows you to specify which browsers babel should target when transpiling. The plugin 'transform-strict-mode' places a "use strict"; directive at the top of all files to enable strict mode.
 
-- **webpack.dev.config.js** - info
-- **webpack.prod.config.js** - info
+- **webpack.dev.config.js** - This is a basic webpack configuration, it includes the eslint module for syntax validation, the babel transpiler, and sourcemaps for your JS.
+
+- **webpack.prod.config.js** - Running in production mode will trigger this config file, code uglification and minifying runs by default in this mode. It includes the workbox plugin for generating yourself a PWA - additional config is likely required to get this working effectively.
 
 ## Primary Functions
 
