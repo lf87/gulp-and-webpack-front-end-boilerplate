@@ -3,10 +3,8 @@
 This guide will explain how to set up and use the Gulp/Webpack Front End Boilerplate.
 
 ## Initial set-up
-
-1.Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
-
-1)Install gulp and gulp-cli globally using the following commands:
+1. Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
+2. Install gulp and gulp-cli globally using the following commands:
 
 `$ npm i gulp -g`
 
@@ -25,6 +23,9 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 * **gulpfile.babel** - Use this file to define new tasks.
 
 - **.babelrc** - The preset 'env' allows you to specify which browsers babel should target when transpiling. The plugin 'transform-strict-mode' places a "use strict"; directive at the top of all files to enable strict mode.
+
+- **webpack.dev.config.js** - info
+- **webpack.prod.config.js** - info
 
 ## Primary Functions
 
