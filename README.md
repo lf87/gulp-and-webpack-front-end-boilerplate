@@ -2,6 +2,34 @@
 
 This guide will explain how to set up and use the Gulp/Webpack Front End Boilerplate.
 
+- [Gulp/Webpack workflow set up and usage guide](#gulp-webpack-workflow-set-up-and-usage-guide)
+  - [Initial set-up](#initial-set-up)
+  - [Configuration](#configuration)
+  - [Primary Functions](#primary-functions)
+    - [Browser Sync](#browser-sync)
+    - [Browser Sync Reload](#browser-sync-reload)
+    - [SASS Compiling](#sass-compiling)
+    - [Clean Production](#clean-production)
+    - [Duplicate Files](#duplicate-files)
+    - [Duplicate Production Files](#duplicate-production-files)
+    - [Fonts Compressions](#fonts-compressions)
+    - [JPG and GIF Compression](#jpg-and-gif-compression)
+    - [PNG Compression](#png-compression)
+    - [SVG Compression](#svg-compression)
+    - [Nunjucks Pages](#nunjucks-pages)
+    - [Nunjucks Templates](#nunjucks-templates)
+    - [Watch](#watch)
+    - [Webpack](#webpack)
+  - [Primary Tasks](#primary-tasks)
+    - [Development](#development)
+    - [Production](#production)
+    - [Build](#build)
+  - [Additional Tasks](#additional-tasks)
+    - [Critical CSS](#critical-css)
+    - [SCSS Lint](#scss-lint)
+    - [Clean](#clean)
+  - [Updating packages](#updating-packages)
+
 ## Initial set-up
 1. Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
 2. Install gulp and gulp-cli globally using the following commands:
@@ -35,9 +63,7 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **Function name**: `bs`
 
-**Default behaviour**: Launches a local development server and watches for changes to HTML and CSS. HTML is injected to the DOM when a change is made\*. CSS is also injected.
-
-\*\*Live HTML injection doesn't work when working with multiple pages, but will always at least fall back to page reload.\*
+**Default behaviour**: Launches a local development server and watches for changes to HTML and CSS. HTML is injected to the DOM when a change is made. CSS is also injected.
 
 **Additional info**: You can configure browser sync to run through a proxy. To do this, inside server.js - Remove the `server` line, add a property for `proxy`, and update this value with the appropriate URL.
 
