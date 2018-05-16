@@ -29,6 +29,8 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
     - [Clean](#clean)
   - [Updating packages](#updating-packages)
 
+---
+
 ## Initial set-up
 1. Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
 2. Install gulp and gulp-cli globally using the following commands:
@@ -36,6 +38,8 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 `$ npm i gulp -g`
 
 `$ npm i gulp-cli -g`
+
+---
 
 ## Configuration
 
@@ -54,6 +58,8 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 - **webpack.dev.config.js** - This is a basic webpack configuration, it includes the eslint module for syntax validation, the babel transpiler, and sourcemaps for your JS.
 
 - **webpack.prod.config.js** - Running in production mode will trigger this config file, code uglification and minifying runs by default in this mode. It includes the workbox plugin for generating yourself a PWA - additional config is likely required to get this working effectively.
+
+---
 
 ## Primary Functions
 
@@ -151,6 +157,8 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **production behaviour**: Running in production mode will use an alternative webpack config file.
 
+---
+
 ## Primary Tasks
 
 ### Development
@@ -176,6 +184,8 @@ Below is a brief description of each function, all of which can be reconfigured 
 **Command**: npm run build
 
 **Default behaviour**: Generates your production ready files in to the 'production' folder
+
+---
 
 ## Additional Tasks
 
@@ -212,6 +222,8 @@ Below is a brief description of each function, all of which can be reconfigured 
 **Default behaviour**: Cleans all your distribution files and folders.
 
 **Additional Notes**: If modifying this function, be careful not to delete your source files!
+
+---
 
 ## Updating packages
 
