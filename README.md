@@ -29,6 +29,8 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
     - [Clean](#clean)
   - [Updating packages](#updating-packages)
 
+&nbsp;
+&nbsp;
 
 ## Initial set-up
 1. Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
@@ -37,6 +39,7 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 `$ npm i gulp -g`
 
 `$ npm i gulp-cli -g`
+
 &nbsp;
 &nbsp;
 
