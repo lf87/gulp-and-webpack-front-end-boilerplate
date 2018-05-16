@@ -2,7 +2,6 @@
 
 This guide will explain how to set up and use the Gulp/Webpack Front End Boilerplate.
 
-- [Gulp/Webpack workflow set up and usage guide](#gulp-webpack-workflow-set-up-and-usage-guide)
   - [Initial set-up](#initial-set-up)
   - [Configuration](#configuration)
   - [Primary Functions](#primary-functions)
