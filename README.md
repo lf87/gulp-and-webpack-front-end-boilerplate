@@ -32,8 +32,6 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### Browser Sync
 
-**File**: server.js
-
 **Function name**: `bs`
 
 **Default behaviour**: Launches a local development server and watches for changes to HTML and CSS. HTML is injected to the DOM when a change is made\*. CSS is also injected.
@@ -44,15 +42,11 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### Browser Sync Reload
 
-**File**: server.js
-
 **Function name**: `bsReload`
 
 **Default behaviour**: This triggers a page reload, it's triggered as a callback after certain other functions are complete.
 
 ### SASS Compiling
-
-**File**: styles.js
 
 **Function name**: `sass`
 
@@ -62,15 +56,11 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### Clean Production
 
-**File**: clean.js
-
 **Function name**: `cleanProd`
 
 **Default behaviour**: Cleans all your production files and folders. This will run automatically before running the 'build' task.
 
 ### Duplicate Files
-
-**File**: duplicate-files.js
 
 **Function name**: `duplicateFiles`
 
@@ -78,15 +68,11 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### Duplicate Production Files
 
-**File**: duplicate-files.js
-
 **Function name**: `duplicateProdFiles`
 
 **Default behaviour**: Duplicates any files/folders located in the distribution directory in to the production folder. This function runs when the 'build' task is run.
 
 ### Fonts Compressions
-
-**File**: fonts.js
 
 **Function name**: `fonts`
 
@@ -94,15 +80,11 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### JPG and GIF Compression
 
-**File**: images.js
-
 **Function name**: `images`
 
 **Default behaviour**: Compresses images. Make sure to save for web in PS first.
 
 ### PNG Compression
-
-**File**: images.js
 
 **Function name**: `imagesPng`
 
@@ -110,15 +92,11 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### SVG Compression
 
-**File**: images.js
-
 **Function name**: `svgs`
 
 **Default behaviour**: Strips out unnecessary meta data, minifies, and compresses SVG code.
 
 ### Nunjucks Pages
-
-**File**: templating.js
 
 **Function name**: `nunjucksPages`
 
@@ -126,7 +104,7 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **Additional Info**: It's not configured by default to accept multiple JSON files.
 
-**File**: templating.js
+### Nunjucks Templates
 
 **Function name**: `nunjucksTemplates`
 
@@ -134,15 +112,11 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### Watch
 
-**File**: watch.js
-
 **Function name**: `watch`
 
 **Default behaviour**: Waits for activity inside the specified folders and will run the relevant functions once a change has been detected.
 
 ### Webpack
-
-**File**: webpack.js
 
 **Function name**: `webpack`
 
@@ -180,8 +154,6 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### Critical CSS
 
-**File**: styles.js
-
 **Function name**: `criticalCss`
 
 **Task name**: `critical-css`
@@ -194,8 +166,6 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 ### SCSS Lint
 
-**File**: styles.js
-
 **Function name**: `scssLint`
 
 **Task name**: `scss-lint`
@@ -205,8 +175,6 @@ Below is a brief description of each function, all of which can be reconfigured 
 **Default behaviour**: Checks SCSS for errors and warns of any bad practices - This requires ruby. Run `$ gem install scss_lint scss_lint_reporter_checkstyle` to install the required files. The default location for lint reports is at the gulpfile root level inside '/reports'
 
 ### Clean
-
-**File**: clean.js
 
 **Function name**: `clean`
 
