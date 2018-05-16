@@ -1,8 +1,8 @@
 import util from 'gulp-util'
 
 // Disable or enable pop up notifications
-const notifications = false
-if (notifications) {
+const notifications = true
+if (!notifications) {
   process.env.DISABLE_NOTIFIER = true // Uncomment to disables all notifications
 }
 
