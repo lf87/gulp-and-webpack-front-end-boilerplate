@@ -35,10 +35,17 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 ## Initial set-up
 1. Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
 2. Install gulp and gulp-cli globally using the following commands:
+3. CD into project folder
+4. Install ruby + gem for scss linting
+5. Install npm packages
 
 `$ npm i gulp -g`
 
 `$ npm i gulp-cli -g`
+
+`$ gem install scss_lint scss_lint_reporter_checkstyle`
+
+`$ npm i`
 
 &nbsp;
 &nbsp;
