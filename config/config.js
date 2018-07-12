@@ -29,7 +29,7 @@ const src = {
 const dist = {
   pages: `${root}/${dest}`,
   css: `${root}/${dest}`,
-  static: `${root}/${dest}/${assets}`,
+  static: `${root}/${dest}`,
   webpack: `${root}/${dest}/${assets}/js`,
   img: `${root}/${dest}/${assets}/img`,
   svg: `${root}/${dest}/${assets}/img/svgs`,
