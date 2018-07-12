@@ -35,6 +35,7 @@ const build = gulp.parallel(nunjucksPages, sass, webpackBundle, images, imagesPn
 const run = gulp.parallel(bs, watch)
 
 // Additional tasks that may/will need to be run individually
+gulp.task('server', gulp.series(bs))
 gulp.task('clean', gulp.series(clean))
 gulp.task('critical', gulp.series(criticalCss))
 gulp.task('scss-lint', gulp.series(scssLint))

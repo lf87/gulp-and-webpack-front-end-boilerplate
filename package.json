@@ -13,7 +13,9 @@
     "build": "gulp build --production",
     "clean": "gulp clean",
     "critical": "gulp critical",
-    "scss-lint": "gulp scss-lint"
+    "scss-lint": "gulp scss-lint",
+    "server": "gulp server"
+
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
