@@ -22,7 +22,7 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: [['env', {modules: false}]]
+          presets: [['env', {modules: false}]] // .babelrc to specify browser support | modules: false enables tree shaking
         }
       }
     ]
