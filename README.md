@@ -107,13 +107,13 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **Function name**: `duplicateFiles`
 
-**Default behaviour**: Duplicates any files/folders located in the src/static directory in to the distribution folder.
+**Default behaviour**: Copies any files/folders located in the src/static directory in to the root of the distribution folder.
 
 ### Duplicate Production Files
 
 **Function name**: `duplicateProdFiles`
 
-**Default behaviour**: Duplicates any files/folders located in the distribution directory in to the production folder. This function runs when the 'build' task is run.
+**Default behaviour**: Copies any files/folders located in the distribution directory in to the production folder. This function runs when the 'build' task is run.
 
 ### Fonts Compressions
 
