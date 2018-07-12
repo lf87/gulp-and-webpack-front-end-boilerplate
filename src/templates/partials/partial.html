@@ -1,10 +1,10 @@
 {# This is an example of how to loop through data whilst null checking#}
 
-{% if item.list %}
+{% if page.copy %}
   {% set var = page.copy.copy1 %}
   {% for var, item in page.copy %}
     <span>
-      {{ item | safe}}
+      <br> {{ item | safe}} <br>
     </span>
   {% endfor %}
 {% endif %}
