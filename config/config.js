@@ -30,7 +30,7 @@ const dist = {
   pages: `${root}/${dest}`,
   css: `${root}/${dest}`,
   static: `${root}/${dest}`,
-  webpack: `${root}/${dest}/${assets}/js`,
+  webpack: `${root}/${dest}`,
   img: `${root}/${dest}/${assets}/img`,
   svg: `${root}/${dest}/${assets}/img/svgs`,
   fonts: `${root}/${dest}/${assets}/fonts`,
