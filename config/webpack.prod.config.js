@@ -1,5 +1,6 @@
 // webpack.config.js
 const {GenerateSW} = require('workbox-webpack-plugin')
+const Config = require('./config')
 
 module.exports = {
   output: {
@@ -20,6 +21,12 @@ module.exports = {
   },
   plugins: [
     // Workbox - Generate Service Worker
-    new GenerateSW()
+    new GenerateSW({
+      globDirectory: Config.dest,
+      globPatterns: [
+        '**/*.{html,js,css,png,jpg,svg}'
+      ],
+      swDest: 'sw.js'
+    })
   ]
 }
