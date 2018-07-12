@@ -1,37 +1,24 @@
-@function calculate-rem($size) {
-  $rem-size: $size / 16px;
-  @return $rem-size * 1rem;
+@function calculateRem($size) {
+  $remSize: $size / 16px;
+  @return #{$remSize}rem;
 }
 
-@mixin font-size($size: 14, $line: $size * 1.65) {
+@mixin font-size($size, $line: $size * 1.5) {
   font-size: $size;
   line-height: $line;
-  font-size: calculate-rem($size);
-  line-height: calculate-rem($line);
-}
-
-@mixin font-size-heading($size: 14, $line: $size * 1.15) {
-  font-size: $size;
-  line-height: $line;
-  font-size: calculate-rem($size);
-  line-height: calculate-rem($line);
+  font-size: calculateRem($size);
 }
 
 // Fonts
-@mixin arial($weight: normal, $style: normal) {
-  font-family: Arial, Helvetica, sans-serif;
+// 400, 400i, and 700
+@mixin libre($weight: 400, $style: normal) {
+  font-family: 'Libre Baskerville', serif;
   font-weight: $weight;
-  font-style: $style;
 }
 
-@mixin helvetica($weight: normal, $style: normal) {
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: $weight;
-  font-style: $style;
-}
-
-@mixin montserrat($weight: 400, $style: normal) {
-  font-family: 'Montserrat', sans-serif;
+// 400, and 600
+@mixin sofia($weight: 400, $style: normal) {
+  font-family: 'sofia-pro', sans-serif;
   font-weight: $weight;
   font-style: $style;
 }
@@ -41,7 +28,8 @@
   @if $value==antialiased {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-  } @else {
+  }
+  @else {
     -moz-osx-font-smoothing: auto;
     -webkit-font-smoothing: subpixel-antialiased;
   }
@@ -49,65 +37,34 @@
 
 // Mobile first Breakpoints
 @mixin bp-xl {
-  @media only screen and (min-width: 1400px) {
+  @media only screen and (min-width: $bp-xl) {
     @content;
   }
 }
 
 @mixin bp-lg {
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: $bp-lg) {
     @content;
   }
 }
 
 @mixin bp-md {
-  @media only screen and (min-width: 991px) {
+  @media only screen and (min-width: $bp-md) {
     @content;
   }
 }
 
 @mixin bp-sm {
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: $bp-sm) {
     @content;
   }
 }
 
 @mixin bp-xs {
-  @media only screen and (min-width: 480px) {
+  @media only screen and (min-width: $bp-xs) {
     @content;
   }
 }
-
-// Non mobile first Breakpoints
-// @mixin bp-lg {
-//   @media only screen and (max-width: 1200px) {
-//       @content;
-//   }
-// }
-
-// @mixin bp-md {
-//   @media only screen and (max-width: 992px) {
-//       @content;
-//   }
-// }
-
-// @mixin bp-sm {
-//   @media only screen and (max-width: 767px) {
-//       @content;
-//   }
-// }
-
-// @mixin bp-xs {
-//   @media only screen and (max-width: 479px) {
-//       @content;
-//   }
-// }
-
-// @mixin bp-xxs {
-//   @media only screen and (max-width: 320px) {
-//       @content;
-//   }
-// }
 
 // Misc Breakpoints
 @mixin bp-height-xs {
@@ -190,6 +147,7 @@
   outline: none;
 }
 
+// Add brightness filter on hover/active
 @mixin hover-brightness {
   will-change: filter;
   transition: filter 0.25s ease;
