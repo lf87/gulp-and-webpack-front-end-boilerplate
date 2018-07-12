@@ -18,7 +18,7 @@ rules:
   no-multiple-empty-lines: [2, {"max": 1}]
   no-console: "off"
 
-  brace-style: [2, "stroustrup"]
+  // brace-style: [2, "stroustrup"]
   // comma-dangle: [2, "always-multiline"]
   comma-style: [2, "last"]
   computed-property-spacing: [2, "never"]
@@ -34,6 +34,5 @@ rules:
   space-unary-ops: [2, {"words": true, "nonwords": false}]
   keyword-spacing: [2, {"after": true}]
   space-before-blocks: [2, "always"]
-  space-before-function-paren: [2, "never"]
   space-in-parens: [2, "never"]
   spaced-comment: [2, "always"]
