@@ -2,42 +2,69 @@
 
 This guide will explain how to set up and use the Gulp/Webpack Front End Boilerplate.
 
-  - [Initial set-up](#initial-set-up)
-  - [Configuration](#configuration)
-  - [Primary Functions](#primary-functions)
-    - [Browser Sync](#browser-sync)
-    - [Browser Sync Reload](#browser-sync-reload)
-    - [SASS Compiling](#sass-compiling)
-    - [Clean Production](#clean-production)
-    - [Duplicate Files](#duplicate-files)
-    - [Duplicate Production Files](#duplicate-production-files)
-    - [Fonts Compressions](#fonts-compressions)
-    - [JPG and GIF Compression](#jpg-and-gif-compression)
-    - [PNG Compression](#png-compression)
-    - [SVG Compression](#svg-compression)
-    - [Nunjucks Pages](#nunjucks-pages)
-    - [Nunjucks Templates](#nunjucks-templates)
-    - [Watch](#watch)
-    - [Webpack](#webpack)
-  - [Primary Tasks](#primary-tasks)
-    - [Development](#development)
-    - [Production](#production)
-    - [Build](#build)
-  - [Additional Tasks](#additional-tasks)
-    - [Critical CSS](#critical-css)
-    - [SCSS Lint](#scss-lint)
-    - [Clean](#clean)
-  - [Updating packages](#updating-packages)
+- [Initial set-up](#initial-set-up)
 
-&nbsp;
-&nbsp;
+* [Configuration](#configuration)
+
+- [Primary Functions](#primary-functions)
+
+* [Browser Sync](#browser-sync)
+
+- [Browser Sync Reload](#browser-sync-reload)
+
+* [SASS Compiling](#sass-compiling)
+
+- [Clean Production](#clean-production)
+
+* [Duplicate Files](#duplicate-files)
+
+- [Duplicate Production Files](#duplicate-production-files)
+
+* [Fonts Compressions](#fonts-compressions)
+
+- [JPG and GIF Compression](#jpg-and-gif-compression)
+
+* [PNG Compression](#png-compression)
+
+- [SVG Compression](#svg-compression)
+
+* [Nunjucks Pages](#nunjucks-pages)
+
+- [Nunjucks Templates](#nunjucks-templates)
+
+* [Watch](#watch)
+
+- [Webpack](#webpack)
+
+* [Primary Tasks](#primary-tasks)
+
+- [Development](#development)
+
+* [Production](#production)
+
+- [Build](#build)
+
+* [Additional Tasks](#additional-tasks)
+
+- [Critical CSS](#critical-css)
+
+* [SCSS Lint](#scss-lint)
+
+- [Clean](#clean)
+
+* [Updating packages](#updating-packages)
 
 ## Initial set-up
-1. Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
-2. Install gulp and gulp-cli globally using the following commands:
-3. CD into project folder
-4. Install ruby + gem for scss linting
-5. Install npm packages
+
+1.  Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
+
+2)  Install gulp and gulp-cli globally using the following commands:
+
+3.  CD into project folder
+
+4)  Install ruby + gem for scss linting
+
+5.  Install npm packages
 
 `$ npm i gulp -g`
 
@@ -47,29 +74,23 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 
 `$ npm i`
 
-&nbsp;
-&nbsp;
-
 ## Configuration
 
-* **Files and Folders** - The folder structure is defined inside 'config/config.js'. Edit this file to suit your environment. If you're working with any files other than HTML, then you'll need to update the `fileExt` variable.
+- **Files and Folders** - The folder structure is defined inside 'config/config.js'. Edit this file to suit your environment. If you're working with any files other than HTML, then you'll need to update the `fileExt` variable.
 
-- **Notifications** - Notifications only show when there's an error. If you'd like to completely disable notifications you can do so by setting the 'notifications' variable in your 'gulpfile.js' to false.
+* **Notifications** - Notifications only show when there's an error. If you'd like to completely disable notifications you can do so by setting the 'notifications' variable in your 'gulpfile.js' to false.
 
-* **.eslintignore** - Set to ignore the distribution folder and node_modules folder, but it may be necessary to add an exclusion for any vendor scripts not added through NPM.
+- **.eslintignore** - Set to ignore the distribution folder and node_modules folder, but it may be necessary to add an exclusion for any vendor scripts not added through NPM.
 
-- **.eslintrc** - Completely configurable, meaning you can turn off every rule and run only with basic syntax validation, or mix and match the bundled rules and your custom rules to make ESLint perfect for your project.
+* **.eslintrc** - Completely configurable, meaning you can turn off every rule and run only with basic syntax validation, or mix and match the bundled rules and your custom rules to make ESLint perfect for your project.
 
-* **gulpfile.babel** - Use this file to define new tasks.
+- **gulpfile.babel** - Use this file to define new tasks.
 
-- **.babelrc** - The preset 'env' allows you to specify which browsers babel should target when transpiling. The plugin 'transform-strict-mode' places a "use strict"; directive at the top of all files to enable strict mode.
+* **.babelrc** - The preset 'env' allows you to specify which browsers babel should target when transpiling. The plugin 'transform-strict-mode' places a "use strict"; directive at the top of all files to enable strict mode.
 
 - **webpack.dev.config.js** - This is a basic webpack configuration, it includes the eslint module for syntax validation, the babel transpiler, and sourcemaps for your JS.
 
-- **webpack.prod.config.js** - Running in production mode will trigger this config file, code uglification and minifying runs by default in this mode. It includes the workbox plugin for generating yourself a PWA - additional config is likely required to get this working effectively.
-
-&nbsp;
-&nbsp;
+* **webpack.prod.config.js** - Running in production mode will trigger this config file, code uglification and minifying runs by default in this mode. It includes the workbox plugin for generating yourself a PWA - additional config may be required to get this working as expected.
 
 ## Primary Functions
 
@@ -107,13 +128,13 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **Function name**: `duplicateFiles`
 
-**Default behaviour**: Copies any files/folders located in the src/static directory in to the root of the distribution folder.
+**Default behaviour**: Duplicates any files/folders located in the src/static directory in to the distribution folder.
 
 ### Duplicate Production Files
 
 **Function name**: `duplicateProdFiles`
 
-**Default behaviour**: Copies any files/folders located in the distribution directory in to the production folder. This function runs when the 'build' task is run.
+**Default behaviour**: Duplicates any files/folders located in the distribution directory in to the production folder. This function runs when the 'build' task is run.
 
 ### Fonts Compressions
 
@@ -167,9 +188,6 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **production behaviour**: Running in production mode will use an alternative webpack config file.
 
-&nbsp;
-&nbsp;
-
 ## Primary Tasks
 
 ### Development
@@ -195,9 +213,6 @@ Below is a brief description of each function, all of which can be reconfigured 
 **Command**: npm run build
 
 **Default behaviour**: Generates your production ready files in to the 'production' folder
-
-&nbsp;
-&nbsp;
 
 ## Additional Tasks
 
@@ -234,9 +249,6 @@ Below is a brief description of each function, all of which can be reconfigured 
 **Default behaviour**: Cleans all your distribution files and folders.
 
 **Additional Notes**: If modifying this function, be careful not to delete your source files!
-
-&nbsp;
-&nbsp;
 
 ## Updating packages
 
