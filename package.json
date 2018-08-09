@@ -15,7 +15,6 @@
     "critical": "gulp critical",
     "scss-lint": "gulp scss-lint",
     "server": "gulp server"
-
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -46,10 +45,10 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-svgmin": "^1.2.4",
     "gulp-util": "^3.0.8",
-    "imagemin-pngquant": "^5.0.1",
+    "imagemin-pngquant": "^6.0.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.16.0",
-    "webpack-stream": "^4.0.3",
+    "webpack-stream": "^5.1.1",
     "workbox-webpack-plugin": "^3.3.1"
   },
   "dependencies": {
