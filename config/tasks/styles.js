@@ -5,7 +5,7 @@ import scsslint from 'gulp-scss-lint'
 import sourcemaps from 'gulp-sourcemaps'
 import gutil from 'gulp-util'
 import autoprefixer from 'gulp-autoprefixer'
-import cleanCSS from 'gulp-clean-css'
+import csso from 'gulp-csso'
 import notify from 'gulp-notify'
 import sassGlob from 'gulp-sass-glob'
 
@@ -26,7 +26,7 @@ export function sass() {
       browsers: ['last 2 versions', 'ie 6-10'],
       cascade: false
     }))
-    .pipe(Config.config.production ? cleanCSS({
+    .pipe(Config.config.production ? csso({
       debug: true
     }, function(details) {
       console.log(`${details.name} file size before: ${details.stats.originalSize} bytes`)
