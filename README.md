@@ -92,6 +92,14 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 
 * **webpack.prod.config.js** - Running in production mode will trigger this config file, code uglification and minifying runs by default in this mode. It includes the workbox plugin for generating yourself a PWA - additional config may be required to get this working as expected.
 
+## Folder structure
+
+By default all project files go in the 'src' folder, and distributed files in to the 'dist' folder. Folders within 'src' can be deleted if not required. Anything that is put inside the 'static' folder will be duplicated in to the 'dist' folder e.g. 'src/static/assets/video/vid1.ogv' would be processed and added to 'dist' as 'dist/assets/video/vid1.ogv'.
+
+## Updating packages
+
+You can update packages with the `$ ncu -u` command, but run `$ ncu` first to check the current and most recent version. Please refer to the plugin page for more information: https://www.npmjs.com/package/npm-check-updates
+
 ## Primary Functions
 
 Below is a brief description of each function, all of which can be reconfigured on a project per project basis. For further information please see the package documentation.
@@ -248,8 +256,4 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **Default behaviour**: Cleans all your distribution files and folders.
 
-**Additional Notes**: If modifying this function, be careful not to delete your source files!
-
-## Updating packages
-
-You can update packages with the `$ ncu -u` command, or just `$ ncu` to check the current and most recent version. Please refer to this for my information: https://www.npmjs.com/package/npm-check-updates
+**Additional Notes**: If modifying this function, be careful not to delete your source files
