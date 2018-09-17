@@ -5,7 +5,7 @@ const Config = require('../config')
 
 export function watch() {
   gulp.watch(Config.src.pages, gulp.series('nunjucksPages'))
-  gulp.watch([Config.src.templates, Config.src.dataFile], gulp.series('nunjucksTemplates'))
+  gulp.watch([Config.src.templates, Config.src.dataFile], gulp.series('nunjucksTemplates', 'bsReload'))
   gulp.watch(Config.config.pagesWatch, gulp.series(htmlInjector))
   gulp.watch(Config.src.scss, gulp.series('sass'))
   gulp.watch(Config.src.webpack, gulp.series('webpackBundle', 'bsReload'))
