@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.4",
+    "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.24.5",
     "bs-html-injector": "^3.0.3",
@@ -28,7 +28,7 @@
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.0.0",
     "fs": "0.0.1-security",
-    "gulp": "4.0",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-changed": "^3.1.0",
     "gulp-csso": "^3.0.1",
