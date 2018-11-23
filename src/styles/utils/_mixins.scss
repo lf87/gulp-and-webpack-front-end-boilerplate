@@ -41,8 +41,4 @@
   will-change: $type;
   backface-visibility: hidden;
   transition: $type $speed $easing;
-  &:hover,
-  &:active {
-    filter: brightness(1.05);
-  }
 }
