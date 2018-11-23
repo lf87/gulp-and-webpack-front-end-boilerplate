@@ -1,0 +1,97 @@
+// Breakpoints - Mobile first
+$breakpoints:(
+'0': 0,
+'xs': 480px,
+'sm': 768px,
+'md': 991px,
+'lg': 1200px,
+'xl': 1800px
+);
+
+// Media queries
+@mixin bp($bp, $rule: min-width) {
+  @media screen and (#{$rule}: map-get($breakpoints, $bp)) {
+    @content;
+  }
+}
+
+// Usage Example
+// body {
+//   @include bp(xs) {
+//     background-color: grey;
+//   }
+//   @include bp(lg, max-height) {
+//     background-color: green;
+//   }
+// }
+
+// Media queries - Hotfixes
+@mixin bp-horizontal {
+  @media only screen and (max-height: 550px) and (max-width: 767px) {
+    @content;
+  }
+}
+
+// Spacing
+$spacing-value: 15px;
+
+$spacing-modifiers:(
+'0': 1,
+'xs': 2,
+'sm': 3,
+'md': 4,
+'lg': 5,
+'xl': 6
+);
+
+@mixin spacing($type: padding, $direction: all) {
+  @each $bp, $modifier in $spacing-modifiers {
+    @media screen and (min-width: map-get($breakpoints, $bp)) {
+      $val: calc(#{$spacing-value}*#{$modifier});
+      @if $direction==all {
+        #{$type}-top: $val;
+        #{$type}-right: $val;
+        #{$type}-bottom: $val;
+        #{$type}-left: $val;
+      }
+      @if $direction==horizontal {
+        #{$type}-right: $val;
+        #{$type}-left: $val;
+      }
+      @if $direction==vertical {
+        #{$type}-right: $val;
+        #{$type}-left: $val;
+      }
+      @if $direction==top {
+        #{$type}-top: $val;
+      }
+      @if $direction==right {
+        #{$type}-right: $val;
+      }
+      @if $direction==bottom {
+        #{$type}-bottom: $val;
+      }
+      @if $direction==left {
+        #{$type}-left: $val;
+      }
+      @if $direction==top-horizontal {
+        #{$type}-top: $val;
+        #{$type}-right: $val;
+        #{$type}-left: $val;
+      }
+      @if $direction==bottom-horizontal {
+        #{$type}-right: $val;
+        #{$type}-bottom: $val;
+        #{$type}-left: $val;
+      }
+    }
+  }
+}
+
+// Usage Example
+// body {
+//   @include spacing;
+//   @include spacing(margin);
+//   @include spacing(margin, right);
+//   @include spacing(margin, bottom-horizontal);
+// }
