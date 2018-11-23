@@ -1,1 +1,12 @@
+body {
+  @include bp(xs) {
+    background-color: grey;
+  }
+  @include bp(lg, max-height) {
+    background-color: green;
+  }
+}
 
+body {
+  @include spacing(xs);
+}

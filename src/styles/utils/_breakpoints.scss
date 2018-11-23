@@ -1,0 +1,49 @@
+
+// Breakpoints - Mobile first
+$breakpoints:(
+  'xs': 480px,
+  'sm': 768px,
+  'md': 991px,
+  'lg': 1200px,
+  'xl': 1800px
+);
+
+// Media queries
+@mixin bp($bp, $rule: min-width) {
+  @media screen and (#{$rule}: map-get($breakpoints, $bp)) {
+    @content;
+  }
+}
+
+// Media queries - Hotfixes
+@mixin bp-horizontal {
+  @media only screen and (max-height: 550px) and (max-width: 767px) {
+    @content;
+  }
+}
+
+$gutter-unit: px;
+
+$gutter-size: 15;
+
+$gutter-modifiers:(
+  'xs': 1,
+  'sm': 1.5,
+  'md': 2,
+  'lg': 2.5
+);
+@mixin spacing($modifier, $rule: padding) {
+  @each $bp, $modifier in $gutter-modifiers {
+    padding: $modifier;
+  }
+}
+
+// Usage Examples
+// body {
+//   @include bp(xs) {
+//     background-color: grey;
+//   }
+//   @include bp(lg, max-height) {
+//     background-color: green;
+//   }
+// }

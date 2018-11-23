@@ -1,0 +1,91 @@
+// $gutter-unit: px;
+
+// $gutter-size: 15;
+
+// $gutter-modifiers:(
+//   'xs': 1,
+//   'sm': 1.5,
+//   'md': 2,
+//   'lg': 2.5
+// );
+
+
+// Map of breakpoints and modifiers
+// $breakpoint-modifiers: ($bp-xs: $gutter-modifier-xs, $bp-sm: $gutter-modifier-sm, $bp-md: $gutter-modifier-md, $bp-lg: $gutter-modifier-lg);
+
+// Spacing mixin to create uniform margins and paddings
+// @mixin spacing( $type: padding, $direction: all, $value: $gutter-size + $gutter-unit) {
+//   @if $direction==vertical {
+//     #{$type}-top: $value;
+//     #{$type}-bottom: $value;
+//     @each $breakpointVariable, $breakpointModifier in $breakpoints {
+//       $valueModified: calc(#{$value} * #{$breakpointModifier});
+//       @media only screen and (min-width: #{$breakpointVariable}) {
+//         #{$type}-top: $valueModified;
+//         #{$type}-bottom: $valueModified;
+//       }
+//     }
+//   }
+//   @if $direction==horizontal {
+//     #{$type}-right: $value;
+//     #{$type}-left: $value;
+//     @each $breakpointVariable, $breakpointModifier in $breakpoints {
+//       $valueModified: calc(#{$value} * #{$breakpointModifier});
+//       @media only screen and (min-width: #{$breakpointVariable}) {
+//         #{$type}-right: $valueModified;
+//         #{$type}-left: $valueModified;
+//       }
+//     }
+//   }
+//   @if $direction==all {
+//     #{$type}-top: $value;
+//     #{$type}-right: $value;
+//     #{$type}-bottom: $value;
+//     #{$type}-left: $value;
+//     @each $breakpointVariable, $breakpointModifier in $breakpoints {
+//       $valueModified: calc(#{$value} * #{$breakpointModifier});
+//       @media only screen and (min-width: #{$breakpointVariable}) {
+//         #{$type}-top: $valueModified;
+//         #{$type}-right: $valueModified;
+//         #{$type}-bottom: $valueModified;
+//         #{$type}-left: $valueModified;
+//       }
+//     }
+//   }
+//   @if $direction==top {
+//     #{$type}-top: $value;
+//     @each $breakpointVariable, $breakpointModifier in $breakpoints {
+//       $valueModified: calc(#{$value} * #{$breakpointModifier});
+//       @media only screen and (min-width: #{$breakpointVariable}) {
+//         #{$type}-top: $valueModified;
+//       }
+//     }
+//   }
+//   @if $direction==right {
+//     #{$type}-right: $value;
+//     @each $breakpointVariable, $breakpointModifier in $breakpoints {
+//       $valueModified: calc(#{$value} * #{$breakpointModifier});
+//       @media only screen and (min-width: #{$breakpointVariable}) {
+//         #{$type}-right: $valueModified;
+//       }
+//     }
+//   }
+//   @if $direction==bottom {
+//     #{$type}-bottom: $value;
+//     @each $breakpointVariable, $breakpointModifier in $breakpoints {
+//       $valueModified: calc(#{$value} * #{$breakpointModifier});
+//       @media only screen and (min-width: #{$breakpointVariable}) {
+//         #{$type}-bottom: $valueModified;
+//       }
+//     }
+//   }
+//   @if $direction==left {
+//     #{$type}-left: $value;
+//     @each $breakpointVariable, $breakpointModifier in $breakpoints {
+//       $valueModified: calc(#{$value} * #{$breakpointModifier});
+//       @media only screen and (min-width: #{$breakpointVariable}) {
+//         #{$type}-left: $valueModified;
+//       }
+//     }
+//   }
+// }
