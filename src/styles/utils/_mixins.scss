@@ -10,14 +10,14 @@
   font-size: calculateRem($size);
 }
 
-// Fonts
+// @include font-name
 // List all weights here e.g. 400i, 400, 500, 700
-@mixin google-font($weight: 400, $style: normal) {
+@mixin font-name($weight: 400, $style: normal) {
   font-family: 'Google Font', serif;
   font-weight: $weight;
 }
 
-// Font smoothing
+// @include font-smoothing
 @mixin font-smoothing($value: antialiased) {
   @if $value==antialiased {
     -moz-osx-font-smoothing: grayscale;
@@ -29,16 +29,39 @@
   }
 }
 
-// Remove tap highlight on touch devices
-@mixin remove-highlight {
+// @include remove-tap-highlight
+@mixin remove-tap-highlight {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
   -webkit-tap-highlight-color: transparent !important;
   outline: none;
 }
 
-// Transitions
+// @include transitions
 @mixin transition($type: transform, $speed: .2s, $easing: ease) {
   will-change: $type;
   backface-visibility: hidden;
   transition: $type $speed $easing;
+}
+
+// @include responsive-ratio(16,9);
+@mixin responsive-ratio($x,$y, $pseudo: false) {
+  $padding: unquote( ( $y / $x ) * 100 + '%' );
+  @if $pseudo {
+    &:before {
+      @include pseudo($pos: relative);
+      width: 100%;
+      padding-top: $padding;
+    }
+  } @else {
+    padding-top: $padding;
+  }
+}
+
+// @include input-placeholder {}
+@mixin input-placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
 }

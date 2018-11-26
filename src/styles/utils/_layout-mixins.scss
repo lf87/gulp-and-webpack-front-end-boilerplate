@@ -1,0 +1,57 @@
+//  @include bp(lg, max)
+@mixin bp($width, $type: min) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  } @else {
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}
+
+// @include bp-horizontal
+@mixin bp-horizontal {
+  @media only screen and (max-height: 550px) and (max-width: 767px) {
+    @content;
+  }
+}
+
+// @include spacing(t, t, t, t, margin);
+@mixin spacing($t, $r, $b, $l, $type: padding) {
+  @if $t {
+    #{$type}-top: $spacing;
+  }
+  @if $r {
+    #{$type}-right: $spacing;
+  }
+  @if $b {
+    #{$type}-bottom: $spacing;
+  }
+  @if $l {
+    #{$type}-left: $spacing;
+  }
+  @each $bp, $modifier in $spacing-multipliers {
+    @media screen and (min-width: map-get($breakpoints, $bp)) {
+      $val: calc(#{$spacing}*#{$modifier});
+      @if $t {
+        #{$type}-top: $val;
+      }
+      @if $r {
+        #{$type}-right: $val;
+      }
+      @if $b {
+        #{$type}-bottom: $val;
+      }
+      @if $l {
+        #{$type}-left: $val;
+      }
+    }
+  }
+}
+
