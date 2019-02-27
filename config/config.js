@@ -21,7 +21,7 @@ const src = {
   webpack: `${root}/${source}/scripts/**/*.js`,
   img: `${root}/${source}/img/**/*.{jpg,gif}`,
   imgPng: `${root}/${source}/img/**/*.png`,
-  svg: `${root}/${source}/img/svgs/**/*.svg`,
+  svg: `${root}/${source}/img/svg/**/*.svg`,
   fonts: `${root}/${source}/fonts/**/*`,
   static: `${root}/${source}/static/**/*`
 }
@@ -32,7 +32,7 @@ const dist = {
   static: `${root}/${dest}`,
   webpack: `${root}/${dest}`,
   img: `${root}/${dest}/${assets}/img`,
-  svg: `${root}/${dest}/${assets}/img/svgs`,
+  svg: `${root}/${dest}/${assets}/img/svg`,
   fonts: `${root}/${dest}/${assets}/fonts`,
   production: `${root}/production`
 }
