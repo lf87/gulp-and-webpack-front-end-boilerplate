@@ -14,7 +14,7 @@
 // @include font-name
 // List all weights here e.g. 400i, 400, 500, 700
 @mixin font-name($weight: 400, $style: normal) {
-  font-family: 'Google Font', serif;
+  font-family: "Google Font", serif;
   font-weight: $weight;
 }
 
@@ -23,8 +23,7 @@
   @if $value==antialiased {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-  }
-  @else {
+  } @else {
     -moz-osx-font-smoothing: auto;
     -webkit-font-smoothing: subpixel-antialiased;
   }
@@ -38,15 +37,15 @@
 }
 
 // @include transitions
-@mixin transition($type: transform, $speed: .2s, $easing: ease) {
+@mixin transition($type: transform, $speed: 0.2s, $easing: ease) {
   will-change: $type;
   backface-visibility: hidden;
   transition: $type $speed $easing;
 }
 
 // @include responsive-ratio(16,9);
-@mixin responsive-ratio($x,$y, $pseudo: false) {
-  $padding: unquote( ( $y / $x ) * 100 + '%' );
+@mixin responsive-ratio($x, $y, $pseudo: false) {
+  $padding: unquote(($y / $x) * 100 + "%");
   @if $pseudo {
     &:before {
       @include pseudo($pos: relative);
@@ -60,9 +59,19 @@
 
 // @include input-placeholder {}
 @mixin input-placeholder {
-  &.placeholder { @content; }
-  &:-moz-placeholder { @content; }
-  &::-moz-placeholder { @content; }
-  &:-ms-input-placeholder { @content; }
-  &::-webkit-input-placeholder { @content; }
+  &.placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+  &::-webkit-input-placeholder {
+    @content;
+  }
 }

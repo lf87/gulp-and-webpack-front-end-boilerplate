@@ -15,9 +15,22 @@
   }
 }
 
-// @include bp-horizontal
-@mixin bp-horizontal {
-  @media only screen and (max-height: 550px) and (max-width: 767px) {
+// @include bp-horizontal-xs
+@mixin bp-landscape {
+  @media only screen and (max-height: 439px) and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin bp-horizontal-xs {
+  @media only screen and (max-height: 600px) and (min-width: 767px) {
+    @content;
+  }
+}
+
+// @include bp-horizontal-sm
+@mixin bp-horizontal-sm {
+  @media only screen and (max-height: 768px) and (min-width: 767px) {
     @content;
   }
 }
@@ -54,4 +67,3 @@
     }
   }
 }
-
