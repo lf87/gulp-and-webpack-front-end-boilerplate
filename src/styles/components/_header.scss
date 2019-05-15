@@ -1,0 +1,24 @@
+header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	// padding: 20px;
+
+	.logo {
+		width: 107px;
+		margin: 0 auto;
+		padding: 22px;
+
+		@include bp($md) {
+			width: 148px;
+			padding: 22px;
+			margin: 0;
+			background-color: $c-blue-dark;
+		}
+
+		img {
+			width: 100%;
+		}
+	}
+}

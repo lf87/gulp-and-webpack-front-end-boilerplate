@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="850" height="900" viewBox="0 0 850 900">
+  <defs>
+    <polygon id="prefix__q7_layer3-a" points="0 480.853 138.969 480.853 138.969 0 0 0"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <rect width="850" height="900"/>
+    <g transform="matrix(-1 0 0 1 790 419)">
+      <path fill="#FFF" d="M137.87906,17.5969018 C137.87906,27.3588541 123.846602,28.7205045 106.535923,28.7205045 C89.2252447,28.7205045 75.1927859,27.3588541 75.1927859,17.5969018"/>
+      <path stroke="#293D59" stroke-width="11.455" d="M5.76141373,480.760647 C5.75105686,480.156803 5.72925294,229.580918 5.71835098,93.2307941 C5.7139902,45.7329995 44.2289824,7.23006879 91.7408176,7.23006879"/>
+      <mask id="prefix__q7_layer3-b" fill="#fff">
+        <use xlink:href="#prefix__q7_layer3-a"/>
+      </mask>
+      <polygon fill="#293D59" points="73.34 18.962 138.969 18.962 138.969 0 73.34 0" mask="url(#prefix__q7_layer3-b)"/>
+    </g>
+  </g>
+</svg>

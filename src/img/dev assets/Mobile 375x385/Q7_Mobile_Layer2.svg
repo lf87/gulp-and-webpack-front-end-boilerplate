@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="375" height="385" viewBox="0 0 375 385">
+  <defs>
+    <polygon id="prefix__q7_mobile_layer2-a" points="0 240.926 69.985 240.926 69.985 0 0 0"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <rect width="375" height="385"/>
+    <g transform="matrix(-1 0 0 1 347 144)">
+      <path fill="#FFF" d="M69.435498,8.81674291 C69.435498,13.7078666 62.3687922,14.3901073 53.6511843,14.3901073 C44.9335765,14.3901073 37.8668706,13.7078666 37.8668706,8.81674291"/>
+      <path stroke="#293D59" stroke-width="5.728" d="M2.90143137,240.880074 C2.89621569,240.577525 2.88523529,115.029109 2.8797451,46.7123106 C2.87754902,22.9140393 22.2735882,3.62255006 46.2004118,3.62255006"/>
+      <mask id="prefix__q7_mobile_layer2-b" fill="#fff">
+        <use xlink:href="#prefix__q7_mobile_layer2-a"/>
+      </mask>
+      <polygon fill="#293D59" points="36.934 9.5 69.985 9.5 69.985 0 36.934 0" mask="url(#prefix__q7_mobile_layer2-b)"/>
+    </g>
+  </g>
+</svg>

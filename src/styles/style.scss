@@ -3,5 +3,6 @@
 @import "utils/mixins";
 @import "utils/reset";
 
-@import "main";
-//@import "globbing-works-too/**/*"
+@import "core/**/*";
+@import "components/**/*";
+
