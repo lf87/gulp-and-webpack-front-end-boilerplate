@@ -23,7 +23,7 @@ export function sass() {
       return 'An error occurred while compiling scss.\nLook in the console for details.\n' + error
     }))
     .pipe(autoprefixer({
-      browsers: ['last 2 versions', 'ie 6-10'],
+      browsers: ['last 2 versions', 'IE 11'],
       cascade: false
     }))
     .pipe(Config.config.production ? csso({
