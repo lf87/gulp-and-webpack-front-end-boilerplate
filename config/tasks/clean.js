@@ -19,7 +19,7 @@ export function clean() {
     './maps',
     './reports',
   ])
-  return gulp.src(`${root}`).pipe(
+  return gulp.src(`${global}`).pipe(
     notify({
       message: 'Folders cleaned successfully',
       onLast: true
@@ -31,7 +31,7 @@ export function cleanProd() {
   del([
     `${Config.dist.production}`,
   ])
-  return gulp.src(`${root}`).pipe(
+  return gulp.src(`${global}`).pipe(
     notify({
       message: 'Production folder cleaned successfully',
       onLast: true
