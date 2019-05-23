@@ -21,5 +21,7 @@ export function duplicateProdFiles () {
     nodir: true
   })
     .pipe(gulp.dest(Config.dist.production))
-    .pipe(notify({ message: `The assets have been copied to ${Config.dist.production}`, onLast: true }))
+    .pipe(notify({
+      message: `The assets have been copied to ${Config.dist.production}`, onLast: true
+    }))
 }
