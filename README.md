@@ -58,7 +58,7 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 
 1.  Download and install the latest stable version of [NodeJS](https://nodejs.org/en/download/), and [Git](https://git-scm.com/downloads).
 
-2)  Install gulp and gulp-cli globally using the following commands:
+2)  Install gulp and gulp-cli globally
 
 3.  CD into project folder
 
@@ -70,9 +70,9 @@ This guide will explain how to set up and use the Gulp/Webpack Front End Boilerp
 
 `$ npm i gulp-cli -g`
 
-`$ gem install scss_lint scss_lint_reporter_checkstyle`
+`$ gem install scss_lint scss_lint_reporter_checkstyle` (Optional)
 
-`$ npm i`
+`$ npm ci`
 
 ## Configuration
 
@@ -256,4 +256,4 @@ Below is a brief description of each function, all of which can be reconfigured 
 
 **Default behaviour**: Cleans all your distribution files and folders.
 
-**Additional Notes**: If modifying this function, be careful not to delete your source files
+**Additional Notes**: If modifying this function, be careful not to reference files inside the src folder
