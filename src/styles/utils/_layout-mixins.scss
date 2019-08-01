@@ -1,10 +1,12 @@
 //  @include bp(lg, max)
 @mixin bp($width, $type: min) {
-  @if map_has_key($breakpoints, $width) {
-    $width: map_get($breakpoints, $width);
+  @if map-has-key($breakpoints, $width) {
+    $width: map-get($breakpoints, $width);
+
     @if $type == max {
       $width: $width - 1px;
     }
+
     @media only screen and (#{$type}-width: $width) {
       @content;
     }
@@ -22,15 +24,44 @@
   }
 }
 
+// @include bp-laptop
+@mixin bp-laptop {
+  @media only screen and (min-width: 1330px) {
+    @content;
+  }
+}
+
+// @include bp-horizontal-xs (for when the keyboard is open on some devices)
+@mixin bp-horizontal-xxs {
+  @media only screen and (max-height: 300px) {
+    @content;
+  }
+}
+
+// @include bp-horizontal-xs
 @mixin bp-horizontal-xs {
-  @media only screen and (max-height: 600px) and (min-width: 767px) {
+  @media only screen and (max-height: 400px) {
     @content;
   }
 }
 
 // @include bp-horizontal-sm
 @mixin bp-horizontal-sm {
-  @media only screen and (max-height: 768px) and (min-width: 767px) {
+  @media only screen and (max-height: 560px) {
+    @content;
+  }
+}
+
+// @include bp-horizontal-sm
+@mixin bp-horizontal-md {
+  @media only screen and (max-height: 660px) {
+    @content;
+  }
+}
+
+// @include bp-horizontal-sm
+@mixin bp-horizontal-lg {
+  @media only screen and (max-height: 760px) {
     @content;
   }
 }
@@ -40,27 +71,35 @@
   @if $t {
     #{$type}-top: $spacing;
   }
+
   @if $r {
     #{$type}-right: $spacing;
   }
+
   @if $b {
     #{$type}-bottom: $spacing;
   }
+
   @if $l {
     #{$type}-left: $spacing;
   }
+
   @each $bp, $modifier in $spacing-multipliers {
     @media screen and (min-width: map-get($breakpoints, $bp)) {
       $val: calc(#{$spacing}*#{$modifier});
+
       @if $t {
         #{$type}-top: $val;
       }
+
       @if $r {
         #{$type}-right: $val;
       }
+
       @if $b {
         #{$type}-bottom: $val;
       }
+
       @if $l {
         #{$type}-left: $val;
       }
