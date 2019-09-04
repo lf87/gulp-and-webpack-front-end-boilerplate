@@ -36,11 +36,27 @@
   outline: none;
 }
 
-// @include transitions
-@mixin transition($type: transform, $speed: 0.2s, $easing: ease) {
-  will-change: $type;
-  backface-visibility: hidden;
-  transition: $type $speed $easing;
+
+// @include transition(transform opacity, 500ms, ease, 0s, true, true);
+@mixin transition($properties: all, $duration: 200ms, $method: ease, $delay: 0ms, $willChange: false, $backFaceVisibility: false) {
+  $value: ();
+  $valueWillChange: ();
+  @each $property in $properties {
+    @if length($value) > 0 {
+      $value: append($value, unquote(",") #{$property} $duration $method $delay);
+      $valueWillChange: append($valueWillChange, unquote(",") #{$property});
+    } @else {
+      $value: append($value, #{$property} $duration $method $delay);
+      $valueWillChange: append($valueWillChange, #{$property});
+    }
+  }
+  transition: $value;
+  @if $willChange {
+    will-change: $valueWillChange;
+  }
+  @if $backFaceVisibility {
+    backface-visibility: hidden;
+  }
 }
 
 // @include responsive-ratio(16,9);
