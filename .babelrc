@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "browsers": ["last 2 versions", "safari >= 7"]
       }
@@ -8,7 +8,7 @@
   ],
   "plugins": [
     [
-      "transform-strict-mode",
+      "@babel/plugin-transform-strict-mode",
       {
         "strict": true
       }
