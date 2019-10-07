@@ -15,8 +15,8 @@ const assets = 'assets'
 
 const src = {
   dataFile: `${root}/${source}/data/data.json`,
-  pages: `${root}/${source}/pages/*${fileExt}`,
-  templates: `${root}/${source}/templates/**/*${fileExt}`,
+  pages: `${root}/${source}/pages/*.njk`,
+  templates: `${root}/${source}/templates/**/*.njk`,
   scss: `${root}/${source}/styles/**/*.scss`,
   webpack: `${root}/${source}/scripts/**/*.js`,
   img: `${root}/${source}/img/**/*.{jpg,gif}`,
