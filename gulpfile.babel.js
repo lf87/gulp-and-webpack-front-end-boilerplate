@@ -2,8 +2,8 @@ import gulp from 'gulp'
 
 // Import tasks/functions
 import {clean, cleanProd} from './config/tasks/clean'
-import {nunjucksPages, nunjucksTemplates} from './config/tasks/templating'
-import {sass, criticalCss, scssLint} from './config/tasks/styles'
+import {nunjucksPages} from './config/tasks/templating'
+import {sass, scssLint} from './config/tasks/styles'
 import {fonts} from './config/tasks/fonts'
 import {images, imagesPng, svgs} from './config/tasks/images'
 import {duplicateFiles, duplicateProdFiles} from './config/tasks/duplicate-files'
@@ -15,10 +15,8 @@ import {webpackBundle} from './config/tasks/webpack'
 exports.clean = clean
 exports.cleanProd = cleanProd
 exports.nunjucksPages = nunjucksPages
-exports.nunjucksTemplates = nunjucksTemplates
 exports.webpackBundle = webpackBundle
 exports.sass = sass
-exports.criticalCss = criticalCss
 exports.scssLint = scssLint
 exports.images = images
 exports.imagesPng = imagesPng
@@ -37,7 +35,6 @@ const run = gulp.parallel(bs, watch)
 // Additional tasks that may/will need to be run individually
 gulp.task('server', gulp.series(bs))
 gulp.task('clean', gulp.series(clean))
-gulp.task('critical', gulp.series(criticalCss))
 gulp.task('scss-lint', gulp.series(scssLint))
 
 // Default task - Cleans dist files/folders, Runs all the build tasks, launches browser sync, and watches for changes

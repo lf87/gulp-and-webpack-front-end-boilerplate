@@ -42,7 +42,7 @@ const config = {
   lint: `${root}/${source}/styles/**/*.scss`, // Path of SCSS files that you want to lint
   lintExclude: `!${root}/${source}/styles/vendor/**/*.scss`, // Path of SCSS files that you want to exclude from lint
   templates: [`${root}/${source}/templates/`, `${source}/templates/partials/`], // Default file paths for nunjucks
-  pagesWatch: `${root}*${fileExt}`, // HTML injection  - This is the directory where pages are output
+  pagesWatch: `${root}/${dest}/*${fileExt}`, // HTML injection  - This is the directory where pages are output
   production: !!util.env.production, // Used for production deployment
   criticalCss: `${dist.production}/style.css` // Accepts arrays
 }
