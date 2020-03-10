@@ -39,7 +39,7 @@ export function imagesPng() {
     )
     .pipe(
       gulpPngquant({
-        quality: '65-80'
+        quality: '10-50'
       })
     )
     .pipe(gulp.dest(Config.dist.img))
