@@ -19,7 +19,7 @@ const src = {
   templates: `${root}/${source}/templates/**/*.njk`,
   scss: `${root}/${source}/styles/**/*.scss`,
   webpack: `${root}/${source}/scripts/**/*.js`,
-  img: `${root}/${source}/img/**/*.{jpg,gif}`,
+  img: `${root}/${source}/img/**/*.jpg`,
   imgPng: `${root}/${source}/img/**/*.png`,
   svg: `${root}/${source}/img/svg/**/*.svg`,
   fonts: `${root}/${source}/fonts/**/*`,
